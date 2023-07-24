@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UNICEF Data</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <link rel="stylesheet" href=
+"https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+		integrity=
+"sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+		crossorigin="anonymous">
+        <style>
+            #dataTable{ width: 100%; border: 1px solid #ddd; padding: 10px; margin-top: 10px; margin-bottom: 10px;}
+            #dataTable th, #dataTable td{ border-bottom: 1px solid #ddd; border-right: 1px solid #ddd; padding: 5px 10px;}
+            .formBox{ width: 100%; display: flex; flex-wrap: wrap; justify-content: space-between; padding: 40px;}
+            #pagination{ margin-top: 20px;}
+            #pagination button {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff; border: 0px; border-radius: 4px; padding: 5px 15px; margin: 0 0 0 20px;}
+    .formBoxIn, #contactForm{ width: 45%;}
+        </style>
+</head>
+
+<body >
+	
+	
+    <div class="formBox">
+    <form id="contactForm">
+	<!-- <h2 class="text-primary" style=
+    "padding: 0 0 20px 0; text-align: center;">
+    Hey There,Help Us In Collecting Data
+    </h2>
+		<div class="card">
+			<div class="card-body">
+				<div class="form-group">
+					<label for="exampleFormControlInput1">
+						Full Name
+					</label>
+					
+					<input type="text" class="form-control"
+					id="name" placeholder="Enter your name">
+				</div>
+
+				<div class="form-group">
+					<label for="exampleFormControlInput1">
+						Age
+					</label>
+					
+					<input type="number" class="form-control"
+					id="age" placeholder="Enter your age">
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlInput1">
+						Gender
+					</label>
+					
+					<input type="text" class="form-control"
+					id="gender" placeholder="Enter your gender">
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlInput1">
+						Grade
+					</label>
+					
+					<input type="text" class="form-control"
+					id="grade" placeholder="Enter your grade">
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlInput1">
+						Final score
+					</label>
+					
+					<input type="text" class="form-control"
+					id="score" placeholder="Enter your score">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary"
+				style="margin: 0 20px 20px 20px;">
+				Submit
+			</button>
+
+		</div>
+	</form> -->
+
+<div class="formBoxIn">
+    <div style="width: 100%; display: flex; justify-content: space-between;">
+        <div style="width: 100%">
+            <label for="searchName">Search by Name:</label>
+            <input type="text" id="searchName" oninput="searchData()" />
+        </div>
+
+
+        <div style="width: 200px; display: flex; justify-content: space-between;">
+            <label for="sortCriteria">Sort by:</label>
+            <select id="sortCriteria" onchange="sortData()">
+                <option value="name">Name</option>
+                <option value="age">Age</option>
+                <option value="gender">Gender</option>
+                <option value="score">Score</option>
+                <option value="attempted">Attempted On</option>
+            </select>
+        </div>
+    </div>
+
+    <table id="dataTable" >
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Score</th>
+                <th>Attempted On</th>
+            </tr>
+        </thead>
+        <tbody id="dataList">
+            <!-- Data will be loaded here -->
+        </tbody>
+    </table>
+
+    <div id="pagination">
+        <!-- Pagination controls will be added here -->
+    </div>
+    </div>
+    </div>
+
+
+    <script>
+        // Replace with your Firebase project configuration
+        // var firebaseConfig = {
+        //     apiKey: "AIzaSyDPn2CnNUrpwN2mooV1WrGFLkbQwSnPz7k",
+        //     authDomain: "sampledb20230720.firebaseapp.com",
+        //     databaseURL: "https://sampledb20230720-default-rtdb.firebaseio.com",
+        //     projectId: "sampledb20230720",
+        //     storageBucket: "sampledb20230720.appspot.com",
+        //     messagingSenderId: "924662638665",
+        //     appId: "1:924662638665:web:f055c165372675083b3798",
+        //     measurementId: "G-V21LQZSX49"
+        // }
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1bjWm3FV06EzaONxURAPOxcd34Fzp0W0",
+            authDomain: "unicef-e6d80.firebaseapp.com",
+            databaseURL: "https://unicef-e6d80-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "unicef-e6d80",
+            storageBucket: "unicef-e6d80.appspot.com",
+            messagingSenderId: "745647732927",
+            appId: "1:745647732927:web:a7bde58a2d527fdae3ae0a",
+            measurementId: "G-MNT48P4Z7X"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Get a reference to the "UNICEF" schema in the database
+        var unicefRef = firebase.database().ref("UNICEF");
+
+        
+        
+        // Function to display the data in both the table and the list
+        function displayData(snapshot) {
+            var dataList = document.getElementById("dataList");
+            dataList.innerHTML = ""; // Clear the previous data
+
+            var dataTable = document.getElementById("dataTable");
+            var tableBody = dataTable.getElementsByTagName("tbody")[0];
+            tableBody.innerHTML = ""; // Clear the previous data
+
+            snapshot.forEach(function(childSnapshot) {
+                var data = childSnapshot.val();
+                console.log("**** data *******",data);
+                // var listItem = document.createElement("li");
+                // listItem.textContent = `${data.name}`;
+                // dataList.appendChild(listItem);
+
+                var tableRow = document.createElement("tr");
+                const attemptedOn = convertUnixToDate(data.created_on);
+                tableRow.innerHTML = `<td>${data.name}</td><td>${data.age}</td><td>${data.gender}</td><td>${data.score}</td><td>${attemptedOn}</td>`;
+                tableBody.appendChild(tableRow);
+            });
+        }
+
+        // Function to search data by name
+        function searchData() {
+            var searchName = document.getElementById("searchName").value.trim().toLowerCase();
+            unicefRef.orderByChild("name").startAt(searchName).endAt(searchName + "\uf8ff").on("value", displayData);
+        }
+
+        // Function to sort data by selected criteria
+        function sortData() {
+            var sortCriteria = document.getElementById("sortCriteria").value;
+            unicefRef.orderByChild(sortCriteria).on("value", displayData);
+        }
+
+        // Load the initial data with pagination when the page is ready
+        document.addEventListener("DOMContentLoaded", function() {
+            unicefRef.on("value", displayData);
+
+            // // Add pagination controls
+            // var paginationDiv = document.getElementById("pagination");
+            // var currentPage = 1;
+
+            // function updatePaginationControls() {
+            //     paginationDiv.innerHTML = `Page: ${currentPage} <button onclick="goToPage('prev')">Previous</button> <button onclick="goToPage('next')">Next</button>`;
+            // }
+
+            // function goToPage(direction) {
+            //     if (direction === "prev" && currentPage > 1) {
+            //         currentPage--;
+            //     } else if (direction === "next") {
+            //         currentPage++;
+            //     }
+            //     unicefRef.limitToFirst(5).startAt((currentPage - 1) * 5).on("value", displayData);
+            //     updatePaginationControls();
+            // }
+
+            // updatePaginationControls();
+        });
+        document.getElementById('contactForm')
+			.addEventListener('submit', submitForm);
+
+
+		function submitForm(e) {
+			e.preventDefault();
+
+			// Get values: Full Name, Age, Gender, Grade, Final Score, Created ON
+			var name = getInputVal('name');
+			var age = getInputVal('age');
+			var gender = getInputVal('gender');
+			var grade = getInputVal('grade');
+			var score = getInputVal('score');
+            var created_on = generateTimestamp();
+            
+            console.log("name,age,gender,grade,score,created_on: ",name,age,gender,grade,score,created_on);
+			saveMessage(name, age, gender, grade, score,created_on);
+			document.getElementById('contactForm').reset();
+		}
+
+		// Function to get form values
+		function getInputVal(id) {
+			return document.getElementById(id).value;
+		}
+
+		// Save message to firebase
+		function saveMessage(name, age,gender,grade,score) {
+			var newMessageRef = unicefRef.push();
+			newMessageRef.set({
+				name: name,
+				age: age,
+                gender: gender,
+                grade: grade,
+                score: score
+			});
+		}
+        function generateTimestamp() {
+            const currentTimestamp = Math.floor(Date.now() / 1000); // Get current Unix timestamp
+            // const formattedDate = convertUnixToDate(currentTimestamp);
+            return currentTimestamp;
+        }
+
+        function convertUnixToDate(timestamp) {
+            const dateObj = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
+            const year = dateObj.getFullYear();
+            const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // Months are zero-based, so we add 1
+            const day = String(dateObj.getDate()).padStart(2, "0");
+            const hour = String(dateObj.getHours()).padStart(2,"0");
+            const minute = String(dateObj.getMinutes()).padStart(2,"0");
+            const seconds = String(dateObj.getSeconds()).padStart(2,"0");
+
+            return `${year}-${month}-${day} ${hour}:${minute}:${seconds}`;
+        }
+    </script>
+</body>
+</html>
