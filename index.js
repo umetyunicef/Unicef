@@ -35,8 +35,9 @@ async function setData(sample){
         // The app only has access as defined in the Security Rules
         var db = admin.database();
         var ref = db.ref("/UNICEF");
+        var newRef = ref.push();
         
-        await ref.set(sample);
+        await newRef.set(sample);
     }catch(err){
         console.log(err);
     }
@@ -47,10 +48,13 @@ async function setData(sample){
 }
 
 // const sample = {
-//     Name: "Testing123",
-//     Score: "5",
-//     Grade: "Testing",
-//     Age: "25"
+//     name: "testing",
+//     score: "10",
+//     grade: "Graduated",
+//     age: "30",
+//     gender: "Female",
+//     created_on: Math.floor(Date.now() / 1000)
+
 // }
 // setData(sample);
 
