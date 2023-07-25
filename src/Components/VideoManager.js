@@ -210,10 +210,10 @@ function VideoManager() {
 
                 <Scene vr-mode-ui="enabled:true" embedded >
                     <a-assets>
-                        <img id="play" src="https://s3-dev.umety.com/unicef/play.png" alt='playImg'></img>
-                        <img id="pause" src="https://s3-dev.umety.com/unicef/pause.png" alt='pauseImg'></img>
-                        <img id="correctTick" src="https://s3-dev.umety.com/unicef/correctTick.png" alt='correctTickTmg'></img>
-                        <img id="incorrectTick" src="https://s3-dev.umety.com/unicef/incorrectTick.png" alt='incorrectTickImg'></img>
+                        <img id="play" src="play.png" alt='playImg'></img>
+                        <img id="pause" src="pause.png" alt='pauseImg'></img>
+                        <img id="correctTick" src="correctTick.png" alt='correctTickTmg'></img>
+                        <img id="incorrectTick" src="incorrectTick.png" alt='incorrectTickImg'></img>
 
                     </a-assets>
 
