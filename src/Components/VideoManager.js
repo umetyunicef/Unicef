@@ -211,13 +211,13 @@ function VideoManager() {
                 <Scene vr-mode-ui="enabled:true" embedded >
                     <a-assets>
 
-                        <img id="img1" src="https://s3-dev.umety.com/unicef/Menstrual_Cup.png" alt='img1'></img>
-                        <img id="img2" src="https://s3-dev.umety.com/unicef/Sanitary Pad.png" alt='img2'></img>
+                        <img id="img1" src="https://umety-dev.s3.amazonaws.com/unicef/Menstrual_Cup.png" alt='img1'></img>
+                        <img id="img2" src="https://umety-dev.s3.amazonaws.com/unicef/Sanitary Pad.png" alt='img2'></img>
 
-                        <img id="play" src="https://s3-dev.umety.com/unicef/play.png" alt='playImg'></img>
-                        <img id="pause" src="https://s3-dev.umety.com/unicef/pause.png" alt='pauseImg'></img>
-                        <img id="correctTick" src="https://s3-dev.umety.com/unicef/correctTick.png" alt='correctTickTmg'></img>
-                        <img id="incorrectTick" src="https://s3-dev.umety.com/unicef/incorrectTick.png" alt='incorrectTickImg'></img>
+                        <img id="play" src="https://umety-dev.s3.amazonaws.com/unicef/play.png" alt='playImg'></img>
+                        <img id="pause" src="https://umety-dev.s3.amazonaws.com/unicef/pause.png" alt='pauseImg'></img>
+                        <img id="correctTick" src="https://umety-dev.s3.amazonaws.com/unicef/correctTick.png" alt='correctTickTmg'></img>
+                        <img id="incorrectTick" src="https://umety-dev.s3.amazonaws.com/unicef/incorrectTick.png" alt='incorrectTickImg'></img>
 
                     </a-assets>
 
