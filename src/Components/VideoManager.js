@@ -419,7 +419,7 @@ function VideoManager() {
                     </Entity>
 
                     <Entity primitive="a-videosphere" src="#myVideo" rotation="0 -90 0"></Entity>
-                    <Entity primitive="video" id="myVideo" crossOrigin="anonymous" src='https://s3-dev.umety.com/unicef/video360.mp4'></Entity>
+                    <Entity primitive="video" id="myVideo" crossOrigin="anonymous" src='https://s3-dev.umety.com/unicef/Unicef.mp4'></Entity>
                 </Scene>
             </div>
 
