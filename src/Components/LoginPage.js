@@ -64,7 +64,7 @@ export default function LoginPage() {
 
   return (
     <>
-      {isSubmit ? (<VideoManager />) : (<div className='loginParentDiv'>
+      {isSubmit ? (<VideoManager formData={formData} />) : (<div className='loginParentDiv'>
 
         <div className='loginPageDiv'>
           <img className='logoImg' src="https://umety-dev.s3.amazonaws.com/logo/umety_logo.svg" alt="" />

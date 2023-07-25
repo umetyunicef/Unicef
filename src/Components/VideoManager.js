@@ -1,9 +1,10 @@
+
 import "aframe";
-import AFRAME from "aframe";
 import { Scene, Entity } from "aframe-react";
 import React, { useEffect, useState } from 'react';
+import { firebase } from "../DataManager";
 
-function VideoManager() {
+function VideoManager({ formData }) {
 
     const [currOptionHovered, setCurrOptionHovered] = useState();
 
@@ -21,8 +22,6 @@ function VideoManager() {
     const [isQuesCompleted, setIsQuesCompleted] = useState(false);
 
     const [clickedOption, setSetClickedOption] = useState(null);
-
-
 
 
     const [questionData] = useState([
@@ -83,15 +82,35 @@ function VideoManager() {
     const handleNext = () => {
 
         setSetClickedOption(null);
+
         console.log("Next Button Clicked", currentQuestionIndex);
         if (currentQuestionIndex === 4) {
             setIsQuesCompleted(true);
+            const UserData = {
+                name: formData.name,
+                score: score,
+                grade: formData.grade,
+                age: formData.age,
+                gender: formData.gender,
+                country: formData.country,
+                created_on: Math.floor(Date.now() / 1000)
+
+            }
+
+            console.log("User Data....", UserData);
+
+            firebase.setData(UserData);
+            firebase.getData();
+        } else {
+            setPickedOptionIndex(0);
+            setCurrentQuestionIndex(prev => prev + 1);
+            setIsNext(false);
+            setIsSubmit(true);
         }
 
-        setPickedOptionIndex(0);
-        setCurrentQuestionIndex(prev => prev + 1);
-        setIsNext(false);
-        setIsSubmit(true);
+        console.log("2", currentQuestionIndex);
+
+
 
     }
 
@@ -100,38 +119,12 @@ function VideoManager() {
     }, [score])
 
     useEffect(() => {
+        console.log("Component Rendered");
+    }, [])
 
 
-        // Check if A-Frame is loaded and the component is not already registered
-        if (AFRAME && !AFRAME.components['play-pause']) {
-            AFRAME.registerComponent('play-pause', {
-                init: function () {
 
-                    const myVideo = document.querySelector('#myVideo');
-                    const videoControls = document.querySelector('#videoControls');
 
-                    this.el.addEventListener('click', () => {
-                        console.log("Play pause btn clicked")
-                        if (myVideo.paused) {
-                            myVideo.play();
-                            videoControls.setAttribute('src', '#pause');
-                        } else {
-                            myVideo.pause();
-                            videoControls.setAttribute('src', '#play');
-                        }
-                    });
-
-                    // Add event listener for video completion
-                    myVideo.addEventListener('ended', handleVideoComplete);
-
-                },
-            });
-        }
-
-        // Set the videos state using the data from videosData
-    }, []);
-
-    // Function to handle video completion
     const handleVideoComplete = () => {
         console.log("Video Ended");
 
@@ -180,10 +173,6 @@ function VideoManager() {
     };
 
 
-    const handleRestart = () => {
-        console.log("Restart Button Clicked");
-        window.location.reload();
-    }
 
     const tickGenerator = (res) => {
 
@@ -202,13 +191,16 @@ function VideoManager() {
 
     }
 
+
+
     return (
         <div className="App" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
             <div id="AFrameScene" style={{ height: window.innerHeight, width: window.innerWidth, border: '1px solid black' }}>
-                {/* <div id="AFrameScene" > */}
+
 
                 <Scene vr-mode-ui="enabled:true" embedded >
+
                     <a-assets>
 
                         <img id="img1" src="https://umety-dev.s3.amazonaws.com/unicef/Menstrual_Cup.png" alt='img1'></img>
@@ -219,152 +211,169 @@ function VideoManager() {
                         <img id="correctTick" src="https://umety-dev.s3.amazonaws.com/unicef/correctTick.png" alt='correctTickTmg'></img>
                         <img id="incorrectTick" src="https://umety-dev.s3.amazonaws.com/unicef/incorrectTick.png" alt='incorrectTickImg'></img>
 
+
+                        <video id="myVideo" src="https://s3-dev.umety.com/unicef/Unicef.mp4"> </video>
+
                     </a-assets>
 
-                    <Entity primitive="a-camera" cursor="rayOrigin:mouse;">
-
-                        <a-image id="videoControls" src="#play" position="0 -1.5 -2" scale=".2 .2 .2" play-pause ></a-image>
-
-                        {!isVideoRunning && <Entity>
-                            {!isQuesCompleted ?
-
-                                (<Entity id="QuestionContainerBgPanel" geometry="primitive: plane; width: 2; height: 1.3"
-                                    material="color: #FFFFFF; opacity:1"
-                                    position="0 0 -1">
-
-                                    <Entity
-                                        id="QuestionHeadingDiv"
-                                        position="0 0.4 0.1"
-                                        text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].ques, width: 1.5 }}
-                                        scale="1 1 1"
-                                    ></Entity>
-
-                                    <Entity id="OptionsDiv" position="0 0 0.1">
+                    <Entity primitive="a-camera">
+                        <a-entity cursor="fuse: false;"
+                            position="0 0 -1"
+                            geometry="primitive: ring"
+                            material="color: white; shader: flat"
+                            scale="0.01 0.01 0.01"
+                            raycaster="objects: .raycastable"
 
 
-                                        <Entity id="OptionBgPanel1"
-                                            geometry="primitive: plane; width: 1.3; height: 0.1"
-                                            material={clickedOption === 0 ? "color: black" : "color: blue"}
-                                            position="0 0.22 0"
-                                            events={{
-                                                click: () => handleOptionClick("0"),
-                                                mouseenter: () => handleMouseEnter("#OptionBgPanel1"),
-                                                mouseleave: () => handleMouseExit()
+                        />
 
-                                            }}
-                                        >
+                    </Entity>
 
-                                            <Entity
-                                                id="option"
-                                                position="0 0 0"
-                                                text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[0], align: "left" }}
-                                                scale="1 1 1"
-                                            />
 
-                                            {isNext && tickGenerator(0)}
-                                        </Entity>
-                                        <Entity id="OptionBgPanel2"
-                                            geometry="primitive: plane; width: 1.3; height: 0.1"
-                                            material={clickedOption === 1 ? "color: black" : "color: blue"}
-                                            position="0 0.09 0"
-                                            events={{
-                                                click: () => handleOptionClick("1"),
-                                                mouseenter: () => handleMouseEnter("#OptionBgPanel2"),
-                                                mouseleave: () => handleMouseExit()
+                    {!isVideoRunning && <Entity id="QuizContainer" position="0 1.7 -1.5">
+                        {!isQuesCompleted ?
 
-                                            }}
-                                        >
-                                            <Entity
-                                                id="option"
-                                                position="0 0 0"
-                                                text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[1], align: "left" }}
-                                                scale="1 1 1"
-                                            />
-                                            {isNext && tickGenerator(1)}
-                                        </Entity>
-                                        <Entity id="OptionBgPanel3"
-                                            geometry="primitive: plane; width: 1.3; height: 0.1"
-                                            material={clickedOption === 2 ? "color: black" : "color: blue"}
-                                            position="0 -0.04 0"
-                                            events={{
-                                                click: () => handleOptionClick("2"),
-                                                mouseenter: () => handleMouseEnter("#OptionBgPanel3"),
-                                                mouseleave: () => handleMouseExit()
-                                            }}
-                                        >
-                                            <Entity
-                                                id="option"
-                                                position="0 0 0"
-                                                text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[2], align: "left" }}
-                                                scale="1 1 1"
-                                            />
-                                            {isNext && tickGenerator(2)}
-                                        </Entity>
-                                        <Entity id="OptionBgPanel4"
-                                            geometry="primitive: plane; width: 1.3; height: 0.1"
-                                            material={clickedOption === 3 ? "color: black" : "color: blue"}
-                                            position="0 -0.17 0"
-                                            events={{
-                                                click: () => handleOptionClick("3"),
-                                                mouseenter: () => handleMouseEnter("#OptionBgPanel4"),
-                                                mouseleave: () => handleMouseExit()
-                                            }}
-                                        >
-                                            <Entity
-                                                id="option"
-                                                position="0 0 0"
-                                                text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[3], align: "left" }}
-                                                scale="1 1 1"
-                                            />
-                                            {isNext && tickGenerator(3)}
-                                        </Entity>
+                            (<Entity id="QuestionContainerBgPanel" geometry="primitive: plane; width: 1.8; height: 1.2"
+                                material="color: #FFFFFF; opacity:1"
+                                position="0 0 0">
 
+                                <Entity
+                                    id="QuestionHeadingDiv"
+                                    position="0 0.4 0.1"
+                                    text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].ques, width: 1.5 }}
+                                    scale="1 1 1"
+                                ></Entity>
+
+                                <Entity id="OptionsDiv" position="-0.05 0 0.1">
+
+
+                                    <Entity id="OptionBgPanel1"
+                                        geometry="primitive: plane; width: 1.3; height: 0.1"
+                                        material={clickedOption === 0 ? "color: black" : "color: blue"}
+                                        position="0 0.22 0"
+                                        class="raycastable"
+                                        events={{
+                                            click: () => handleOptionClick("0"),
+                                            mouseenter: () => handleMouseEnter("#OptionBgPanel1"),
+                                            mouseleave: () => handleMouseExit()
+
+                                        }}
+                                    >
+
+                                        <Entity
+                                            id="option"
+                                            position="0 0 0"
+                                            text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[0], align: "left" }}
+                                            scale="1 1 1"
+                                        />
+
+                                        {isNext && tickGenerator(0)}
+                                    </Entity>
+                                    <Entity id="OptionBgPanel2"
+                                        geometry="primitive: plane; width: 1.3; height: 0.1"
+                                        material={clickedOption === 1 ? "color: black" : "color: blue"}
+                                        position="0 0.09 0"
+                                        class="raycastable"
+                                        events={{
+                                            click: () => handleOptionClick("1"),
+                                            mouseenter: () => handleMouseEnter("#OptionBgPanel2"),
+                                            mouseleave: () => handleMouseExit()
+
+                                        }}
+                                    >
+                                        <Entity
+                                            id="option"
+                                            position="0 0 0"
+                                            text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[1], align: "left" }}
+                                            scale="1 1 1"
+                                        />
+                                        {isNext && tickGenerator(1)}
+                                    </Entity>
+                                    <Entity id="OptionBgPanel3"
+                                        geometry="primitive: plane; width: 1.3; height: 0.1"
+                                        material={clickedOption === 2 ? "color: black" : "color: blue"}
+                                        position="0 -0.04 0"
+                                        class="raycastable"
+                                        events={{
+                                            click: () => handleOptionClick("2"),
+                                            mouseenter: () => handleMouseEnter("#OptionBgPanel3"),
+                                            mouseleave: () => handleMouseExit()
+                                        }}
+                                    >
+                                        <Entity
+                                            id="option"
+                                            position="0 0 0"
+                                            text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[2], align: "left" }}
+                                            scale="1 1 1"
+                                        />
+                                        {isNext && tickGenerator(2)}
+                                    </Entity>
+                                    <Entity id="OptionBgPanel4"
+                                        geometry="primitive: plane; width: 1.3; height: 0.1"
+                                        material={clickedOption === 3 ? "color: black" : "color: blue"}
+                                        position="0 -0.17 0"
+                                        class="raycastable"
+                                        events={{
+                                            click: () => handleOptionClick("3"),
+                                            mouseenter: () => handleMouseEnter("#OptionBgPanel4"),
+                                            mouseleave: () => handleMouseExit()
+                                        }}
+                                    >
+                                        <Entity
+                                            id="option"
+                                            position="0 0 0"
+                                            text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[3], align: "left" }}
+                                            scale="1 1 1"
+                                        />
+                                        {isNext && tickGenerator(3)}
                                     </Entity>
 
-                                    {isSubmit &&
-                                        <Entity id="SubmitBtnBgPanel"
-                                            geometry="primitive: plane; width: 0.5; height: 0.15"
-                                            material={{ color: 'black' }}
-                                            position="0 -0.4 0.1"
-                                            events={{
-                                                click: () => handleSubmit()
-                                            }}
-                                        >
+                                </Entity>
 
-                                            <Entity id="SubmitBtnDiv"
-                                                text={{ value: 'SUBMIT', align: 'center' }}
-                                                position="0 0 0"
-                                            />
-                                        </Entity>
-                                    }
+                                {isSubmit &&
+                                    <Entity id="SubmitBtnBgPanel"
+                                        geometry="primitive: plane; width: 0.5; height: 0.15"
+                                        material={{ color: 'black' }}
+                                        position="0 -0.4 0.1"
+                                        class="raycastable"
+                                        events={{
+                                            click: () => handleSubmit()
+                                        }}
+                                    >
 
-                                    {isNext &&
-                                        <Entity id="NextBtnBgPanel"
-                                            geometry="primitive: plane; width: 0.5; height: 0.15"
-                                            material={{ color: 'black' }}
-                                            position="0 -0.4 0.1"
-                                            events={{
-                                                click: () => handleNext()
-                                            }}
-                                        >
+                                        <Entity id="SubmitBtnDiv"
+                                            text={{ value: 'SUBMIT', align: 'center' }}
+                                            position="0 0 0"
+                                        />
+                                    </Entity>
+                                }
 
-                                            <Entity id="SubmitBtnDiv"
-                                                text={{ value: 'NEXT', align: 'center' }}
-                                                position="0 0 0"
-                                            />
-                                        </Entity>
-                                    }
+                                {isNext &&
+                                    <Entity id="NextBtnBgPanel"
+                                        geometry="primitive: plane; width: 0.5; height: 0.15"
+                                        material={{ color: 'black' }}
+                                        position="0 -0.4 0.1"
+                                        class="raycastable"
+                                        events={{
+                                            click: () => handleNext()
+                                        }}
+                                    >
 
-                                </Entity>)
+                                        <Entity id="SubmitBtnDiv"
+                                            text={{ value: 'NEXT', align: 'center' }}
+                                            position="0 0 0"
+                                        />
+                                    </Entity>
+                                }
 
-                                :
-                                (<Entity id="RestartBgPanel" geometry="primitive: plane; width: 2; height: 1.3"
-                                    material="color: #FFFFFF"
-                                    position="0 0 -1"
-                                >
+                            </Entity>)
 
-                                    <a-image id="imgRestartPanel1" src="#img1" position="-0.4 0.25 0.1" scale="0.5 0.5 0.5"></a-image>
-                                    <a-image id="imgRestartPanel2" src="#img2" position="0.4 0.25 0.1" scale="0.5 0.5 0.5"></a-image>
+                            :
+                            (
+                                <Entity id="QuestionContainerBgPanel" geometry="primitive: plane; width: 1.8; height: 1.2"
+                                    material="color: #FFFFFF; opacity:1"
+                                    position="0 0 0">
+
 
                                     <Entity
                                         id="RemarkDiv"
@@ -377,9 +386,10 @@ function VideoManager() {
                                         geometry="primitive: plane; width: 0.4; height: 0.15"
                                         material="color: blue"
                                         position="0.4 -0.4 0.1"
+                                        class="raycastable"
                                         events={{
-                                            click: () => handleRestart()
-                                            // mouseEnter: "material.color: white"
+                                            click: () => { window.location.reload(0) },
+                                            mouseEnter: "material.color: white"
                                         }}
                                     >
                                         <Entity
@@ -387,10 +397,6 @@ function VideoManager() {
                                             position="0 0 0"
                                             text={{ color: 'white', align: 'center', value: "Restart", width: 1.5 }}
                                             scale="1 1 1"
-                                            events={{
-                                                click: () => handleRestart()
-                                                // mouseEnter: "material.color: white"
-                                            }}
                                         ></Entity>
 
                                     </Entity>
@@ -403,23 +409,47 @@ function VideoManager() {
                                         <Entity
                                             position="0 0 0"
                                             text={{ color: 'white', align: 'center', value: `Score : ${score}`, width: 1.5 }}
+                                            scale="1 1 1"
                                         ></Entity>
 
                                     </Entity>
-
                                 </Entity>)
 
+                        }
+
+                    </Entity>}
+
+
+                    <Entity primitive="a-image" id="videoControls" class="raycastable" src="#play" position="0 0.5 -2" scale=".3 .3 .3"
+                        events={{
+                            click: () => {
+                                console.log("clicked");
+                                const myVideo = document.querySelector('#myVideo');
+                                const videoControls = document.querySelector('#videoControls');
+
+
+                                console.log("Play pause btn clicked");
+                                if (myVideo.paused) {
+                                    myVideo.play();
+                                    videoControls.setAttribute('src', '#pause');
+                                } else {
+                                    myVideo.pause();
+                                    videoControls.setAttribute('src', '#play');
+                                }
+
+
+
+                                // Add event listener for video completion
+                                myVideo.addEventListener('ended', handleVideoComplete);
+
                             }
-
-                        </Entity>}
-
-
+                        }}
+                    ></Entity>
 
 
-                    </Entity>
 
                     <Entity primitive="a-videosphere" src="#myVideo" rotation="0 -90 0"></Entity>
-                    <Entity primitive="video" id="myVideo" crossOrigin="anonymous" src='https://s3-dev.umety.com/unicef/Unicef.mp4'></Entity>
+                    {/* <Entity primitive="video" id="myVideo" crossOrigin="anonymous" src='/video360.mp4'></Entity> */}
                 </Scene>
             </div>
 
