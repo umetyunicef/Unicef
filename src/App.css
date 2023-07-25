@@ -8,6 +8,14 @@
   box-sizing: border-box;
 }
 
+#root {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -264,4 +272,25 @@
   justify-content: center;
   align-items: center;
   padding: 30px;
+}
+
+@media screen and (max-width:650px) {
+  .loginParentDiv {
+    padding: 20px;
+  }
+
+  .inputField90,
+  .inputField {
+    height: 35px;
+  }
+
+  .enterBtn {
+    font-size: 16px;
+    padding: 5px 20px;
+    width: 100%;
+  }
+
+  .loginPageDiv {
+    padding: 20px 15px;
+  }
 }
