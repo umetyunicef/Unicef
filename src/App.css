@@ -1,7 +1,3 @@
-body {
-  margin: 0;
-}
-
 .App {
   text-align: center;
 }
@@ -40,4 +36,226 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* QUESTION PANEL */
+.QuestionsTopParent {
+  margin: auto;
+  max-width: 750px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.QuestionContainer {
+  background: #fff;
+  min-width: 600px;
+  height: auto;
+  color: black;
+  border: 1px solid #817e7e;
+}
+
+.QuestionsAndOptions {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  padding: 0 20px;
+}
+
+.QuestionHeading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 25px;
+  font-weight: 600;
+  height: auto;
+  padding: 10px;
+}
+
+.QuizOptions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.radioBtn {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.OptionSymbolDiv {
+  width: 10%;
+}
+
+.OptionSymbol {
+  padding: 0 20px;
+}
+
+.inputRadioBtn {
+  width: 25px;
+  height: 25px;
+}
+
+.radioLabel {
+  width: 90%;
+  height: 60px;
+  background: royalblue;
+  color: white;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 5px;
+  margin-left: 15px;
+}
+
+.QuizOptions input[type="radio"]:disabled+label {
+  color: #555;
+}
+
+.QuizOptions input[type="radio"] {
+  /* Increase the radius value to make the radio button more round */
+  border-radius: 50%;
+}
+
+/* Style for the text value of the option */
+/* .OptionText {
+  flex: 1;
+  margin-right: 10px;
+  margin-left: 15px;
+} */
+
+.SubmitBtn {
+  padding: 5px;
+  background-color: blue;
+  color: white;
+}
+
+/* LOGIN PAGE */
+.loginParentDiv {
+  margin: auto;
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.loginPageDiv {
+  width: 100%;
+  height: auto;
+  border: 2px solid blue;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 30px;
+}
+
+.looInput {
+  width: 100%;
+  padding: 0 0 10px 0;
+}
+
+.logoImg {
+  margin-bottom: 25px;
+}
+
+.form {
+  width: 100%;
+}
+
+.inputField {
+  width: 100%;
+  height: 60px;
+  padding: 5px 25px;
+  border: 1px solid blue;
+  font-size: 18px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.inputField90 {
+  width: 90%;
+  height: 60px;
+  padding: 5px 25px;
+  border: 1px solid blue;
+  font-size: 18px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+
+.enterBtn {
+  width: 100%;
+  margin: 0 auto;
+  color: white;
+  font-weight: 700;
+  border-radius: 4px;
+  background: #1957c9;
+  font-size: 30px;
+  width: auto;
+  padding: 20px;
+  border: 0px;
+  width: 290px;
+}
+
+.looInputBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.OptionText {
+  font-weight: 450;
+  font-size: 18px;
+  color: white;
+}
+
+.pictureDiv {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.QuizCompleted {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.QuizCompletedImgDiv {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  padding: 50px;
+}
+
+.quizText {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.finalScoreText {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
 }

@@ -214,12 +214,14 @@ function VideoManager() {
                         <img id="pause" src="pause.png" alt='pauseImg'></img>
                         <img id="correctTick" src="correctTick.png" alt='correctTickTmg'></img>
                         <img id="incorrectTick" src="incorrectTick.png" alt='incorrectTickImg'></img>
+                        <img id="img1" src="Menstrual_Cup.png" alt='img1'></img>
+                        <img id="img2" src="Sanitary Pad.png" alt='img2'></img>
 
                     </a-assets>
 
                     <Entity primitive="a-camera" cursor="rayOrigin:mouse;">
 
-                        <a-image id="videoControls" src="#pause" position="0 -1.5 -2" scale=".2 .2 .2" play-pause ></a-image>
+                        <a-image id="videoControls" src="#play" position="0 -1.5 -2" scale=".2 .2 .2" play-pause ></a-image>
 
                         {!isVideoRunning && <Entity>
                             {!isQuesCompleted ?
@@ -359,6 +361,8 @@ function VideoManager() {
                                     position="0 0 -1"
                                 >
 
+                                    <a-image id="imgRestartPanel1" src="#img1" position="-0.4 0.25 0.1" scale="0.5 0.5 0.5"></a-image>
+                                    <a-image id="imgRestartPanel2" src="#img2" position="0.4 0.25 0.1" scale="0.5 0.5 0.5"></a-image>
 
                                     <Entity
                                         id="RemarkDiv"
