@@ -210,10 +210,10 @@ function VideoManager() {
 
                 <Scene vr-mode-ui="enabled:true" embedded >
                     <a-assets>
-                        <img id="play" src="play.png" alt='playImg'></img>
-                        <img id="pause" src="pause.png" alt='pauseImg'></img>
-                        <img id="correctTick" src="correctTick.png" alt='correctTickTmg'></img>
-                        <img id="incorrectTick" src="incorrectTick.png" alt='incorrectTickImg'></img>
+                        <img id="play" src="https://s3-dev.umety.com/unicef/play.png" alt='playImg'></img>
+                        <img id="pause" src="https://s3-dev.umety.com/unicef/pause.png" alt='pauseImg'></img>
+                        <img id="correctTick" src="https://s3-dev.umety.com/unicef/correctTick.png" alt='correctTickTmg'></img>
+                        <img id="incorrectTick" src="https://s3-dev.umety.com/unicef/incorrectTick.png" alt='incorrectTickImg'></img>
 
                     </a-assets>
 
@@ -413,7 +413,7 @@ function VideoManager() {
                     </Entity>
 
                     <Entity primitive="a-videosphere" src="#myVideo" rotation="0 -90 0"></Entity>
-                    <Entity primitive="video" id="myVideo" autoplay="true" loop="false" crossOrigin="anonymous" src='https://umety-dev.s3.amazonaws.com/unicef/video360.mp4'></Entity>
+                    <Entity primitive="video" id="myVideo" autoplay="true" loop="false" crossOrigin="anonymous" src='https://s3-dev.umety.com/unicef/video360.mp4'></Entity>
                 </Scene>
             </div>
 

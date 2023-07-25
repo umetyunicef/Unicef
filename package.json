@@ -2,6 +2,7 @@
   "name": "video",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://umetyunicef.github.io/Unicef",
   "dependencies": {
     "@fastify/busboy": "^1.2.1",
     "@testing-library/jest-dom": "^5.17.0",
@@ -23,6 +24,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build && cd build && cp -r static/css ./css && cp -r static/js ./js",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
