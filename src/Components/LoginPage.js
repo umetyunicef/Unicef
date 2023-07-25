@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import VideoManager from './VideoManager';
 
 export default function LoginPage() {
@@ -10,13 +10,40 @@ export default function LoginPage() {
     grade: '',
     country: '',
   });
-
+  const [ageError, setAgeError] = useState('');
+  const [countryError, setCountryError] = useState('');
   const [isSubmit, setIsSubmit] = useState(false);
+  const [disableSubmit, setDisableSubmit] = useState(true);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormdata) => ({ ...prevFormdata, [name]: value }));
   };
+
+  const handleAge = (event) => {
+    const { name, value } = event.target;
+
+    // Check if the entered age is within the range of 5 to 50
+    const ageValue = parseInt(value, 10);
+    if (name === 'age' && (ageValue < 5 || ageValue > 80)) {
+      setAgeError('Age must be between 5 and 80');
+    } else {
+      setAgeError('');
+    }
+    setFormData((prevFormdata) => ({ ...prevFormdata, [name]: value }));
+  }
+
+  const handleCountry = (event) => {
+    const { name, value } = event.target;
+
+    // Check if the entered value is not a number and has at least two characters
+    if (name === 'country' && (!isNaN(value) || value.length < 2)) {
+      setCountryError('Country must be at least 2 characters and cannot be a number');
+    } else {
+      setCountryError('');
+    }
+    setFormData((prevFormdata) => ({ ...prevFormdata, [name]: value }));
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -26,6 +53,14 @@ export default function LoginPage() {
       setIsSubmit(true);
     }
   };
+
+  useEffect(() => {
+    if (formData.name && formData.gender && formData.age && formData.grade && formData.country && !ageError && !countryError) {
+      setDisableSubmit(false); // Enable the submit button
+    } else {
+      setDisableSubmit(true); // Disable the submit button
+    }
+  }, [formData, ageError, countryError]);
 
   return (
     <>
@@ -69,9 +104,10 @@ export default function LoginPage() {
                 name="age"
                 placeholder='Age'
                 value={formData.age}
-                onChange={handleChange}
+                onChange={handleAge}
                 required
               />
+              {ageError && <p style={{ color: "red" }}>{ageError}</p>}
             </div>
             <div className='gradeDiv looInput'>
 
@@ -85,10 +121,16 @@ export default function LoginPage() {
                 required
               >
                 <option value="">Select Grade</option>
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
+                <option value="3">Grade 3</option>
+                <option value="4">Grade 4</option>
+                <option value="5">Grade 5</option>
+                <option value="6">Grade 6</option>
+                <option value="7">Grade 7</option>
+                <option value="8">Grade 8</option>
+                <option value="9">Grade 9</option>
+                <option value="10">Grade 10</option>
+                <option value="11">Grade 11</option>
+                <option value="12">Grade 12</option>
               </select>
             </div>
             <div className='countryDiv looInput'>
@@ -98,11 +140,12 @@ export default function LoginPage() {
                 name="country"
                 placeholder='Country'
                 value={formData.country}
-                onChange={handleChange}
+                onChange={handleCountry}
                 required
               />
+              {countryError && <p style={{ color: "red" }}>{countryError}</p>}
             </div>
-            <div className='looInputBtn'><button type="submit" className='enterBtn'>Enter</button></div>
+            <div className='looInputBtn'><button type="submit" className='enterBtn' disabled={disableSubmit} >Enter</button></div>
           </form>
         </div>
       </div>)}
