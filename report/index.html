@@ -74,17 +74,19 @@
     let sortOrder = 1;
 
     function fetchNextUsers(page, searchTerm, sortBy) {
-      getTotalRecords();
+      getTotalRecords(searchTerm);
       const userList = document.querySelector("#userList tbody");
       userList.innerHTML = "";
 
       const dbRef = firebase.database().ref('UNICEF');
-      let query = dbRef.orderByChild('created_on');
 
+      var sortByMapping= ["name","gender","age","grade","country","score","created_on"];
+      var sortByColumnName = sortByMapping[sortBy];
+      // console.log("sortByColumnName = ",sortByColumnName);
       if (currentPage > 1) {
-        query = query.startAt(lastItemKey).limitToFirst(PAGE_SIZE + 1);
+        query = dbRef.orderByChild(sortByColumnName).startAt(lastItemKey).limitToFirst(PAGE_SIZE + 1);
       } else {
-        query = query.limitToFirst(PAGE_SIZE);
+        query = dbRef.orderByChild(sortByColumnName).limitToFirst(PAGE_SIZE);
       }
 
       if (searchTerm) {
@@ -165,13 +167,13 @@
             }
 
             if (currentPage === 1 && userCount <= PAGE_SIZE - 1) {
-              lastItemKey = user.created_on;
+              lastItemKey = searchTerm ? user.name : user.created_on;
             } else if (userCount === PAGE_SIZE) {
-              lastItemKey = user.created_on;
+              lastItemKey = searchTerm ? user.name : user.created_on;
             }
 
             if (currentPage !== 1 && userCount === 1) {
-              firstItemKey = user.created_on;
+              firstItemKey = searchTerm ? user.name : user.created_on;
             }
 
             userCount++;
@@ -216,12 +218,14 @@
     });
 
     // Function to fetch the total number of records
-    async function getTotalRecords() {
-      const dbRef = firebase.database().ref('UNICEF');
-      const data = await dbRef.once("value");
-      totalRecords = data.numChildren();
-      document.getElementById("nextBtn").disabled = currentPage == Math.ceil(totalRecords / PAGE_SIZE);
-      updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE);
+    async function getTotalRecords(searchTerm) {
+      if(!searchTerm){
+        const dbRef = firebase.database().ref('UNICEF');
+        const data = await dbRef.once("value");
+        totalRecords = data.numChildren();
+        document.getElementById("nextBtn").disabled = currentPage == Math.ceil(totalRecords / PAGE_SIZE);
+        updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE);
+      }
     }
 
     // Function to update the pagination information
