@@ -1,13 +1,11 @@
 import './App.css';
 import React from 'react';
-import VideoManager from './Components/VideoManager';
-// import LoginPage from './Components/LoginPage';
+import RouteManager from './Components/RouteManager';
 
 export default function App() {
   return (
     <>
-      {/* <LoginPage /> */}
-      <VideoManager />
+      <RouteManager />
     </>
   )
 }

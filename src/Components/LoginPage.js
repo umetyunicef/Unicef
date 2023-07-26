@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import VideoManager from './VideoManager';
 
-export default function LoginPage() {
+export default function LoginPage({ setIsLogin, setIsIntro, setFormData }) {
 
-  const [formData, setFormData] = useState({
+  const [myFormData, setMYFormData] = useState({
     name: '',
     gender: '',
     age: '',
@@ -12,17 +11,16 @@ export default function LoginPage() {
   });
   const [ageError, setAgeError] = useState('');
   const [countryError, setCountryError] = useState('');
-  const [isSubmit, setIsSubmit] = useState(false);
   const [disableSubmit, setDisableSubmit] = useState(true);
 
   const handleChange = (event) => {
 
+    let { name, value } = event.target;
     if (name === "grade") {
       value = parseInt(value);
     }
-    const { name, value } = event.target;
 
-    setFormData((prevFormdata) => ({ ...prevFormdata, [name]: value }));
+    setMYFormData((prevFormdata) => ({ ...prevFormdata, [name]: value }));
   };
 
   const handleAge = (event) => {
@@ -35,7 +33,7 @@ export default function LoginPage() {
     } else {
       setAgeError('');
     }
-    setFormData((prevFormdata) => ({ ...prevFormdata, [name]: value }));
+    setMYFormData((prevFormdata) => ({ ...prevFormdata, [name]: value }));
   }
 
   const handleCountry = (event) => {
@@ -47,29 +45,32 @@ export default function LoginPage() {
     } else {
       setCountryError('');
     }
-    setFormData((prevFormdata) => ({ ...prevFormdata, [name]: value }));
+    setMYFormData((prevFormdata) => ({ ...prevFormdata, [name]: value }));
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData); // Replace this with your login logic
+    console.log(myFormData); // Replace this with your login logic
 
-    if (formData != null) {
-      setIsSubmit(true);
+    if (myFormData != null) {
+      setIsLogin(false);
+      setIsIntro(true);
     }
   };
 
   useEffect(() => {
-    if (formData.name && formData.gender && formData.age && formData.grade && formData.country && !ageError && !countryError) {
+    if (myFormData.name && myFormData.gender && myFormData.age && myFormData.grade && myFormData.country && !ageError && !countryError) {
       setDisableSubmit(false); // Enable the submit button
     } else {
       setDisableSubmit(true); // Disable the submit button
     }
-  }, [formData, ageError, countryError]);
+  }, [myFormData, ageError, countryError]);
 
   return (
     <>
-      {isSubmit ? (<VideoManager formData={formData} />) : (<div className='loginParentDiv'>
+      {/* (<VideoManager formData={myFormData} />) */}
+
+      <div className='loginParentDiv'>
 
         <div className='loginPageDiv'>
           <img className='logoImg' src="https://umety-dev.s3.amazonaws.com/logo/umety_logo.svg" alt="" />
@@ -79,7 +80,7 @@ export default function LoginPage() {
                 className="inputField90"
                 type="text"
                 name="name"
-                value={formData.name}
+                value={myFormData.name}
                 onChange={handleChange}
                 placeholder="Enter your full name"
                 required
@@ -92,7 +93,7 @@ export default function LoginPage() {
                 type="text"
                 name="gender"
                 placeholder='Gender'
-                value={formData.gender}
+                value={myFormData.gender}
                 onChange={handleChange}
                 required
               >
@@ -108,7 +109,7 @@ export default function LoginPage() {
                 type="number"
                 name="age"
                 placeholder='Age'
-                value={formData.age}
+                value={myFormData.age}
                 onChange={handleAge}
                 required
               />
@@ -121,7 +122,7 @@ export default function LoginPage() {
                 type="text"
                 name="grade"
                 placeholder='Grade'
-                value={formData.grade}
+                value={myFormData.grade}
                 onChange={handleChange}
                 required
               >
@@ -144,7 +145,7 @@ export default function LoginPage() {
                 type="text"
                 name="country"
                 placeholder='Country'
-                value={formData.country}
+                value={myFormData.country}
                 onChange={handleCountry}
                 required
               />
@@ -153,7 +154,9 @@ export default function LoginPage() {
             <div className='looInputBtn'><button type="submit" className='enterBtn' disabled={disableSubmit} >Enter</button></div>
           </form>
         </div>
-      </div>)}
+      </div>
+
+
     </>
   )
 }
