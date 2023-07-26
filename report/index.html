@@ -26,13 +26,13 @@
   
   <table border="0" cellpadding="0" cellspacing="0" id="userList">
       <thead>
-        <th onclick="sortTable(0)">Name</th>
-        <th onclick="sortTable(1)">Gender</th>
-        <th onclick="sortTable(2)">Age</th>
-        <th onclick="sortTable(3)">Grade</th>
-        <th onclick="sortTable(4)">Country</th>
-        <th onclick="sortTable(5)">Score</th>
-        <th onclick="sortTable(6)">Attempted On</th>
+        <th onclick="sortTable(0)">Name <span></span></th>
+        <th onclick="sortTable(1)">Gender <span></span></th>
+        <th onclick="sortTable(2)">Age <span></span></th>
+        <th onclick="sortTable(3)">Grade <span></span></th>
+        <th onclick="sortTable(4)">Country <span></span></th>
+        <th onclick="sortTable(5)">Score <span></span></th>
+        <th onclick="sortTable(6)">Attempted On <span></span></th>
     </thead>
     <tbody>
 
@@ -237,9 +237,29 @@
       fetchNextUsers(currentPage, searchTerm, sortOrder);
     });
 
+    function showArrowOnColumn(sortBy, sortOrder){
+      // Get the target table
+      const table = document.getElementById('userList');
+
+      // Find the ith <th> element
+      const thElements = table.querySelectorAll('th');
+      for(let i=0;i<thElements.length;i++){
+        const spanElement = thElements[i].querySelector('span');
+        spanElement.textContent = "";
+      }
+      const ithTh = thElements[sortBy];
+      // Create a <span> element
+      const spanElement = ithTh.querySelector('span');
+      // Set the content of the <span> (you can change this as per your requirement)
+      spanElement.textContent = sortOrder>0 ? "\u25B2" : "\u25BC";
+      // Append the <span> tag inside the ith <th> element
+      ithTh.appendChild(spanElement);
+    }
+
     // Function to handle the sorting of the table
     function sortTable(columnIndex) {
       sortOrder *= -1;
+      showArrowOnColumn(columnIndex ,sortOrder);
       fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), columnIndex);
     }
 
