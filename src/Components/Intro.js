@@ -176,39 +176,48 @@ export default function Intro({ setIsIntro, setIsVideoManager }) {
 
                             ) : isBegin ?
                                 (
-                                    <Entity id="BeginContainer" position="0 1.7 -1.5">
-                                        <Entity id="BeginContainerBgPanel" geometry="primitive: plane; width: 1.8; height: 1.2"
+                                    <Entity id="LearningOutcomesContainer" position="0 1.7 -1.5">
+                                        <Entity id="LearningOutcomesContainerBgPanel" geometry="primitive: plane; width: 2; height: 1.5"
                                             material="color: #FFFFFF; opacity:1"
                                             position="0 0 0">
 
+
+                                            {/* input images here */}
+
                                             <Entity
-                                                id="BeginTextDiv"
-                                                position="0 0.1 0.1"
-                                                text={{ color: 'black', align: 'center', value: "Join this enlightening adventure with Mary, your virtual companion, as we explore the importance of menstrual health and hygiene. Together, we'll help you gain valuable understanding about this essential aspect of women's health, fostering a positive and informed approach to periods.", width: 1.5 }}
-                                                scale="1 0.9 0.8"
+                                                id="IntroTextDiv"
+                                                position="0 0.55 0.1"
+                                                text={{ color: 'black', align: 'center', value: "", width: 1.5 }}
+                                                scale="1 1 1"
+                                            ></Entity>
+                                            <Entity
+                                                id="IntroTextDiv"
+                                                position="-0.08 0.12 0.1"
+                                                text={{
+                                                    color: 'black', align: 'left', value: "Join this enlightening adventure with Mary, your virtual companion, as we explore the importance of menstrual health and hygiene. Together, we'll help you gain valuable understanding about this essential aspect of women's health, fostering a positive and informed approach to periods."
+                                                    , width: 1.5
+                                                }}
+                                                scale="1 0.6 0.6"
                                             ></Entity>
 
-                                            <Entity id="BeginBtnBgPanel"
+                                            <Entity id="NextBtnBgPanel"
                                                 geometry="primitive: plane; width: 0.5; height: 0.15"
                                                 material={{ color: 'royalblue' }}
-                                                position="0 -0.4 0.1"
+                                                position="0 -0.55 0.1"
                                                 className="raycastable"
                                                 events={{
-                                                    click: () => handleBegin()
+                                                    click: handleBegin
                                                 }}
                                             >
 
-                                                <Entity id="BeginBtnDiv"
-                                                    text={{ value: 'LET BEGIN', align: 'center' }}
+                                                <Entity id="NextBtnDiv"
+                                                    text={{ value: 'LET\'S BEGIN', align: 'center' }}
                                                     position="0 0 0"
                                                 />
                                             </Entity>
-
-
-
-
                                         </Entity>
-                                    </Entity>) : null
+                                    </Entity>
+                                ) : null
 
 
                     };
