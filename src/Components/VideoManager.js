@@ -238,7 +238,7 @@ function VideoManager({ formData }) {
                         <video id="myVideo" src="https://s3-dev.umety.com/unicef/Unicef.mp4"> </video>
 
                     </a-assets>
-                    <Entity id="camera" primitive="a-camera">
+                    {/* <Entity id="camera" primitive="a-camera">
                         <a-entity cursor="fuse: false;"
                             position="0 0 -1"
                             geometry="primitive: ring"
@@ -246,8 +246,22 @@ function VideoManager({ formData }) {
                             scale="0.01 0.01 0.01"
                             raycaster="objects: .raycastable"
                         />
-                    </Entity>
+                    </Entity> */}
 
+                    <Entity id="camera" primitive="a-camera">
+                        {isVRMode ? (
+                            <a-entity
+                                cursor="fuse: false;"
+                                position="0 0 -1"
+                                geometry="primitive: ring"
+                                material="color: white; shader: flat"
+                                scale="0.01 0.01 0.01"
+                                raycaster="objects: .raycastable"
+                            />
+                        ) : (
+                            <Entity cursor="rayOrigin: mouse;" />
+                        )}
+                    </Entity>
 
                     {/* {isVRMode ? <Entity id="camera" primitive="a-camera">
                         <a-entity cursor="fuse: false;"
