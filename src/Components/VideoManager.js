@@ -57,6 +57,29 @@ function VideoManager({ formData }) {
         }
     ]);
 
+    const [isVRMode, setIsVRMode] = useState(false);
+
+    useEffect(() => {
+        const enterVRHandler = () => {
+            console.log("VR Mode Enabled");
+            setIsVRMode(true);
+        };
+
+        const exitVRHandler = () => {
+
+            console.log("VR Mode Disabled");
+            setIsVRMode(false);
+        };
+
+        window.addEventListener("enter-vr", enterVRHandler);
+        window.addEventListener("exit-vr", exitVRHandler);
+
+        return () => {
+            window.removeEventListener("enter-vr", enterVRHandler);
+            window.removeEventListener("exit-vr", exitVRHandler);
+        };
+    }, []);
+
 
     const handleSubmit = () => {
 
@@ -217,15 +240,15 @@ function VideoManager({ formData }) {
                     </a-assets>
 
                     <Entity primitive="a-camera">
-                        <a-entity cursor="fuse: false;"
-                            position="0 0 -1"
-                            geometry="primitive: ring"
-                            material="color: white; shader: flat"
-                            scale="0.01 0.01 0.01"
-                            raycaster="objects: .raycastable"
 
-
-                        />
+                        {isVRMode ?
+                            <a-entity cursor="fuse: false;"
+                                position="0 0 -1"
+                                geometry="primitive: ring"
+                                material="color: white; shader: flat"
+                                scale="0.01 0.01 0.01"
+                                raycaster="objects: .raycastable"
+                            /> : <Entity cursor="rayOrigin:mouse;" />}
 
                     </Entity>
 
