@@ -25,12 +25,14 @@
   </div>
   
   <table border="0" cellpadding="0" cellspacing="0" id="userList">
-    <thead>
+      <thead>
         <th onclick="sortTable(0)">Name</th>
-        <th>Age</th>
-        <th>Gender</th>
-        <th>Score</th>
-        <th onclick="sortTable(4)">Attempted On</th>
+        <th onclick="sortTable(1)">Gender</th>
+        <th onclick="sortTable(2)">Age</th>
+        <th onclick="sortTable(3)">Grade</th>
+        <th onclick="sortTable(4)">Country</th>
+        <th onclick="sortTable(5)">Score</th>
+        <th onclick="sortTable(6)">Attempted On</th>
     </thead>
     <tbody>
 
@@ -102,23 +104,61 @@
           // Sort the data based on the selected column
           if (sortBy === 0) {
             sortedUsers.sort((a, b) => {
-              const nameA = a.name.toLowerCase();
-              const nameB = b.name.toLowerCase();
+              const nameA = a.name?.toLowerCase();
+              const nameB = b.name?.toLowerCase();
               if (nameA < nameB) return -sortOrder;
-              if (nameA > nameB) return sortOrder;
+              if (nameA > nameB) return -sortOrder;
               return 0;
             });
-          } else if (sortBy === 4) {
+          } 
+          else if(sortBy === 1){
+            sortedUsers.sort((a,b) => {
+              const genderA = a.gender?.toLowerCase();
+              const genderB = b.gender?.toLowerCase();
+              if(genderA < genderB) return -sortOrder;
+              if(genderA > genderB) return -sortOrder;
+              return 0;
+            })
+          }
+          else if(sortBy === 2){
+            sortedUsers.sort((a,b) => {
+              const ageA = a.age;
+              const ageB = b.age;
+              return sortOrder * (ageA - ageB);
+            })
+          }
+          else if(sortBy === 3){
+            sortedUsers.sort((a,b) => {
+              const gradeA = a.grade;
+              const gradeB = b.grade;
+              return sortOrder * (gradeA - gradeB) ;
+            })
+          }
+          else if (sortBy === 4) {
+            sortedUsers.sort((a,b) => {
+              const countryA = a.country?.toLowerCase();
+              const countryB = b.country?.toLowerCase();
+              return sortOrder * (countryA > countryB);
+            })
+          }
+          else if(sortBy === 5) {
+            sortedUsers.sort((a,b) => {
+              const scoreA = a.score;
+              const scoreB = b.score;
+              return sortOrder * (scoreA > scoreB);
+            })
+          }
+          else if(sortBy === 6) {
             sortedUsers.sort((a, b) => {
-              const dateA = new Date(a.created_on);
-              const dateB = new Date(b.created_on);
+              const dateA = new Date(a.created_on||'');
+              const dateB = new Date(b.created_on || '');
               return sortOrder * (dateA - dateB);
             });
           }
 
           sortedUsers.forEach((user) => {
             const li = document.createElement("tr");
-            li.innerHTML = `<td>${user.name}</td> <td>${user.age}</td> <td>${user.gender}</td> <td>${user.score}</td> <td>${convertUnixToDate(user.created_on)}</td>`;
+            li.innerHTML = `<td>${user.name}</td> <td>${user.gender}</td> <td>${user.age}</td> <td>${user.grade}</td> <td>${user.country}</td> <td>${user.score}</td> <td>${convertUnixToDate(user.created_on)}</td>`;
 
             if (userCount != 0 || currentPage === 1) {
               userList.appendChild(li);
