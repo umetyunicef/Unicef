@@ -219,7 +219,7 @@ function VideoManager({ formData }) {
     return (
         <div className="App" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
-            <div id="AFrameScene" style={{ height: window.innerHeight, width: window.innerWidth, border: '1px solid black' }}>
+            <div id="AFrameScene" style={{ height: window.innerHeight - 200, width: window.innerWidth, border: '1px solid black' }}>
 
 
                 <Scene vr-mode-ui="enabled:true" embedded >
