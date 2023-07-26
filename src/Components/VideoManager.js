@@ -62,6 +62,11 @@ function VideoManager({ formData }) {
     useEffect(() => {
         const enterVRHandler = () => {
             console.log("VR Mode Enabled");
+
+            // const entity = document.getElementById('camera');
+            // entity.removeAttribute('cursor');
+            // console.log("entity", entity);
+
             setIsVRMode(true);
         };
 
@@ -74,10 +79,10 @@ function VideoManager({ formData }) {
         window.addEventListener("enter-vr", enterVRHandler);
         window.addEventListener("exit-vr", exitVRHandler);
 
-        return () => {
-            window.removeEventListener("enter-vr", enterVRHandler);
-            window.removeEventListener("exit-vr", exitVRHandler);
-        };
+        // return () => {
+        //     window.removeEventListener("enter-vr", enterVRHandler);
+        //     window.removeEventListener("exit-vr", exitVRHandler);
+        // };
     }, []);
 
 
@@ -140,11 +145,6 @@ function VideoManager({ formData }) {
     useEffect(() => {
         console.log("Score", score);
     }, [score])
-
-    useEffect(() => {
-        console.log("Component Rendered");
-    }, [])
-
 
 
 
@@ -239,18 +239,20 @@ function VideoManager({ formData }) {
 
                     </a-assets>
 
-                    <Entity primitive="a-camera">
+                    {isVRMode ? <Entity id="camera" primitive="a-camera">
+                        <a-entity cursor="fuse: false;"
+                            position="0 0 -1"
+                            geometry="primitive: ring"
+                            material="color: white; shader: flat"
+                            scale="0.01 0.01 0.01"
+                            raycaster="objects: .raycastable"
+                        />
+                    </Entity> :
+                        <Entity id="camera" primitive="a-camera" cursor="rayOrigin: mouse;">
 
-                        {isVRMode ?
-                            <a-entity cursor="fuse: false;"
-                                position="0 0 -1"
-                                geometry="primitive: ring"
-                                material="color: white; shader: flat"
-                                scale="0.01 0.01 0.01"
-                                raycaster="objects: .raycastable"
-                            /> : <Entity cursor="rayOrigin:mouse;" />}
+                        </Entity>}
 
-                    </Entity>
+
 
 
                     {!isVideoRunning && <Entity id="QuizContainer" position="0 1.7 -1.5">
@@ -274,7 +276,7 @@ function VideoManager({ formData }) {
                                         geometry="primitive: plane; width: 1.3; height: 0.1"
                                         material={clickedOption === 0 ? "color: black" : "color: blue"}
                                         position="0 0.22 0"
-                                        class="raycastable"
+                                        className="raycastable"
                                         events={{
                                             click: () => handleOptionClick("0"),
                                             mouseenter: () => handleMouseEnter("#OptionBgPanel1"),
@@ -296,7 +298,7 @@ function VideoManager({ formData }) {
                                         geometry="primitive: plane; width: 1.3; height: 0.1"
                                         material={clickedOption === 1 ? "color: black" : "color: blue"}
                                         position="0 0.09 0"
-                                        class="raycastable"
+                                        className="raycastable"
                                         events={{
                                             click: () => handleOptionClick("1"),
                                             mouseenter: () => handleMouseEnter("#OptionBgPanel2"),
@@ -316,7 +318,7 @@ function VideoManager({ formData }) {
                                         geometry="primitive: plane; width: 1.3; height: 0.1"
                                         material={clickedOption === 2 ? "color: black" : "color: blue"}
                                         position="0 -0.04 0"
-                                        class="raycastable"
+                                        className="raycastable"
                                         events={{
                                             click: () => handleOptionClick("2"),
                                             mouseenter: () => handleMouseEnter("#OptionBgPanel3"),
@@ -335,7 +337,7 @@ function VideoManager({ formData }) {
                                         geometry="primitive: plane; width: 1.3; height: 0.1"
                                         material={clickedOption === 3 ? "color: black" : "color: blue"}
                                         position="0 -0.17 0"
-                                        class="raycastable"
+                                        className="raycastable"
                                         events={{
                                             click: () => handleOptionClick("3"),
                                             mouseenter: () => handleMouseEnter("#OptionBgPanel4"),
@@ -358,7 +360,7 @@ function VideoManager({ formData }) {
                                         geometry="primitive: plane; width: 0.5; height: 0.15"
                                         material={{ color: 'black' }}
                                         position="0 -0.4 0.1"
-                                        class="raycastable"
+                                        className="raycastable"
                                         events={{
                                             click: () => handleSubmit()
                                         }}
@@ -376,7 +378,7 @@ function VideoManager({ formData }) {
                                         geometry="primitive: plane; width: 0.5; height: 0.15"
                                         material={{ color: 'black' }}
                                         position="0 -0.4 0.1"
-                                        class="raycastable"
+                                        className="raycastable"
                                         events={{
                                             click: () => handleNext()
                                         }}
@@ -409,7 +411,7 @@ function VideoManager({ formData }) {
                                         geometry="primitive: plane; width: 0.4; height: 0.15"
                                         material="color: blue"
                                         position="0.4 -0.4 0.1"
-                                        class="raycastable"
+                                        className="raycastable"
                                         events={{
                                             click: () => { window.location.reload(0) },
                                             mouseEnter: "material.color: white"
@@ -443,7 +445,7 @@ function VideoManager({ formData }) {
                     </Entity>}
 
 
-                    <Entity primitive="a-image" id="videoControls" class="raycastable" src="#play" position="0 0.5 -2" scale=".3 .3 .3"
+                    <Entity primitive="a-image" id="videoControls" className="raycastable" src="#play" position="0 0.5 -2" scale=".3 .3 .3"
                         events={{
                             click: () => {
                                 console.log("clicked");
