@@ -9,7 +9,8 @@ function VideoManager({ formData }) {
     const [currOptionHovered, setCurrOptionHovered] = useState();
 
 
-    const [isVideoRunning, setIsVideoRunning] = useState(true);
+    const [isVideoStarted, setIsVideoStarted] = useState(false);
+    const [isVideoEnded, setIsVideoEnded] = useState(false)
 
     const [isSubmit, setIsSubmit] = useState(true);
     const [isNext, setIsNext] = useState(false);
@@ -83,6 +84,7 @@ function VideoManager({ formData }) {
         //     window.removeEventListener("enter-vr", enterVRHandler);
         //     window.removeEventListener("exit-vr", exitVRHandler);
         // };
+
     }, []);
 
 
@@ -115,12 +117,12 @@ function VideoManager({ formData }) {
         if (currentQuestionIndex === 4) {
             setIsQuesCompleted(true);
             const UserData = {
-                name: formData.name,
+                name: formData.name.tolowerCase(),
                 score: score,
                 grade: formData.grade,
                 age: formData.age,
-                gender: formData.gender,
-                country: formData.country,
+                gender: formData.gender.toLowerCase(),
+                country: formData.country.toUpperCase(),
                 created_on: Math.floor(Date.now() / 1000)
 
             }
@@ -143,8 +145,8 @@ function VideoManager({ formData }) {
     }
 
     useEffect(() => {
-        console.log("Score", score);
-    }, [score])
+        console.log("isVideoStarted", isVideoStarted);
+    }, [isVideoStarted])
 
 
 
@@ -153,7 +155,8 @@ function VideoManager({ formData }) {
 
         const videoBtn = document.querySelector('#videoControls');
         videoBtn.setAttribute('visible', false);
-        setIsVideoRunning(false);
+        setIsVideoEnded(true);
+        setIsVideoStarted(false);
 
     };
 
@@ -268,13 +271,37 @@ function VideoManager({ formData }) {
                     </Entity>
 
                     <Entity id="camera2" primitive="a-camera" cursor="rayOrigin: mouse;">
+                        {/* {!isVRMode && <Entity primitive="a-image" id="videoControls" className="raycastable" src="#play" position="0 -1 -2" scale=".3 .3 .3"
+                            events={{
+                                click: () => {
+                                    console.log("clicked");
+                                    const myVideo = document.querySelector('#myVideo');
+                                    const videoControls = document.querySelector('#videoControls');
 
+
+                                    console.log("Play pause btn clicked");
+                                    if (myVideo.paused) {
+                                        myVideo.play();
+                                        videoControls.setAttribute('src', '#pause');
+                                    } else {
+                                        myVideo.pause();
+                                        videoControls.setAttribute('src', '#play');
+                                    }
+
+
+
+                                    // Add event listener for video completion
+                                    myVideo.addEventListener('ended', handleVideoComplete);
+
+                                }
+                            }}
+                        ></Entity>} */}
                     </Entity>
 
 
 
 
-                    {!isVideoRunning && <Entity id="QuizContainer" position="0 1.7 -1.5">
+                    {isVideoEnded && <Entity id="QuizContainer" position="0 1.7 -1.5">
                         {!isQuesCompleted ?
 
                             (<Entity id="QuestionContainerBgPanel" geometry="primitive: plane; width: 1.8; height: 1.2"
@@ -464,9 +491,10 @@ function VideoManager({ formData }) {
                     </Entity>}
 
 
-                    <Entity primitive="a-image" id="videoControls" className="raycastable" src="#play" position="0 0.5 -2" scale=".3 .3 .3"
+                    <Entity primitive="a-image" id="videoControls" className="raycastable" src={isVideoStarted ? "#pause" : "#play"} position="0 0.5 -2" scale=".3 .3 .3"
                         events={{
                             click: () => {
+
                                 console.log("clicked");
                                 const myVideo = document.querySelector('#myVideo');
                                 const videoControls = document.querySelector('#videoControls');
@@ -474,9 +502,13 @@ function VideoManager({ formData }) {
 
                                 console.log("Play pause btn clicked");
                                 if (myVideo.paused) {
+
+                                    setIsVideoStarted(true);
                                     myVideo.play();
                                     videoControls.setAttribute('src', '#pause');
                                 } else {
+
+                                    setIsVideoStarted(false);
                                     myVideo.pause();
                                     videoControls.setAttribute('src', '#play');
                                 }
