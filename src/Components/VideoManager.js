@@ -216,6 +216,8 @@ function VideoManager({ formData }) {
 
 
 
+
+
     return (
         <div className="App" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
@@ -254,18 +256,18 @@ function VideoManager({ formData }) {
                         )}
                     </Entity> */}
 
-                    <Entity id="camera" primitive="a-camera">
+                    <Entity id="camera1" primitive="a-camera">
 
-                        {isVRMode && <a-entity cursor="fuse: false;"
+                        <a-entity cursor="fuse: false;"
                             position="0 0 -1"
                             geometry="primitive: ring"
                             material="color: white; shader: flat"
-                            scale="0.01 0.01 0.01"
+                            scale={isVRMode ? "0.01 0.01 0.01" : "0 0 0"}
                             raycaster="objects: .raycastable"
-                        />}
+                        />
                     </Entity>
 
-                    <Entity id="camera" primitive="a-camera" cursor="rayOrigin: mouse;">
+                    <Entity id="camera2" primitive="a-camera" cursor="rayOrigin: mouse;">
 
                     </Entity>
 
