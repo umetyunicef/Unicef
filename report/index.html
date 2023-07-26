@@ -35,11 +35,11 @@
         <th onclick="sortTable(6)">Attempted On</th>
     </thead>
     <tbody>
-​
+
     </tbody>
     <!-- User data will be added here dynamically -->
   </table>
-​
+
   <div class="paginationDiv">
     <p id="records"></p>
     <aside>
@@ -62,7 +62,7 @@
         appId: "1:745647732927:web:a7bde58a2d527fdae3ae0a",
         measurementId: "G-MNT48P4Z7X"
     };
-​
+
     firebase.initializeApp(firebaseConfig);
  // Constants for pagination
     const PAGE_SIZE = 2;
@@ -72,35 +72,35 @@
     let totalRecords = 0;
     let currentPageRecords = 0;
     let sortOrder = 1;
-​
+
     function fetchNextUsers(page, searchTerm, sortBy) {
       getTotalRecords();
       const userList = document.querySelector("#userList tbody");
       userList.innerHTML = "";
-​
+
       const dbRef = firebase.database().ref('UNICEF');
       let query = dbRef.orderByChild('created_on');
-​
+
       if (currentPage > 1) {
         query = query.startAt(lastItemKey).limitToFirst(PAGE_SIZE + 1);
       } else {
         query = query.limitToFirst(PAGE_SIZE);
       }
-​
+
       if (searchTerm) {
         query = dbRef.orderByChild('name').startAt(searchTerm).endAt(searchTerm + '\uf8ff');
       }
-​
+
       query.once("value")
         .then((snapshot) => {
           const users = snapshot.val();
           let userCount = 0;
-​
+
           let sortedUsers = [];
           snapshot.forEach((childSnapshot) => {
             sortedUsers.push(childSnapshot.val());
           });
-​
+
           // Sort the data based on the selected column
           if (sortBy === 0) {
             sortedUsers.sort((a, b) => {
@@ -155,29 +155,29 @@
               return sortOrder * (dateA - dateB);
             });
           }
-​
+
           sortedUsers.forEach((user) => {
             const li = document.createElement("tr");
             li.innerHTML = `<td>${user.name}</td> <td>${user.gender}</td> <td>${user.age}</td> <td>${user.grade}</td> <td>${user.country}</td> <td>${user.score}</td> <td>${convertUnixToDate(user.created_on)}</td>`;
-​
+
             if (userCount != 0 || currentPage === 1) {
               userList.appendChild(li);
             }
-​
+
             if (currentPage === 1 && userCount <= PAGE_SIZE - 1) {
               lastItemKey = user.created_on;
             } else if (userCount === PAGE_SIZE) {
               lastItemKey = user.created_on;
             }
-​
+
             if (currentPage !== 1 && userCount === 1) {
               firstItemKey = user.created_on;
             }
-​
+
             userCount++;
             currentPageRecords = userCount;
           });
-​
+
           document.getElementById("prevBtn").disabled = currentPage === 1;
           document.getElementById("nextBtn").disabled = currentPage == Math.ceil(totalRecords / PAGE_SIZE);
           updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE);
@@ -186,7 +186,7 @@
           console.error("Error getting users:", error);
         });
     }
-​
+
     function convertUnixToDate(timestamp) {
             const dateObj = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
             const year = dateObj.getFullYear();
@@ -195,16 +195,16 @@
             const hour = String(dateObj.getHours()).padStart(2,"0");
             const minute = String(dateObj.getMinutes()).padStart(2,"0");
             const seconds = String(dateObj.getSeconds()).padStart(2,"0");
-​
+
             return `${year}-${month}-${day} ${hour}:${minute}:${seconds}`;
         }
-​
+
     // Function to handle the "Next" button click
     document.getElementById("nextBtn").addEventListener("click", () => {
       currentPage++;
       fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), sortOrder);
     });
-​
+
     // Function to handle the "Previous" button click
     document.getElementById("prevBtn").addEventListener("click", () => {
       if (currentPage > 1) {
@@ -214,7 +214,7 @@
         updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE);
       }
     });
-​
+
     // Function to fetch the total number of records
     async function getTotalRecords() {
       const dbRef = firebase.database().ref('UNICEF');
@@ -223,12 +223,12 @@
       document.getElementById("nextBtn").disabled = currentPage == Math.ceil(totalRecords / PAGE_SIZE);
       updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE);
     }
-​
+
     // Function to update the pagination information
     function updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE){
       document.getElementById("records").innerText = `Page ${currentPage} of ${Math.ceil(totalRecords / PAGE_SIZE)}`;
     }
-​
+
     // Search functionality
     document.getElementById("searchInput").addEventListener("keyup", () => {
       const searchTerm = document.getElementById("searchInput").value.trim();
@@ -236,13 +236,13 @@
       lastItemKey = null;
       fetchNextUsers(currentPage, searchTerm, sortOrder);
     });
-​
+
     // Function to handle the sorting of the table
     function sortTable(columnIndex) {
       sortOrder *= -1;
       fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), columnIndex);
     }
-​
+
     // Initial fetch on page load
     fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), sortOrder);
   </script>
