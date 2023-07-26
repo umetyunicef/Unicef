@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Unicef/static/css/main.d5753d30.css",
-    "main.js": "/Unicef/static/js/main.2456e41b.js",
+    "main.js": "/Unicef/static/js/main.f251ede4.js",
     "static/js/787.264cb4fb.chunk.js": "/Unicef/static/js/787.264cb4fb.chunk.js",
     "index.html": "/Unicef/index.html",
     "main.d5753d30.css.map": "/Unicef/static/css/main.d5753d30.css.map",
-    "main.2456e41b.js.map": "/Unicef/static/js/main.2456e41b.js.map",
+    "main.f251ede4.js.map": "/Unicef/static/js/main.f251ede4.js.map",
     "787.264cb4fb.chunk.js.map": "/Unicef/static/js/787.264cb4fb.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d5753d30.css",
-    "static/js/main.2456e41b.js"
+    "static/js/main.f251ede4.js"
   ]
 }
