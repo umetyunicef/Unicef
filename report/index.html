@@ -1,200 +1,193 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>UNICEF Data</title>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <link rel="stylesheet" href=
-"https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-		integrity=
-"sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-		crossorigin="anonymous">
-        <style>
-            #dataTable{ width: 100%; border: 1px solid #ddd; padding: 10px; margin-top: 10px; margin-bottom: 10px;}
-            #dataTable th, #dataTable td{ border-bottom: 1px solid #ddd; border-right: 1px solid #ddd; padding: 5px 10px;}
-            .formBox{ width: 100%; display: flex; flex-wrap: wrap; justify-content: space-between; padding: 40px;}
-            #pagination{ margin-top: 20px;}
-            #pagination button {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff; border: 0px; border-radius: 4px; padding: 5px 15px; margin: 0 0 0 20px;}
-    .formBoxIn, #contactForm{ width: 45%;}
-        </style>
+  <title>UNICEF Schema Pagination</title>
+  <style>
+   *{ margin: 0px; padding: 0px; box-sizing: border-box; font-family: Verdana, Geneva, Tahoma, sans-serif;}
+    #userList { width: 100%; box-shadow: 0 2px 4px #eee; border-radius: 4px; overflow: hidden; }
+    #userList th{ background: #d3e0f0; padding: 10px 10px; font-size: 14px; border-bottom: 0px solid #eee; text-align: left; font-weight: 400;}
+    #userList td{border-bottom: 0px solid #eee; padding: 10px 10px; font-size: 14px; }
+    .fullbox{ width: 100%; padding: 40px 100px 10px 100px}
+    .fullbox h1{ font-size: 20px; padding: 0 0 20px 0;}
+    .paginationDiv{ padding: 20px 0 0 0; width: 100%; display: flex; justify-content: space-between; }
+    #userList tr:nth-child(2n) td{background: #f4f8fe}
+    .paginationDiv aside button{ background: skyblue; border: 0px; border-radius: 8px; font-weight: 500; padding: 10px 20px; margin: 0 0 0 15px; cursor: pointer;}
+    #records{ font-size: 12px;}
+    .serchDiv{ width: 250px; margin: 0 0 20px 0;  }
+    .serchDiv input{ width: 100%; height: 35px; padding: 0 20px; border-radius: 4px; border: 1px solid #ddd; }
+  </style>
 </head>
-
-<body >
-	
-	
-    <div class="formBox">
-    
-
-<div class="formBoxIn">
-    <div style="width: 100%; display: flex; justify-content: space-between;">
-        <div style="width: 100%">
-            <label for="searchName">Search by Name:</label>
-            <input type="text" id="searchName" oninput="searchData()" />
-        </div>
-
-
-        <div style="width: 200px; display: flex; justify-content: space-between;">
-            <label for="sortCriteria">Sort by:</label>
-            <select id="sortCriteria" onchange="sortData()">
-                <option value="name">Name</option>
-                <option value="age">Age</option>
-                <option value="gender">Gender</option>
-                <option value="score">Score</option>
-                <option value="attempted">Attempted On</option>
-            </select>
-        </div>
-    </div>
-
-    <table id="dataTable" >
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Gender</th>
-                <th>Score</th>
-                <th>Attempted On</th>
-            </tr>
-        </thead>
-        <tbody id="dataList">
-            <!-- Data will be loaded here -->
-        </tbody>
-    </table>
-
-    <div id="pagination">
-        <!-- Pagination controls will be added here -->
-    </div>
-    </div>
-    </div>
-
-
-    <script>
-        // Replace with your Firebase project configuration
-       
-        const firebaseConfig = {
-            apiKey: "AIzaSyB1bjWm3FV06EzaONxURAPOxcd34Fzp0W0",
-            authDomain: "unicef-e6d80.firebaseapp.com",
-            databaseURL: "https://unicef-e6d80-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "unicef-e6d80",
-            storageBucket: "unicef-e6d80.appspot.com",
-            messagingSenderId: "745647732927",
-            appId: "1:745647732927:web:a7bde58a2d527fdae3ae0a",
-            measurementId: "G-MNT48P4Z7X"
-        };
-        
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-
-        // Get a reference to the "UNICEF" schema in the database
-        var unicefRef = firebase.database().ref("UNICEF");
-
-        
-        
-        // Function to display the data in both the table and the list
-        function displayData(snapshot) {
-            var dataList = document.getElementById("dataList");
-            dataList.innerHTML = ""; // Clear the previous data
-
-            var dataTable = document.getElementById("dataTable");
-            var tableBody = dataTable.getElementsByTagName("tbody")[0];
-            tableBody.innerHTML = ""; // Clear the previous data
-
-            snapshot.forEach(function(childSnapshot) {
-                var data = childSnapshot.val();
-                console.log("**** data *******",data);
-                // var listItem = document.createElement("li");
-                // listItem.textContent = `${data.name}`;
-                // dataList.appendChild(listItem);
-
-                var tableRow = document.createElement("tr");
-                const attemptedOn = convertUnixToDate(data.created_on);
-                tableRow.innerHTML = `<td>${data.name}</td><td>${data.age}</td><td>${data.gender}</td><td>${data.score}</td><td>${attemptedOn}</td>`;
-                tableBody.appendChild(tableRow);
+<body>
+    <div class="fullbox">
+  <h1>UNICEF Schema</h1>
+  <div class="serchDiv">
+    <input type="text" id="searchInput" placeholder="Search by name">
+  </div>
+  
+  <table border="0" cellpadding="0" cellspacing="0" id="userList">
+      <thead>
+        <th onclick="sortTable(0)">Name</th>
+        <th onclick="sortTable(1)">Gender</th>
+        <th onclick="sortTable(2)">Age</th>
+        <th onclick="sortTable(3)">Grade</th>
+        <th onclick="sortTable(4)">Country</th>
+        <th onclick="sortTable(5)">Score</th>
+        <th onclick="sortTable(6)">Attempted On</th>
+    </thead>
+    <tbody>
+​
+    </tbody>
+    <!-- User data will be added here dynamically -->
+  </table>
+​
+  <div class="paginationDiv">
+    <p id="records"></p>
+    <aside>
+        <button class="pbtn" id="prevBtn" disabled>Previous</button>
+        <button class="pbtn" id="nextBtn">Next</button>
+    </aside>
+  </div>
+</div>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyB1bjWm3FV06EzaONxURAPOxcd34Fzp0W0",
+        authDomain: "unicef-e6d80.firebaseapp.com",
+        databaseURL: "https://unicef-e6d80-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "unicef-e6d80",
+        storageBucket: "unicef-e6d80.appspot.com",
+        messagingSenderId: "745647732927",
+        appId: "1:745647732927:web:a7bde58a2d527fdae3ae0a",
+        measurementId: "G-MNT48P4Z7X"
+    };
+​
+    firebase.initializeApp(firebaseConfig);
+ // Constants for pagination
+    const PAGE_SIZE = 2;
+    let lastItemKey = null;
+    let firstItemKey = null;
+    let currentPage = 1;
+    let totalRecords = 0;
+    let currentPageRecords = 0;
+    let sortOrder = 1;
+​
+    function fetchNextUsers(page, searchTerm, sortBy) {
+      getTotalRecords();
+      const userList = document.querySelector("#userList tbody");
+      userList.innerHTML = "";
+​
+      const dbRef = firebase.database().ref('UNICEF');
+      let query = dbRef.orderByChild('created_on');
+​
+      if (currentPage > 1) {
+        query = query.startAt(lastItemKey).limitToFirst(PAGE_SIZE + 1);
+      } else {
+        query = query.limitToFirst(PAGE_SIZE);
+      }
+​
+      if (searchTerm) {
+        query = dbRef.orderByChild('name').startAt(searchTerm).endAt(searchTerm + '\uf8ff');
+      }
+​
+      query.once("value")
+        .then((snapshot) => {
+          const users = snapshot.val();
+          let userCount = 0;
+​
+          let sortedUsers = [];
+          snapshot.forEach((childSnapshot) => {
+            sortedUsers.push(childSnapshot.val());
+          });
+​
+          // Sort the data based on the selected column
+          if (sortBy === 0) {
+            sortedUsers.sort((a, b) => {
+              const nameA = a.name?.toLowerCase();
+              const nameB = b.name?.toLowerCase();
+              if (nameA < nameB) return -sortOrder;
+              if (nameA > nameB) return -sortOrder;
+              return 0;
             });
-        }
-
-        // Function to search data by name
-        function searchData() {
-            var searchName = document.getElementById("searchName").value.trim().toLowerCase();
-            unicefRef.orderByChild("name").startAt(searchName).endAt(searchName + "\uf8ff").on("value", displayData);
-        }
-
-        // Function to sort data by selected criteria
-        function sortData() {
-            var sortCriteria = document.getElementById("sortCriteria").value;
-            unicefRef.orderByChild(sortCriteria).on("value", displayData);
-        }
-
-        // Load the initial data with pagination when the page is ready
-        document.addEventListener("DOMContentLoaded", function() {
-            unicefRef.on("value", displayData);
-
-            // // Add pagination controls
-            // var paginationDiv = document.getElementById("pagination");
-            // var currentPage = 1;
-
-            // function updatePaginationControls() {
-            //     paginationDiv.innerHTML = `Page: ${currentPage} <button onclick="goToPage('prev')">Previous</button> <button onclick="goToPage('next')">Next</button>`;
-            // }
-
-            // function goToPage(direction) {
-            //     if (direction === "prev" && currentPage > 1) {
-            //         currentPage--;
-            //     } else if (direction === "next") {
-            //         currentPage++;
-            //     }
-            //     unicefRef.limitToFirst(5).startAt((currentPage - 1) * 5).on("value", displayData);
-            //     updatePaginationControls();
-            // }
-
-            // updatePaginationControls();
+          } 
+          else if(sortBy === 1){
+            sortedUsers.sort((a,b) => {
+              const genderA = a.gender?.toLowerCase();
+              const genderB = b.gender?.toLowerCase();
+              if(genderA < genderB) return -sortOrder;
+              if(genderA > genderB) return -sortOrder;
+              return 0;
+            })
+          }
+          else if(sortBy === 2){
+            sortedUsers.sort((a,b) => {
+              const ageA = a.age;
+              const ageB = b.age;
+              return sortOrder * (ageA - ageB);
+            })
+          }
+          else if(sortBy === 3){
+            sortedUsers.sort((a,b) => {
+              const gradeA = a.grade;
+              const gradeB = b.grade;
+              return sortOrder * (gradeA - gradeB) ;
+            })
+          }
+          else if (sortBy === 4) {
+            sortedUsers.sort((a,b) => {
+              const countryA = a.country?.toLowerCase();
+              const countryB = b.country?.toLowerCase();
+              return sortOrder * (countryA > countryB);
+            })
+          }
+          else if(sortBy === 5) {
+            sortedUsers.sort((a,b) => {
+              const scoreA = a.score;
+              const scoreB = b.score;
+              return sortOrder * (scoreA > scoreB);
+            })
+          }
+          else if(sortBy === 6) {
+            sortedUsers.sort((a, b) => {
+              const dateA = new Date(a.created_on||'');
+              const dateB = new Date(b.created_on || '');
+              return sortOrder * (dateA - dateB);
+            });
+          }
+​
+          sortedUsers.forEach((user) => {
+            const li = document.createElement("tr");
+            li.innerHTML = `<td>${user.name}</td> <td>${user.gender}</td> <td>${user.age}</td> <td>${user.grade}</td> <td>${user.country}</td> <td>${user.score}</td> <td>${convertUnixToDate(user.created_on)}</td>`;
+​
+            if (userCount != 0 || currentPage === 1) {
+              userList.appendChild(li);
+            }
+​
+            if (currentPage === 1 && userCount <= PAGE_SIZE - 1) {
+              lastItemKey = user.created_on;
+            } else if (userCount === PAGE_SIZE) {
+              lastItemKey = user.created_on;
+            }
+​
+            if (currentPage !== 1 && userCount === 1) {
+              firstItemKey = user.created_on;
+            }
+​
+            userCount++;
+            currentPageRecords = userCount;
+          });
+​
+          document.getElementById("prevBtn").disabled = currentPage === 1;
+          document.getElementById("nextBtn").disabled = currentPage == Math.ceil(totalRecords / PAGE_SIZE);
+          updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE);
+        })
+        .catch((error) => {
+          console.error("Error getting users:", error);
         });
-        document.getElementById('contactForm')
-			.addEventListener('submit', submitForm);
-
-
-		function submitForm(e) {
-			e.preventDefault();
-
-			// Get values: Full Name, Age, Gender, Grade, Final Score, Created ON
-			var name = getInputVal('name');
-			var age = getInputVal('age');
-			var gender = getInputVal('gender');
-			var grade = getInputVal('grade');
-			var score = getInputVal('score');
-            var created_on = generateTimestamp();
-            
-            console.log("name,age,gender,grade,score,created_on: ",name,age,gender,grade,score,created_on);
-			saveMessage(name, age, gender, grade, score,created_on);
-			document.getElementById('contactForm').reset();
-		}
-
-		// Function to get form values
-		function getInputVal(id) {
-			return document.getElementById(id).value;
-		}
-
-		// Save message to firebase
-		function saveMessage(name, age,gender,grade,score) {
-			var newMessageRef = unicefRef.push();
-			newMessageRef.set({
-				name: name,
-				age: age,
-                gender: gender,
-                grade: grade,
-                score: score
-			});
-		}
-        function generateTimestamp() {
-            const currentTimestamp = Math.floor(Date.now() / 1000); // Get current Unix timestamp
-            // const formattedDate = convertUnixToDate(currentTimestamp);
-            return currentTimestamp;
-        }
-
-        function convertUnixToDate(timestamp) {
+    }
+​
+    function convertUnixToDate(timestamp) {
             const dateObj = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
             const year = dateObj.getFullYear();
             const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // Months are zero-based, so we add 1
@@ -202,9 +195,56 @@
             const hour = String(dateObj.getHours()).padStart(2,"0");
             const minute = String(dateObj.getMinutes()).padStart(2,"0");
             const seconds = String(dateObj.getSeconds()).padStart(2,"0");
-
+​
             return `${year}-${month}-${day} ${hour}:${minute}:${seconds}`;
         }
-    </script>
+​
+    // Function to handle the "Next" button click
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      currentPage++;
+      fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), sortOrder);
+    });
+​
+    // Function to handle the "Previous" button click
+    document.getElementById("prevBtn").addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        lastItemKey = null; // Reset lastItemKey to load previous page from the beginning
+        fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), sortOrder);
+        updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE);
+      }
+    });
+​
+    // Function to fetch the total number of records
+    async function getTotalRecords() {
+      const dbRef = firebase.database().ref('UNICEF');
+      const data = await dbRef.once("value");
+      totalRecords = data.numChildren();
+      document.getElementById("nextBtn").disabled = currentPage == Math.ceil(totalRecords / PAGE_SIZE);
+      updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE);
+    }
+​
+    // Function to update the pagination information
+    function updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE){
+      document.getElementById("records").innerText = `Page ${currentPage} of ${Math.ceil(totalRecords / PAGE_SIZE)}`;
+    }
+​
+    // Search functionality
+    document.getElementById("searchInput").addEventListener("keyup", () => {
+      const searchTerm = document.getElementById("searchInput").value.trim();
+      currentPage = 1;
+      lastItemKey = null;
+      fetchNextUsers(currentPage, searchTerm, sortOrder);
+    });
+​
+    // Function to handle the sorting of the table
+    function sortTable(columnIndex) {
+      sortOrder *= -1;
+      fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), columnIndex);
+    }
+​
+    // Initial fetch on page load
+    fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), sortOrder);
+  </script>
 </body>
 </html>
