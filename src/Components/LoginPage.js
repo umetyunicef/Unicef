@@ -16,7 +16,12 @@ export default function LoginPage() {
   const [disableSubmit, setDisableSubmit] = useState(true);
 
   const handleChange = (event) => {
+
+    if (name === "grade") {
+      value = parseInt(value);
+    }
     const { name, value } = event.target;
+
     setFormData((prevFormdata) => ({ ...prevFormdata, [name]: value }));
   };
 

@@ -239,7 +239,7 @@ function VideoManager({ formData }) {
 
                     </a-assets>
 
-                    {/* <Entity id="camera" primitive="a-camera">
+                    <Entity id="camera" primitive="a-camera">
                         {isVRMode ? (
                             <a-entity
                                 cursor="fuse: false;"
@@ -252,9 +252,9 @@ function VideoManager({ formData }) {
                         ) : (
                             <Entity cursor="rayOrigin: mouse;" />
                         )}
-                    </Entity> */}
+                    </Entity>
 
-                    <Entity id="camera" primitive="a-camera">
+                    {/* <Entity id="camera" primitive="a-camera">
                         <a-entity cursor="fuse: false;"
                             position="0 0 -1"
                             geometry="primitive: ring"
@@ -266,7 +266,7 @@ function VideoManager({ formData }) {
 
                     <Entity id="camera" primitive="a-camera" cursor="rayOrigin: mouse;">
 
-                    </Entity>
+                    </Entity> */}
 
 
 
