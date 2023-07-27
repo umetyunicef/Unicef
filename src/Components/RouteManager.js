@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import LoginPage from './LoginPage';
-import Intro from './Intro';
-import VideoManager from './VideoManager';
-import QuestionManager from './QuestionManager';
+import SceneManager from './SceneManager';
 
 
 export default function RouteManager() {
 
   const [isLogin, setIsLogin] = useState(true);
-  const [isIntro, setIsIntro] = useState(false);
-  const [isVideoManager, setIsVideoManager] = useState(false);
-  const [isQuestionManager, setIsQuestionManager] = useState(false);
+  const [isSceneManager, setSceneManager] = useState(false);
 
   const [formData, setFormData] = useState({});
 
@@ -24,14 +20,9 @@ export default function RouteManager() {
   return (
     <>
 
-      {isLogin && <LoginPage setIsLogin={setIsLogin} setIsIntro={setIsIntro} setFormData={setFormData} />}
+      {isLogin && <LoginPage setIsLogin={setIsLogin} setSceneManager={setSceneManager} setFormData={setFormData} />}
 
-      {isIntro && <Intro setIsIntro={setIsIntro} setIsVideoManager={setIsVideoManager} />}
-
-      {isVideoManager && <VideoManager setIsVideoManager={setIsVideoManager} setIsQuestionManager={setIsQuestionManager} />}
-
-      {isQuestionManager && <QuestionManager formData={formData} />}
-
+      {isSceneManager && <SceneManager formData={formData} />}
 
     </>
   )

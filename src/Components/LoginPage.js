@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export default function LoginPage({ setIsLogin, setIsIntro, setFormData }) {
+export default function LoginPage({ setIsLogin, setSceneManager, setFormData }) {
 
   const [myFormData, setMYFormData] = useState({
     name: '',
@@ -55,7 +55,7 @@ export default function LoginPage({ setIsLogin, setIsIntro, setFormData }) {
 
     if (myFormData != null) {
       setIsLogin(false);
-      setIsIntro(true);
+      setSceneManager(true);
     }
   };
 
