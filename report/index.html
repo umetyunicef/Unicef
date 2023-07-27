@@ -26,13 +26,13 @@
   
   <table border="0" cellpadding="0" cellspacing="0" id="userList">
       <thead>
-        <th onclick="sortTable(0)">Name</th>
-        <th onclick="sortTable(1)">Gender</th>
-        <th onclick="sortTable(2)">Age</th>
-        <th onclick="sortTable(3)">Grade</th>
-        <th onclick="sortTable(4)">Country</th>
-        <th onclick="sortTable(5)">Score</th>
-        <th onclick="sortTable(6)">Attempted On</th>
+        <th onclick="sortTable(0)">Name <span></span></th>
+        <th onclick="sortTable(1)">Gender <span></span></th>
+        <th onclick="sortTable(2)">Age <span></span></th>
+        <th onclick="sortTable(3)">Grade <span></span></th>
+        <th onclick="sortTable(4)">Country <span></span></th>
+        <th onclick="sortTable(5)">Score <span></span></th>
+        <th onclick="sortTable(6)">Attempted On <span>&#x25B2;</span></th>
     </thead>
     <tbody>
 
@@ -73,18 +73,19 @@
     let currentPageRecords = 0;
     let sortOrder = 1;
 
-    function fetchNextUsers(page, searchTerm, sortBy) {
-      getTotalRecords();
+    function fetchNextUsers(page, searchTerm, sortBy=0) {
+      getTotalRecords(searchTerm);
       const userList = document.querySelector("#userList tbody");
       userList.innerHTML = "";
 
       const dbRef = firebase.database().ref('UNICEF');
-      let query = dbRef.orderByChild('created_on');
 
+      var sortByMapping= ["name","gender","age","grade","country","score","created_on"];
+      var sortByColumnName = sortByMapping[sortBy];
       if (currentPage > 1) {
-        query = query.startAt(lastItemKey).limitToFirst(PAGE_SIZE + 1);
+        query = dbRef.orderByChild(sortByColumnName).startAt(lastItemKey).limitToFirst(PAGE_SIZE + 1);
       } else {
-        query = query.limitToFirst(PAGE_SIZE);
+        query = dbRef.orderByChild(sortByColumnName).limitToFirst(PAGE_SIZE);
       }
 
       if (searchTerm) {
@@ -165,13 +166,13 @@
             }
 
             if (currentPage === 1 && userCount <= PAGE_SIZE - 1) {
-              lastItemKey = user.created_on;
+              lastItemKey = searchTerm ? user.name : user.created_on;
             } else if (userCount === PAGE_SIZE) {
-              lastItemKey = user.created_on;
+              lastItemKey = searchTerm ? user.name : user.created_on;
             }
 
             if (currentPage !== 1 && userCount === 1) {
-              firstItemKey = user.created_on;
+              firstItemKey = searchTerm ? user.name : user.created_on;
             }
 
             userCount++;
@@ -216,12 +217,14 @@
     });
 
     // Function to fetch the total number of records
-    async function getTotalRecords() {
-      const dbRef = firebase.database().ref('UNICEF');
-      const data = await dbRef.once("value");
-      totalRecords = data.numChildren();
-      document.getElementById("nextBtn").disabled = currentPage == Math.ceil(totalRecords / PAGE_SIZE);
-      updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE);
+    async function getTotalRecords(searchTerm) {
+      if(!searchTerm){
+        const dbRef = firebase.database().ref('UNICEF');
+        const data = await dbRef.once("value");
+        totalRecords = data.numChildren();
+        document.getElementById("nextBtn").disabled = currentPage == Math.ceil(totalRecords / PAGE_SIZE);
+        updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE);
+      }
     }
 
     // Function to update the pagination information
@@ -234,17 +237,38 @@
       const searchTerm = document.getElementById("searchInput").value.trim();
       currentPage = 1;
       lastItemKey = null;
-      fetchNextUsers(currentPage, searchTerm, sortOrder);
+      fetchNextUsers(currentPage, searchTerm, sortOrder=0);
+      showArrowOnColumn(0,1);
     });
+
+    function showArrowOnColumn(sortBy, sortOrder){
+      // Get the target table
+      const table = document.getElementById('userList');
+
+      // Find the ith <th> element
+      const thElements = table.querySelectorAll('th');
+      for(let i=0;i<thElements.length;i++){
+        const spanElement = thElements[i].querySelector('span');
+        spanElement.textContent = "";
+      }
+      const ithTh = thElements[sortBy];
+      // Create a <span> element
+      const spanElement = ithTh.querySelector('span');
+      // Set the content of the <span> (you can change this as per your requirement)
+      spanElement.textContent = sortOrder>0 ? "\u25B2" : "\u25BC";
+      // Append the <span> tag inside the ith <th> element
+      ithTh.appendChild(spanElement);
+    }
 
     // Function to handle the sorting of the table
     function sortTable(columnIndex) {
       sortOrder *= -1;
+      showArrowOnColumn(columnIndex ,sortOrder);
       fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), columnIndex);
     }
 
     // Initial fetch on page load
-    fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), sortOrder);
+    fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), 6);
   </script>
 </body>
 </html>
