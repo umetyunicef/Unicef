@@ -61,7 +61,7 @@ function VideoManager({ setIsVideoManager, setIsQuestionManager }) {
                             <img id="play" src="https://umety-dev.s3.amazonaws.com/unicef/play.png" alt='playImg'></img>
                             <img id="pause" src="https://umety-dev.s3.amazonaws.com/unicef/pause.png" alt='pauseImg'></img>
 
-                            <video id="myVideo" src="https://s3-dev.umety.com/unicef/Unicef.mp4"> </video>
+                            <video id="myVideo" src="https://s3-dev.umety.com/unicef/unicef_video.mp4"> </video>
 
                         </a-assets>
 
