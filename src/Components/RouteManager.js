@@ -33,9 +33,6 @@ export default function RouteManager() {
       {isQuestionManager && <QuestionManager formData={formData} />}
 
 
-
-
-
     </>
   )
 }

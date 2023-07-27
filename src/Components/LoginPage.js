@@ -51,6 +51,7 @@ export default function LoginPage({ setIsLogin, setIsIntro, setFormData }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(myFormData); // Replace this with your login logic
+    setFormData(myFormData);
 
     if (myFormData != null) {
       setIsLogin(false);

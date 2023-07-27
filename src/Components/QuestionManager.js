@@ -107,6 +107,7 @@ export default function QuestionManager({ formData }) {
     if (currentQuestionIndex === 4) {
 
       setIsQuesCompleted(true);
+      console.log("User Data....", formData);
 
       const UserData = {
         name: formData.name?.toLowerCase() || "",
