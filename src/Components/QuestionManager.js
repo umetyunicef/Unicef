@@ -460,6 +460,7 @@ export default function QuestionManager({ formData }) {
                   geometry="primitive: plane; width: 0.35; height: 0.13"
                   material="color: royalblue"
                   position="0.63 -0.46 0.1"
+                  className="raycastable"
                   events={{
                     click: () => handleReport()
                   }}
