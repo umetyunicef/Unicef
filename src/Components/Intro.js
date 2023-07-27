@@ -2,7 +2,7 @@ import "aframe";
 import { Scene, Entity } from "aframe-react";
 import React, { useState, useEffect } from 'react';
 
-export default function Intro({ setIsIntro, setIsVideoManager }) {
+export default function Intro({ setIsIntro, setIsVideoManager, setIsQuestionManager }) {
 
     const [isLearningOutcomes, setLearningOutcomes] = useState(false);
     const [isBegin, setIsBegin] = useState(false);
@@ -53,6 +53,7 @@ export default function Intro({ setIsIntro, setIsVideoManager }) {
 
         setIsIntro(false);
         setIsVideoManager(true);
+        // setIsQuestionManager(true);
     }
 
     return (
@@ -109,8 +110,8 @@ export default function Intro({ setIsIntro, setIsVideoManager }) {
                                 <Entity
                                     id="IntroTextDiv"
                                     position="0 -0.18 0.1"
-                                    text={{ color: 'white', align: 'center', value: "Get ready to embark on an adventurous journey with your period pals to explore menstrual health and hygiene!", width: 1.6 }}
-                                    scale="1 0.8 0.5"
+                                    text={{ color: 'white', align: 'center', value: "Get ready to embark on an adventurous journey with your period pals to explore menstrual health and hygiene!", width: 1, wrapCount: 40 }}
+                                    scale="1 1 1"
                                 ></Entity>
 
                                 <Entity id="StartBtnBgPanel"
@@ -144,31 +145,33 @@ export default function Intro({ setIsIntro, setIsVideoManager }) {
 
                                     <Entity
                                         id="IntroTextDiv"
-                                        position="0 0.5 0.1"
-                                        text={{ color: 'white', align: 'center', value: "Learning OutComes", width: 1.5 }}
+                                        position="0 0.48 0.1"
+                                        text={{ color: 'white', align: 'center', value: "Learning Outcomes", width: 1.5 }}
                                         scale="1 1 1"
                                     ></Entity>
                                     <Entity
                                         id="IntroTextDiv"
-                                        position="-0.08 0.1 0.1"
+                                        position="-0.08 0.05 0.1"
                                         text={{
                                             color: 'white', align: 'left', value: "Knowledge:\n"
-                                                + "Understanding menstruation: \n"
-                                                + "Exploring menstrual hygiene practices and their importance: \n\n"
+                                                + "* Understanding menstruation \n"
+                                                + "* Exploring menstrual hygiene practices and their importance \n\n"
                                                 + "Skills:\n"
-                                                + "Learning how to use different menstrual products \n\n"
+                                                + "* Learning how to use different menstrual products \n\n"
                                                 + "Values: \n"
-                                                + "Promoting understanding and acceptance of menstruation as a natural process\n"
-                                                + "Fostering empathy and compassion towards girls experiencing menstruation\n"
-                                                + "Encouraging confidence, empowerment, and reduced shame when managing periods", width: 1.5
+                                                + "* Promoting understanding and acceptance of menstruation as a natural process\n"
+                                                + "* Fostering empathy and compassion towards girls experiencing menstruation\n"
+                                                + "* Encouraging confidence, empowerment, and reduced shame when managing periods", width: 1.5,
+                                            wrapCount: 60,
                                         }}
-                                        scale="1 0.6 0.6"
+                                        scale="1 1 1"
+                                        textwrap={1}
                                     ></Entity>
 
                                     <Entity id="NextBtnBgPanel"
                                         geometry="primitive: plane; width: 0.5; height: 0.15"
                                         material={{ color: 'royalblue' }}
-                                        position="0 -0.4 0.1"
+                                        position="0 -0.43 0.1"
                                         className="raycastable"
                                         events={{
                                             click: handleNext
@@ -203,9 +206,9 @@ export default function Intro({ setIsIntro, setIsVideoManager }) {
                                             position="-0.04 0.12 0.1"
                                             text={{
                                                 color: 'white', align: 'center', value: "Join this enlightening adventure with Mary, your virtual companion, as we explore the importance of menstrual health and hygiene. Together, we'll help you gain valuable understanding about this essential aspect of women's health, fostering a positive and informed approach to periods."
-                                                , width: 1.5
+                                                , width: 1
                                             }}
-                                            scale="1 0.9 0.6"
+                                            scale="1 1 1"
                                         ></Entity>
 
                                         <Entity id="NextBtnBgPanel"

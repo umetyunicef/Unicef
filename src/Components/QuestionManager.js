@@ -297,7 +297,7 @@ export default function QuestionManager({ formData }) {
 
                   <Entity id="OptionBgPanel1"
                     geometry="primitive: plane; width: 1.3; height: 0.1"
-                    material={clickedOption === 0 ? "color: black" : "color: blue"}
+                    material={clickedOption === 0 ? "color: royalblue" : "color: white"}
                     position="0 0.22 0"
                     className="raycastable"
                     events={{
@@ -309,9 +309,9 @@ export default function QuestionManager({ formData }) {
                   >
 
                     <Entity
-                      id="option"
+                      id="option0"
                       position="0 0 0"
-                      text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[0], align: "left" }}
+                      text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].options[0], align: "left" }}
                       scale="1 1 1"
                     />
 
@@ -319,7 +319,7 @@ export default function QuestionManager({ formData }) {
                   </Entity>
                   <Entity id="OptionBgPanel2"
                     geometry="primitive: plane; width: 1.3; height: 0.1"
-                    material={clickedOption === 1 ? "color: black" : "color: blue"}
+                    material={clickedOption === 1 ? "color: royalblue" : "color: white"}
                     position="0 0.09 0"
                     className="raycastable"
                     events={{
@@ -330,16 +330,16 @@ export default function QuestionManager({ formData }) {
                     }}
                   >
                     <Entity
-                      id="option"
+                      id="option1"
                       position="0 0 0"
-                      text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[1], align: "left" }}
+                      text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].options[1], align: "left" }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(1)}
                   </Entity>
                   <Entity id="OptionBgPanel3"
                     geometry="primitive: plane; width: 1.3; height: 0.1"
-                    material={clickedOption === 2 ? "color: black" : "color: blue"}
+                    material={clickedOption === 2 ? "color: royalblue" : "color: white"}
                     position="0 -0.04 0"
                     className="raycastable"
                     events={{
@@ -349,16 +349,16 @@ export default function QuestionManager({ formData }) {
                     }}
                   >
                     <Entity
-                      id="option"
+                      id="option2"
                       position="0 0 0"
-                      text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[2], align: "left" }}
+                      text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].options[2], align: "left" }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(2)}
                   </Entity>
                   <Entity id="OptionBgPanel4"
                     geometry="primitive: plane; width: 1.3; height: 0.1"
-                    material={clickedOption === 3 ? "color: black" : "color: blue"}
+                    material={clickedOption === 3 ? "color: royalblue" : "color: white"}
                     position="0 -0.17 0"
                     className="raycastable"
                     events={{
@@ -368,9 +368,9 @@ export default function QuestionManager({ formData }) {
                     }}
                   >
                     <Entity
-                      id="option"
+                      id="option3"
                       position="0 0 0"
-                      text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[3], align: "left" }}
+                      text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].options[3], align: "left" }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(3)}
@@ -381,7 +381,7 @@ export default function QuestionManager({ formData }) {
                 {isSubmit &&
                   <Entity id="SubmitBtnBgPanel"
                     geometry="primitive: plane; width: 0.5; height: 0.15"
-                    material={{ color: 'black' }}
+                    material={{ color: 'royalblue' }}
                     position="0 -0.4 0.1"
                     className="raycastable"
                     events={{
@@ -399,7 +399,7 @@ export default function QuestionManager({ formData }) {
                 {isNext &&
                   <Entity id="NextBtnBgPanel"
                     geometry="primitive: plane; width: 0.5; height: 0.15"
-                    material={{ color: 'black' }}
+                    material={{ color: '#107869' }}
                     position="0 -0.4 0.1"
                     className="raycastable"
                     events={{
@@ -407,7 +407,7 @@ export default function QuestionManager({ formData }) {
                     }}
                   >
 
-                    <Entity id="SubmitBtnDiv"
+                    <Entity id="NextBtnDiv"
                       text={{ value: 'NEXT', align: 'center' }}
                       position="0 0 0"
                     />
@@ -442,19 +442,19 @@ export default function QuestionManager({ formData }) {
                   scale="1 0.8 1"
                 ></Entity>
 
-                <Entity id="ScoreDivBgPanel"
+                {/* <Entity id="ScoreDivBgPanel"
                   geometry="primitive: plane; width: 0.4; height: 0.15"
-                  material="color: black"
+                  material="color: royalblue"
                   position="0 -0.4 0.1"
-                >
-                  <Entity
-                    id="ScoreTextDiv"
-                    position="0 0 0"
-                    text={{ color: 'white', align: 'center', value: `Score : ${score}`, width: 1.5 }}
-                    scale="1 1 1"
-                  ></Entity>
+                > */}
+                <Entity
+                  id="ScoreTextDiv"
+                  position="0 -0.4 0.1"
+                  text={{ color: 'white', align: 'center', value: `Score : ${score}`, width: 1.5 }}
+                  scale="1 1 1"
+                ></Entity>
 
-                </Entity>
+                {/* </Entity> */}
 
               </Entity>
             )
