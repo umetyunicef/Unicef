@@ -153,7 +153,7 @@
             sortedUsers.sort((a, b) => {
               const dateA = new Date(a.created_on||'');
               const dateB = new Date(b.created_on || '');
-              return sortOrder * (dateA - dateB);
+              return sortOrder * (dateA - dateB) * -1;
             });
           }
 
