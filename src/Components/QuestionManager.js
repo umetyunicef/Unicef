@@ -248,13 +248,13 @@ export default function QuestionManager({ formData }) {
 
               <Entity
                 id="TextDiv"
-                position="0 -0.2 0.1"
+                position="0 -0.16 0.1"
                 text={{
                   color: 'white', align: 'center', value: "Hey there! Wasn't Jiya's adventure simply fantastic!"
                     + "Let\'s celebrate the understanding that you've gained on this amazing journey."
-                  , width: 1.6
+                  , width: 1.5, wrapCount: 50
                 }}
-                scale="1 0.8 0.5"
+                scale="1 1 1"
               ></Entity>
 
               <Entity id="StartBtnBgPanel"
@@ -437,9 +437,10 @@ export default function QuestionManager({ formData }) {
                   position="0 -0.15 0.1"
                   text={{
                     color: 'white', align: 'center', value: " Woo-hoo! You have completed this adventure!"
-                      + "Your quest for knowledge has unlocked a brighter, more informed path. Onward to the next thrilling escapade!", width: 1.5
+                      + "Your quest for knowledge has unlocked a brighter, more informed path. Onward to the next thrilling escapade!",
+                    width: 1.5, wrapCount: 50
                   }}
-                  scale="1 0.8 1"
+                  scale="1 1 1"
                 ></Entity>
 
                 {/* <Entity id="ScoreDivBgPanel"
@@ -449,7 +450,7 @@ export default function QuestionManager({ formData }) {
                 > */}
                 <Entity
                   id="ScoreTextDiv"
-                  position="0 -0.4 0.1"
+                  position="0 -0.34 0.1"
                   text={{ color: 'white', align: 'center', value: `Score : ${score}`, width: 1.5 }}
                   scale="1 1 1"
                 ></Entity>

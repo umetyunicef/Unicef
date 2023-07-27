@@ -2,7 +2,7 @@ import "aframe";
 import { Scene, Entity } from "aframe-react";
 import React, { useState, useEffect } from 'react';
 
-export default function Intro({ setIsIntro, setIsVideoManager, setIsQuestionManager }) {
+export default function Intro({ setIsIntro, setIsVideoManager }) {
 
     const [isLearningOutcomes, setLearningOutcomes] = useState(false);
     const [isBegin, setIsBegin] = useState(false);
@@ -151,7 +151,7 @@ export default function Intro({ setIsIntro, setIsVideoManager, setIsQuestionMana
                                     ></Entity>
                                     <Entity
                                         id="IntroTextDiv"
-                                        position="-0.08 0.05 0.1"
+                                        position="-0.02 0.05 0.1"
                                         text={{
                                             color: 'white', align: 'left', value: "Knowledge:\n"
                                                 + "* Understanding menstruation \n"
@@ -203,10 +203,10 @@ export default function Intro({ setIsIntro, setIsVideoManager, setIsQuestionMana
                                         ></Entity>
                                         <Entity
                                             id="IntroTextDiv"
-                                            position="-0.04 0.12 0.1"
+                                            position="-0.01 0.12 0.1"
                                             text={{
                                                 color: 'white', align: 'center', value: "Join this enlightening adventure with Mary, your virtual companion, as we explore the importance of menstrual health and hygiene. Together, we'll help you gain valuable understanding about this essential aspect of women's health, fostering a positive and informed approach to periods."
-                                                , width: 1
+                                                , width: 1.6, wrapCount: 42
                                             }}
                                             scale="1 1 1"
                                         ></Entity>

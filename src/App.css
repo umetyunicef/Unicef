@@ -307,3 +307,23 @@
   height: 30px;
 
 }
+
+.a-enter-vr {
+  position: absolute !important;
+  right: 20px !important;
+  /* top: 0px; */
+  bottom: 50px !important;
+  margin: auto 0 !important;
+  width: 60px !important;
+  height: 30px !important;
+}
+
+.a-enter-ar {
+  position: absolute !important;
+  right: 80px !important;
+  /* top: 0px; */
+  bottom: 50px !important;
+  margin: auto 0 !important;
+  width: 60px !important;
+  height: 30px !important;
+}
