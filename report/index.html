@@ -73,7 +73,7 @@
     let currentPageRecords = 0;
     let sortOrder = 1;
 
-    function fetchNextUsers(page, searchTerm, sortBy) {
+    function fetchNextUsers(page, searchTerm, sortBy=0) {
       getTotalRecords(searchTerm);
       const userList = document.querySelector("#userList tbody");
       userList.innerHTML = "";
@@ -82,7 +82,6 @@
 
       var sortByMapping= ["name","gender","age","grade","country","score","created_on"];
       var sortByColumnName = sortByMapping[sortBy];
-      // console.log("sortByColumnName = ",sortByColumnName);
       if (currentPage > 1) {
         query = dbRef.orderByChild(sortByColumnName).startAt(lastItemKey).limitToFirst(PAGE_SIZE + 1);
       } else {
@@ -238,7 +237,7 @@
       const searchTerm = document.getElementById("searchInput").value.trim();
       currentPage = 1;
       lastItemKey = null;
-      fetchNextUsers(currentPage, searchTerm, sortOrder);
+      fetchNextUsers(currentPage, searchTerm, sortOrder=0);
     });
 
     function showArrowOnColumn(sortBy, sortOrder){
@@ -268,7 +267,7 @@
     }
 
     // Initial fetch on page load
-    fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), sortOrder);
+    fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), 6);
   </script>
 </body>
 </html>
