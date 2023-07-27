@@ -200,6 +200,10 @@ export default function QuestionManager({ formData }) {
     setStartPanel(false);
   }
 
+  const handleReport = () => {
+    console.log("Report Click");
+    window.location.href = 'https://umetyunicef.github.io/Unicef/report';
+  }
 
   return (
     <div className="App" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -252,7 +256,7 @@ export default function QuestionManager({ formData }) {
                 text={{
                   color: 'white', align: 'center', value: "Hey there! Wasn't Jiya's adventure simply fantastic!"
                     + "Let\'s celebrate the understanding that you've gained on this amazing journey."
-                  , width: 1.5, wrapCount: 50
+                  , width: 1.5, wrapCount: 60, lineHeight: 55
                 }}
                 scale="1 1 1"
               ></Entity>
@@ -288,7 +292,7 @@ export default function QuestionManager({ formData }) {
                 <Entity
                   id="QuestionHeadingDiv"
                   position="0 0.4 0.1"
-                  text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].ques, width: 1.5 }}
+                  text={{ color: 'white', align: 'left', value: questionData[currentQuestionIndex].ques, width: 1.5 }}
                   scale="1 1 1"
                 ></Entity>
 
@@ -311,7 +315,7 @@ export default function QuestionManager({ formData }) {
                     <Entity
                       id="option0"
                       position="0 0 0"
-                      text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].options[0], align: "left" }}
+                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[0], align: "left" }}
                       scale="1 1 1"
                     />
 
@@ -332,7 +336,7 @@ export default function QuestionManager({ formData }) {
                     <Entity
                       id="option1"
                       position="0 0 0"
-                      text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].options[1], align: "left" }}
+                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[1], align: "left" }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(1)}
@@ -351,7 +355,7 @@ export default function QuestionManager({ formData }) {
                     <Entity
                       id="option2"
                       position="0 0 0"
-                      text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].options[2], align: "left" }}
+                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[2], align: "left" }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(2)}
@@ -370,7 +374,7 @@ export default function QuestionManager({ formData }) {
                     <Entity
                       id="option3"
                       position="0 0 0"
-                      text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].options[3], align: "left" }}
+                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[3], align: "left" }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(3)}
@@ -434,28 +438,41 @@ export default function QuestionManager({ formData }) {
 
                 <Entity
                   id="RemarkDiv"
-                  position="0 -0.15 0.1"
+                  position="0 -0.25 0.1"
                   text={{
                     color: 'white', align: 'center', value: " Woo-hoo! You have completed this adventure!"
                       + "Your quest for knowledge has unlocked a brighter, more informed path. Onward to the next thrilling escapade!",
-                    width: 1.5, wrapCount: 50
+                    width: 1.2, wrapCount: 50, lineHeight: 55
                   }}
                   scale="1 1 1"
                 ></Entity>
 
-                {/* <Entity id="ScoreDivBgPanel"
-                  geometry="primitive: plane; width: 0.4; height: 0.15"
-                  material="color: royalblue"
-                  position="0 -0.4 0.1"
-                > */}
+
                 <Entity
                   id="ScoreTextDiv"
-                  position="0 -0.34 0.1"
+                  position="0 -0.45 0.1"
                   text={{ color: 'white', align: 'center', value: `Score : ${score}`, width: 1.5 }}
                   scale="1 1 1"
                 ></Entity>
 
-                {/* </Entity> */}
+
+
+                <Entity id="ReportDivBgPanel"
+                  geometry="primitive: plane; width: 0.35; height: 0.13"
+                  material="color: royalblue"
+                  position="0.63 -0.46 0.1"
+                  events={{
+                    click: () => handleReport()
+                  }}
+                >
+                  <Entity
+                    id="ReportTextDiv"
+                    position="0 0 0"
+                    text={{ color: 'white', align: 'center', value: "Report", width: 1.5 }}
+                    scale="1 1 1"
+                  ></Entity>
+
+                </Entity>
 
               </Entity>
             )
