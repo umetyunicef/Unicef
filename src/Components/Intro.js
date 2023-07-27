@@ -205,13 +205,52 @@ export default function Intro({ setIsIntro, setIsVideoManager }) {
                                         ></Entity>
                                         <Entity
                                             id="ValuesContentDiv"
-                                            position="-0.08 -0.27 0.1"
+                                            position="-0.056 -0.27 0.1"
                                             text={{
                                                 color: 'white', align: 'left',
                                                 value:
-                                                    "- Promoting understanding and acceptance of menstruation as a natural process \n" +
-                                                    "- Fostering empathy and compassion towards girls experiencing menstruation \n" +
-                                                    "- Encouraging confidence, empowerment, and reduced shame when managing periods \n", width: 1.2, height: 1,
+                                                    "Promoting understanding and acceptance of menstruation as a natural process \n" +
+                                                    "Fostering empathy and compassion towards girls experiencing menstruation \n" +
+                                                    "Encouraging confidence, empowerment, and reduced shame when managing periods \n", width: 1.2, height: 1,
+                                                lineHeight: 55,
+                                                wrapCount: 50
+
+                                            }}
+                                            scale="1 1 1"
+                                        ></Entity>
+
+
+
+                                        <Entity
+                                            id="spaceContentDiv1"
+                                            position="-0.08 -0.138 0.1"
+                                            text={{
+                                                color: 'white', align: 'left',
+                                                value: "-", width: 1.2, height: 1,
+                                                lineHeight: 55,
+                                                wrapCount: 50
+
+                                            }}
+                                            scale="1 1 1"
+                                        ></Entity>
+                                        <Entity
+                                            id="spaceContentDiv2"
+                                            position="-0.08 -0.240 0.1"
+                                            text={{
+                                                color: 'white', align: 'left',
+                                                value: "-", width: 1.2, height: 1,
+                                                lineHeight: 55,
+                                                wrapCount: 50
+
+                                            }}
+                                            scale="1 1 1"
+                                        ></Entity>
+                                        <Entity
+                                            id="spaceContentDiv3"
+                                            position="-0.08 -0.352 0.1"
+                                            text={{
+                                                color: 'white', align: 'left',
+                                                value: "-", width: 1.2, height: 1,
                                                 lineHeight: 55,
                                                 wrapCount: 50
 
