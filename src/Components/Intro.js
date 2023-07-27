@@ -67,10 +67,9 @@ export default function Intro({ setIsIntro, setIsVideoManager }) {
                     <a-assets>
                         <a-image id="skyImg" src="https://umety-dev.s3.amazonaws.com/unicef/skyImg.jpg" />
                         <a-image id="tempon" src="https://umety-dev.s3.amazonaws.com/unicef/Tampon.png" />
-                        <a-image id="sanitary" src="https://umety-dev.s3.amazonaws.com/unicef/Sanitary Pad.png" />
+                        <a-image id="sanitary" src="https://umety-dev.s3.amazonaws.com/unicef/Sanitary-Pad.png" />
                         <a-image id="menstrual" src="https://umety-dev.s3.amazonaws.com/unicef/Menstrual_Cup.png" />
-                        <a-image id="egg" src="https://umety-dev.s3.amazonaws.com/unicef/Egg.png" />
-                        <a-image id="uterus" src="https://umety-dev.s3.amazonaws.com/unicef/Uterus.png" />
+                        <a-image id="uterus" src="https://umety-dev.s3.amazonaws.com/unicef/Egg_Uterus.png" />
                     </a-assets>
                     <Entity primitive="a-sky" src="#skyImg" />
 

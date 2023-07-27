@@ -219,10 +219,9 @@ export default function QuestionManager({ formData }) {
             <img id="correctTick" src="https://s3-dev.umety.com/unicef/correctTick.png" alt='correctTickTmg'></img>
             <img id="incorrectTick" src="https://s3-dev.umety.com/unicef/incorrectTick.png" alt='incorrectTickImg'></img>
             <a-image id="tempon" src="https://umety-dev.s3.amazonaws.com/unicef/Tampon.png" />
-            <a-image id="sanitary" src="https://umety-dev.s3.amazonaws.com/unicef/Sanitary Pad.png" />
+            <a-image id="sanitary" src="https://umety-dev.s3.amazonaws.com/unicef/Sanitary-Pad.png" />
             <a-image id="menstrual" src="https://umety-dev.s3.amazonaws.com/unicef/Menstrual_Cup.png" />
-            <a-image id="egg" src="https://umety-dev.s3.amazonaws.com/unicef/Egg.png" />
-            <a-image id="uterus" src="https://umety-dev.s3.amazonaws.com/unicef/Uterus.png" />
+            <a-image id="uterus" src="https://umety-dev.s3.amazonaws.com/unicef/Egg_Uterus.png" />
 
           </a-assets>
 
