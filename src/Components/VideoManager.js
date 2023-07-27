@@ -109,8 +109,6 @@ function VideoManager({ setIsVideoManager, setIsQuestionManager }) {
                             }}
                         ></Entity>
 
-
-
                         <Entity primitive="a-videosphere" src="#myVideo" rotation="0 -90 0"></Entity>
                     </Scene>
                 </div>

@@ -107,6 +107,7 @@ export default function QuestionManager({ formData }) {
     if (currentQuestionIndex === 4) {
 
       setIsQuesCompleted(true);
+      console.log("User Data....", formData);
 
       const UserData = {
         name: formData.name?.toLowerCase() || "",
@@ -247,13 +248,13 @@ export default function QuestionManager({ formData }) {
 
               <Entity
                 id="TextDiv"
-                position="0 -0.2 0.1"
+                position="0 -0.16 0.1"
                 text={{
                   color: 'white', align: 'center', value: "Hey there! Wasn't Jiya's adventure simply fantastic!"
                     + "Let\'s celebrate the understanding that you've gained on this amazing journey."
-                  , width: 1.6
+                  , width: 1.5, wrapCount: 50
                 }}
-                scale="1 0.8 0.5"
+                scale="1 1 1"
               ></Entity>
 
               <Entity id="StartBtnBgPanel"
@@ -296,7 +297,7 @@ export default function QuestionManager({ formData }) {
 
                   <Entity id="OptionBgPanel1"
                     geometry="primitive: plane; width: 1.3; height: 0.1"
-                    material={clickedOption === 0 ? "color: black" : "color: blue"}
+                    material={clickedOption === 0 ? "color: royalblue" : "color: white"}
                     position="0 0.22 0"
                     className="raycastable"
                     events={{
@@ -308,9 +309,9 @@ export default function QuestionManager({ formData }) {
                   >
 
                     <Entity
-                      id="option"
+                      id="option0"
                       position="0 0 0"
-                      text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[0], align: "left" }}
+                      text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].options[0], align: "left" }}
                       scale="1 1 1"
                     />
 
@@ -318,7 +319,7 @@ export default function QuestionManager({ formData }) {
                   </Entity>
                   <Entity id="OptionBgPanel2"
                     geometry="primitive: plane; width: 1.3; height: 0.1"
-                    material={clickedOption === 1 ? "color: black" : "color: blue"}
+                    material={clickedOption === 1 ? "color: royalblue" : "color: white"}
                     position="0 0.09 0"
                     className="raycastable"
                     events={{
@@ -329,16 +330,16 @@ export default function QuestionManager({ formData }) {
                     }}
                   >
                     <Entity
-                      id="option"
+                      id="option1"
                       position="0 0 0"
-                      text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[1], align: "left" }}
+                      text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].options[1], align: "left" }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(1)}
                   </Entity>
                   <Entity id="OptionBgPanel3"
                     geometry="primitive: plane; width: 1.3; height: 0.1"
-                    material={clickedOption === 2 ? "color: black" : "color: blue"}
+                    material={clickedOption === 2 ? "color: royalblue" : "color: white"}
                     position="0 -0.04 0"
                     className="raycastable"
                     events={{
@@ -348,16 +349,16 @@ export default function QuestionManager({ formData }) {
                     }}
                   >
                     <Entity
-                      id="option"
+                      id="option2"
                       position="0 0 0"
-                      text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[2], align: "left" }}
+                      text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].options[2], align: "left" }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(2)}
                   </Entity>
                   <Entity id="OptionBgPanel4"
                     geometry="primitive: plane; width: 1.3; height: 0.1"
-                    material={clickedOption === 3 ? "color: black" : "color: blue"}
+                    material={clickedOption === 3 ? "color: royalblue" : "color: white"}
                     position="0 -0.17 0"
                     className="raycastable"
                     events={{
@@ -367,9 +368,9 @@ export default function QuestionManager({ formData }) {
                     }}
                   >
                     <Entity
-                      id="option"
+                      id="option3"
                       position="0 0 0"
-                      text={{ color: 'white', align: 'center', value: questionData[currentQuestionIndex].options[3], align: "left" }}
+                      text={{ color: 'black', align: 'center', value: questionData[currentQuestionIndex].options[3], align: "left" }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(3)}
@@ -380,7 +381,7 @@ export default function QuestionManager({ formData }) {
                 {isSubmit &&
                   <Entity id="SubmitBtnBgPanel"
                     geometry="primitive: plane; width: 0.5; height: 0.15"
-                    material={{ color: 'black' }}
+                    material={{ color: 'royalblue' }}
                     position="0 -0.4 0.1"
                     className="raycastable"
                     events={{
@@ -398,7 +399,7 @@ export default function QuestionManager({ formData }) {
                 {isNext &&
                   <Entity id="NextBtnBgPanel"
                     geometry="primitive: plane; width: 0.5; height: 0.15"
-                    material={{ color: 'black' }}
+                    material={{ color: '#107869' }}
                     position="0 -0.4 0.1"
                     className="raycastable"
                     events={{
@@ -406,7 +407,7 @@ export default function QuestionManager({ formData }) {
                     }}
                   >
 
-                    <Entity id="SubmitBtnDiv"
+                    <Entity id="NextBtnDiv"
                       text={{ value: 'NEXT', align: 'center' }}
                       position="0 0 0"
                     />
@@ -436,24 +437,25 @@ export default function QuestionManager({ formData }) {
                   position="0 -0.15 0.1"
                   text={{
                     color: 'white', align: 'center', value: " Woo-hoo! You have completed this adventure!"
-                      + "Your quest for knowledge has unlocked a brighter, more informed path. Onward to the next thrilling escapade!", width: 1.5
+                      + "Your quest for knowledge has unlocked a brighter, more informed path. Onward to the next thrilling escapade!",
+                    width: 1.5, wrapCount: 50
                   }}
-                  scale="1 0.8 1"
+                  scale="1 1 1"
                 ></Entity>
 
-                <Entity id="ScoreDivBgPanel"
+                {/* <Entity id="ScoreDivBgPanel"
                   geometry="primitive: plane; width: 0.4; height: 0.15"
-                  material="color: black"
+                  material="color: royalblue"
                   position="0 -0.4 0.1"
-                >
-                  <Entity
-                    id="ScoreTextDiv"
-                    position="0 0 0"
-                    text={{ color: 'white', align: 'center', value: `Score : ${score}`, width: 1.5 }}
-                    scale="1 1 1"
-                  ></Entity>
+                > */}
+                <Entity
+                  id="ScoreTextDiv"
+                  position="0 -0.34 0.1"
+                  text={{ color: 'white', align: 'center', value: `Score : ${score}`, width: 1.5 }}
+                  scale="1 1 1"
+                ></Entity>
 
-                </Entity>
+                {/* </Entity> */}
 
               </Entity>
             )
