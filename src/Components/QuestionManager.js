@@ -236,26 +236,26 @@ export default function QuestionManager({ formData }) {
             />
           </Entity>
 
-          <Entity id="camera2" primitive="a-camera" cursor="rayOrigin: mouse;"></Entity>
+          <Entity id="camera2" primitive="a-camera" cursor="rayOrigin: mouse;" raycaster="objects: .raycastable"></Entity>
 
           {startPanel &&
 
             <Entity id="StartContainer" position="0 1.7 -1.5">
-              <Entity id="StartContainerBgPanel" geometry="primitive: plane; width: 1.8; height: 1.2"
+              <Entity id="StartContainerBgPanel" geometry="primitive: plane; width: 2; height: 1.3"
                 material="color: #000000; opacity:0.8"
                 position="0 0 0" />
-              <Entity primitive="a-image" id="sanitary" src="#sanitary" position="-0.66 0.16 0.1" scale=".5 .4 .3" />
-              <Entity primitive="a-image" id="menstrual" src="#menstrual" position="-0.22 0.3 0.1" scale=".5 .4 .3" />
-              <Entity primitive="a-image" id="uterus" src="#uterus" position="0.22 0.3 0.1" scale=".5 .4 .3" />
-              <Entity primitive="a-image" id="temponImage" src="#tempon" position="0.66 0.16 0.1" scale=".5 .4 .3" />
+              <Entity primitive="a-image" id="sanitary" src="#sanitary" position="-0.65 0.1 0.1" scale="1 1 1" width="0.5" height="0.5" />
+              <Entity primitive="a-image" id="menstrual" src="#menstrual" position="-0.22 0.2 0.1" scale="1 1 1" width="0.5" height="0.5" />
+              <Entity primitive="a-image" id="uterus" src="#uterus" position="0.33 0.2 0.1" scale="1 1 1" width="0.5" height="0.5" />
+              <Entity primitive="a-image" id="temponImage" src="#tempon" position="0.73 0.1 0.1" scale="1 1 1" width="0.5" height="0.5" />
 
               <Entity
                 id="TextDiv"
-                position="0 -0.16 0.1"
+                position="0 -0.25 0.1"
                 text={{
-                  color: 'white', align: 'center', value: "Hey there! Wasn't Jiya's adventure simply fantastic!"
+                  color: 'white', align: 'center', value: "Hey there! Wasn't Jiya's adventure simply fantastic! "
                     + "Let\'s celebrate the understanding that you've gained on this amazing journey."
-                  , width: 1.5, wrapCount: 60, lineHeight: 55
+                  , width: 1.5, wrapCount: 55, lineHeight: 55
                 }}
                 scale="1 1 1"
               ></Entity>
@@ -263,7 +263,7 @@ export default function QuestionManager({ formData }) {
               <Entity id="StartBtnBgPanel"
                 geometry="primitive: plane; width: 0.5; height: 0.15"
                 material={{ color: 'royalblue' }}
-                position="0 -0.4 0.1"
+                position="0 -0.45 0.1"
                 className="raycastable"
                 events={{
                   click: () => handleStartClick()
@@ -290,7 +290,7 @@ export default function QuestionManager({ formData }) {
 
                 <Entity
                   id="QuestionHeadingDiv"
-                  position="0 0.4 0.1"
+                  position="0.05 0.4 0.1"
                   text={{ color: 'white', align: 'left', value: questionData[currentQuestionIndex].ques, width: 1.5 }}
                   scale="1 1 1"
                 ></Entity>
@@ -313,8 +313,8 @@ export default function QuestionManager({ formData }) {
 
                     <Entity
                       id="option0"
-                      position="0 0 0"
-                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[0], align: "left" }}
+                      position="0.14 0 0"
+                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[0], align: "left", width: 1.5, wrapCount: 65 }}
                       scale="1 1 1"
                     />
 
@@ -334,8 +334,8 @@ export default function QuestionManager({ formData }) {
                   >
                     <Entity
                       id="option1"
-                      position="0 0 0"
-                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[1], align: "left" }}
+                      position="0.14 0 0"
+                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[1], align: "left", width: 1.5, wrapCount: 65 }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(1)}
@@ -353,8 +353,8 @@ export default function QuestionManager({ formData }) {
                   >
                     <Entity
                       id="option2"
-                      position="0 0 0"
-                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[2], align: "left" }}
+                      position="0.14 0 0"
+                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[2], align: "left", width: 1.5, wrapCount: 65 }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(2)}
@@ -372,8 +372,8 @@ export default function QuestionManager({ formData }) {
                   >
                     <Entity
                       id="option3"
-                      position="0 0 0"
-                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[3], align: "left" }}
+                      position="0.14 0 0"
+                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[3], align: "left", width: 1.5, wrapCount: 65 }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(3)}
@@ -439,7 +439,7 @@ export default function QuestionManager({ formData }) {
                   id="RemarkDiv"
                   position="0 -0.25 0.1"
                   text={{
-                    color: 'white', align: 'center', value: " Woo-hoo! You have completed this adventure!"
+                    color: 'white', align: 'center', value: " Woo-hoo! You have completed this adventure! \n"
                       + "Your quest for knowledge has unlocked a brighter, more informed path. Onward to the next thrilling escapade!",
                     width: 1.2, wrapCount: 50, lineHeight: 55
                   }}

@@ -74,7 +74,11 @@ export default function Intro({ setIsIntro, setIsVideoManager }) {
                     <Entity primitive="a-sky" src="#skyImg" />
 
 
-                    <Entity id="camera1" primitive="a-camera" cursor="rayOrigin: mouse;"></Entity>
+                    <Entity id="camera1" primitive="a-camera">
+                        <a-entity cursor="rayOrigin: mouse;"
+                            raycaster="objects: .raycastable"
+                        />
+                    </Entity>
                     <Entity id="camera2" primitive="a-camera">
 
                         <a-entity cursor="fuse: false;"
@@ -140,125 +144,174 @@ export default function Intro({ setIsIntro, setIsVideoManager }) {
                         !isBegin && isLearningOutcomes ?
                             (
                                 <Entity id="LearningOutcomesContainer" position="0 1.7 -1.5">
-                                    <Entity id="LearningOutcomesContainerBgPanel" geometry="primitive: plane; width: 1.7; height: 1.5"
-                                        material="color: #000000; opacity:0.8"
-                                        position="0 -0.05 0" />
 
-
-                                    {/* input images here */}
-
-                                    <Entity
-                                        id="LearningOutcomesHeadingDiv"
-                                        position="0 0.55 0.1"
-                                        text={{ color: 'white', align: 'center', value: "Learning Outcomes", width: 1.7 }}
-                                        scale="1 1 1"
-                                    ></Entity>
-
-                                    <Entity id="ContentDiv" position="0.1 0.027 0">
+                                    <Entity id="LearningOutcomesDiv" position="0 0.6 0">
+                                        <Entity id="LearningOutcomesBgPanel" geometry="primitive: plane; width: 3.4; height: 0.2"
+                                            material="color: #000000; opacity:0.8"
+                                            position="0 0 0" />
                                         <Entity
-                                            id="KnowledgeHeadingDiv"
-                                            position="-0.04 0.4 0.1"
-                                            text={{ color: 'white', align: 'left', value: "Knowledge:", width: 1.3, height: 1 }}
-                                            scale="1 1 1"
-                                        ></Entity>
-
-                                        <Entity
-                                            id="KnowledgeContentDiv"
-                                            position="-0.08 0.28 0.1"
-                                            text={{
-                                                color: 'white', align: 'left',
-                                                value:
-                                                    "- Understanding menstruation \n"
-                                                    +
-                                                    "- Exploring menstrual hygiene practices and their importance", width: 1.2, height: 1,
-                                                lineHeight: 55,
-                                                wrapCount: 50
-                                            }}
-                                            scale="1 1 1"
-                                        ></Entity>
-
-
-                                        <Entity
-                                            id="SkillsHeadingDiv"
-                                            position="-0.04 0.13 0.1"
-                                            text={{ color: 'white', align: 'left', value: "Skills:", width: 1.3, height: 1 }}
-                                            scale="1 1 1"
-                                        ></Entity>
-                                        <Entity
-                                            id="SkillsContentDiv"
-                                            position="-0.08 0.047 0.1"
-                                            text={{
-                                                color: 'white', align: 'left',
-                                                value:
-                                                    "- Learning how to use different menstrual products", width: 1.2, height: 1,
-                                                lineHeight: 55,
-                                                wrapCount: 50
-                                            }}
-                                            scale="1 1 1"
-                                        ></Entity>
-
-                                        <Entity
-                                            id="ValuesHeadingDiv"
-                                            position="-0.04 -0.05 0.1"
-                                            text={{ color: 'white', align: 'left', value: "Values:", width: 1.3, height: 1 }}
-                                            scale="1 1 1"
-                                        ></Entity>
-                                        <Entity
-                                            id="ValuesContentDiv"
-                                            position="-0.056 -0.27 0.1"
-                                            text={{
-                                                color: 'white', align: 'left',
-                                                value:
-                                                    "Promoting understanding and acceptance of menstruation as a natural process \n" +
-                                                    "Fostering empathy and compassion towards girls experiencing menstruation \n" +
-                                                    "Encouraging confidence, empowerment, and reduced shame when managing periods \n", width: 1.2, height: 1,
-                                                lineHeight: 55,
-                                                wrapCount: 50
-
-                                            }}
-                                            scale="1 1 1"
-                                        ></Entity>
-
-
-
-                                        <Entity
-                                            id="spaceContentDiv1"
-                                            position="-0.08 -0.138 0.1"
-                                            text={{
-                                                color: 'white', align: 'left',
-                                                value: "-", width: 1.2, height: 1,
-                                                lineHeight: 55,
-                                                wrapCount: 50
-
-                                            }}
-                                            scale="1 1 1"
-                                        ></Entity>
-                                        <Entity
-                                            id="spaceContentDiv2"
-                                            position="-0.08 -0.240 0.1"
-                                            text={{
-                                                color: 'white', align: 'left',
-                                                value: "-", width: 1.2, height: 1,
-                                                lineHeight: 55,
-                                                wrapCount: 50
-
-                                            }}
-                                            scale="1 1 1"
-                                        ></Entity>
-                                        <Entity
-                                            id="spaceContentDiv3"
-                                            position="-0.08 -0.352 0.1"
-                                            text={{
-                                                color: 'white', align: 'left',
-                                                value: "-", width: 1.2, height: 1,
-                                                lineHeight: 55,
-                                                wrapCount: 50
-
-                                            }}
+                                            id="LearningOutcomesHeadingText"
+                                            position="0 0 0"
+                                            text={{ color: 'white', align: 'center', value: "LEARNING OUTCOMES", width: 1, height: 1, wrapCount: 20 }}
                                             scale="1 1 1"
                                         ></Entity>
                                     </Entity>
 
+
+                                    <Entity id="knowledgeDiv" position="-1.2 0 0">
+
+                                        <Entity id="knowledgeDivBgPanel" geometry="primitive: plane; width: 1; height: 0.7"
+                                            material="color: #000000; opacity:0.8"
+                                            position="0 0 0" />
+
+                                        <Entity
+                                            id="KnowledgeHeadingTextDiv"
+                                            position="0 0.25 0"
+                                            text={{ color: 'white', align: 'center', value: "Knowledge", width: 1, height: 1, lineHeight: 55, wrapCount: 25 }}
+                                            scale="1 1 1"
+                                        ></Entity>
+
+                                        <Entity
+                                            id="KnowledgeContentTextDiv"
+                                            position="0.08 0.065 0"
+                                            text={{
+                                                color: 'white', align: 'left',
+                                                value:
+                                                    "Understanding menstruation \n" +
+                                                    "Exploring menstrual hygiene practices and \n their importance", width: 1, height: 1,
+                                                lineHeight: 60,
+                                                wrapCount: 40
+                                            }}
+                                            scale="1 1 1"
+                                        ></Entity>
+                                        <Entity
+                                            id="KnowledgeSpaceDiv1"
+                                            position="0.05 0.135 0"
+                                            text={{
+                                                color: 'white', align: 'left',
+                                                value: "-", width: 1, height: 1,
+                                                wrapCount: 40
+
+                                            }}
+                                            scale="1 1 1"
+                                        ></Entity>
+                                        <Entity
+                                            id="KnowledgeSpaceDiv2"
+                                            position="0.05 0.065 0"
+                                            text={{
+                                                color: 'white', align: 'left',
+                                                value: "-", width: 1, height: 1,
+                                                wrapCount: 40
+
+                                            }}
+                                            scale="1 1 1"
+                                        ></Entity>
+
+                                    </Entity>
+
+
+                                    <Entity id="SkillsDiv" position="0 0 0">
+
+                                        <Entity id="SkillsDivBgPanel" geometry="primitive: plane; width: 1; height: 0.7"
+                                            material="color: #000000; opacity:0.8"
+                                            position="0 0 0" />
+
+                                        <Entity
+                                            id="SkillsHeadingTextDiv"
+                                            position="0 0.25 0"
+                                            text={{ color: 'white', align: 'center', value: "Skills", width: 1, height: 1, lineHeight: 55, wrapCount: 25 }}
+                                            scale="1 1 1"
+                                        ></Entity>
+
+                                        <Entity
+                                            id="SkillsContentTextDiv"
+                                            position="0.08 0.08 0"
+                                            text={{
+                                                color: 'white', align: 'left',
+                                                value:
+                                                    "Learning how to use different \n menstrual products", width: 1, height: 1,
+                                                lineHeight: 60,
+                                                wrapCount: 40
+                                            }}
+                                            scale="1 1 1"
+                                        ></Entity>
+                                        <Entity
+                                            id="SkillsSpaceDiv1"
+                                            position="0.05 0.115 0"
+                                            text={{
+                                                color: 'white', align: 'left',
+                                                value: "-", width: 1, height: 1,
+                                                wrapCount: 40
+
+                                            }}
+                                            scale="1 1 1"
+                                        ></Entity>
+
+                                    </Entity>
+
+
+                                    <Entity id="ValuesDiv" position="1.2 0 0">
+
+                                        <Entity id="knowledgeDivBgPanel" geometry="primitive: plane; width: 1; height: 0.7"
+                                            material="color: #000000; opacity:0.8"
+                                            position="0 0 0" />
+
+                                        <Entity
+                                            id="ValuesHeadingTextDiv"
+                                            position="0 0.25 0"
+                                            text={{ color: 'white', align: 'center', value: "Values", width: 1, height: 1, lineHeight: 55, wrapCount: 25 }}
+                                            scale="1 1 1"
+                                        ></Entity>
+
+                                        <Entity
+                                            id="ValuesContentTextDiv"
+                                            position="0.08 -0.03 0"
+                                            text={{
+                                                color: 'white', align: 'left',
+                                                value:
+                                                    "Promoting understanding and acceptance of menstruation as a natural process \n" +
+                                                    "Fostering empathy and compassion towards \n girls experiencing menstruation \n" +
+                                                    "Encouraging confidence, empowerment, and reduced shame when managing periods \n", width: 1, height: 1,
+                                                lineHeight: 60,
+                                                wrapCount: 40
+                                            }}
+                                            scale="1 1 1"
+                                        ></Entity>
+                                        <Entity
+                                            id="ValuesSpaceDiv1"
+                                            position="0.05 0.12 0"
+                                            text={{
+                                                color: 'white', align: 'left',
+                                                value: "-", width: 1, height: 1,
+                                                wrapCount: 40
+
+                                            }}
+                                            scale="1 1 1"
+                                        ></Entity>
+                                        <Entity
+                                            id="ValuesSpaceDiv2"
+                                            position="0.05 -0.12 0"
+                                            text={{
+                                                color: 'white', align: 'left',
+                                                value: "-", width: 1, height: 1,
+                                                wrapCount: 40
+
+                                            }}
+                                            scale="1 1 1"
+                                        ></Entity>
+                                        <Entity
+                                            id="ValuesSpaceDiv3"
+                                            position="0.05 0 0"
+                                            text={{
+                                                color: 'white', align: 'left',
+                                                value: "-", width: 1, height: 1,
+                                                wrapCount: 40
+
+                                            }}
+                                            scale="1 1 1"
+                                        ></Entity>
+
+                                    </Entity>
 
                                     <Entity id="NextBtnBgPanel"
                                         geometry="primitive: plane; width: 0.5; height: 0.15"
@@ -275,53 +328,93 @@ export default function Intro({ setIsIntro, setIsVideoManager }) {
                                             position="0 0 0"
                                         />
                                     </Entity>
+
                                 </Entity>
 
                             ) : isBegin ?
-                                (
-                                    <Entity id="LearningOutcomesContainer" position="0 1.7 -1.5">
-                                        <Entity id="LearningOutcomesContainerBgPanel" geometry="primitive: plane; width: 1.5; height: 0.8"
-                                            material="color: #000000; opacity:0.8"
-                                            position="0 0 0" />
+                                // (
+                                //     <Entity id="BeginContainer" position="0 1.7 -1.5">
+                                //         <Entity id="BeginBgPanel" geometry="primitive: plane; width: 1.5; height: 0.8"
+                                //             material="color: #000000; opacity:0.8"
+                                //             position="0 0 0" />
+
+                                //         <Entity
+                                //             id="BeginTextDiv"
+                                //             position="0 0.12 0.1"
+                                //             text={{
+                                //                 color: 'white', align: 'left', value: "Join this enlightening adventure with Mary, your virtual companion, as we explore the importance of menstrual health and hygiene. Together, we'll help you gain valuable understanding about this essential aspect of women's health, fostering a positive and informed approach to periods."
+                                //                 , width: 1.2, height: 1,
+                                //                 lineHeight: 55,
+                                //                 wrapCount: 50
+                                //             }}
+                                //             scale="1 1 1"
+                                //         ></Entity>
+
+                                //         <Entity id="BeginBtnBgPanel"
+                                //             geometry="primitive: plane; width: 0.5; height: 0.15"
+                                //             material={{ color: 'royalblue' }}
+                                //             position="0 -0.24 0.1"
+                                //             className="raycastable"
+                                //             events={{
+                                //                 click: () => handleBegin()
+                                //             }}
+                                //         >
+
+                                //             <Entity id="BeginBtnDiv"
+                                //                 text={{ value: 'LET\'S BEGIN', align: 'center' }}
+                                //                 position="0 0 0"
+                                //             />
+
+                                //         </Entity>
 
 
-                                        {/* input images here */}
+                                //     </Entity>
+                                // ) 
 
-                                        <Entity
-                                            id="IntroTextDiv"
-                                            position="0 0.55 0.1"
-                                            text={{ color: 'black', align: 'center', value: "", width: 1.5 }}
-                                            scale="1 1 1"
-                                        ></Entity>
-                                        <Entity
-                                            id="IntroTextDiv"
-                                            position="0 0.12 0.1"
-                                            text={{
-                                                color: 'white', align: 'left', value: "Join this enlightening adventure with Mary, your virtual companion, as we explore the importance of menstrual health and hygiene. Together, we'll help you gain valuable understanding about this essential aspect of women's health, fostering a positive and informed approach to periods."
-                                                , width: 1.2, height: 1,
-                                                lineHeight: 55,
-                                                wrapCount: 50
-                                            }}
-                                            scale="1 1 1"
-                                        ></Entity>
+                                (<Entity id="BeginContainer" position="0 1.7 -1.5">
+                                    <Entity id="BeginContainerBgPanel" geometry="primitive: plane; width: 1.5; height: 0.8"
+                                        material="color: #000000; opacity:0.8"
+                                        position="0 0 0">
 
-                                        <Entity id="NextBtnBgPanel"
-                                            geometry="primitive: plane; width: 0.5; height: 0.15"
-                                            material={{ color: 'royalblue' }}
-                                            position="0 -0.24 0.1"
-                                            className="raycastable"
-                                            events={{
-                                                click: handleBegin
-                                            }}
-                                        >
 
-                                            <Entity id="NextBtnDiv"
-                                                text={{ value: 'LET\'S BEGIN', align: 'center' }}
-                                                position="0 0 0"
-                                            />
-                                        </Entity>
                                     </Entity>
-                                ) : null
+                                    <Entity primitive="a-image" id="sanitary" src="#sanitary" position="-0.66 0.16 0.1" scale="0" />
+                                    <Entity primitive="a-image" id="menstrual" src="#menstrual" position="-0.22 0.3 0.1" scale="0" />
+                                    <Entity primitive="a-image" id="uterus" src="#uterus" position="0.22 0.3 0.1" scale="0" />
+                                    <Entity primitive="a-image" id="temponImage" src="#tempon" position="0.66 0.16 0.1" scale="0" />
+
+                                    <Entity
+                                        id="BeginTextDiv"
+                                        position="0 0.12 0.1"
+                                        text={{
+                                            color: 'white', align: 'left', value: "Join this enlightening adventure with Mary, your virtual companion, as we explore the importance of menstrual health and hygiene. Together, we'll help you gain valuable understanding about this essential aspect of women's health, fostering a positive and informed approach to periods."
+                                            , width: 1.2, height: 1,
+                                            lineHeight: 55,
+                                            wrapCount: 50
+                                        }}
+                                        scale="1 1 1"
+                                    ></Entity>
+
+                                    <Entity id="BeginBtnBgPanel"
+                                        geometry="primitive: plane; width: 0.5; height: 0.15"
+                                        material={{ color: 'royalblue' }}
+                                        position="0 -0.24 0.1"
+                                        className="raycastable"
+                                        events={{
+                                            click: () => handleBegin()
+                                        }}
+                                    >
+
+                                        <Entity id="BeginBtnDiv"
+                                            text={{ value: 'LET\'S BEGIN', align: 'center' }}
+                                            position="0 0 0"
+                                        />
+                                    </Entity>
+
+
+                                </Entity>)
+
+                                : null
 
 
                     };

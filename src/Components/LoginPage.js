@@ -28,8 +28,8 @@ export default function LoginPage({ setIsLogin, setIsIntro, setFormData }) {
 
     // Check if the entered age is within the range of 5 to 50
     const ageValue = parseInt(value, 10);
-    if (name === 'age' && (ageValue < 5 || ageValue > 80)) {
-      setAgeError('Age must be between 5 and 80');
+    if (name === 'age' && (ageValue < 8 || ageValue > 80)) {
+      setAgeError('Age must be between 8 and 80');
     } else {
       setAgeError('');
     }
@@ -60,7 +60,7 @@ export default function LoginPage({ setIsLogin, setIsIntro, setFormData }) {
   };
 
   useEffect(() => {
-    if (myFormData.name && myFormData.gender && myFormData.age && myFormData.grade && myFormData.country && !ageError && !countryError) {
+    if (myFormData.name && myFormData.gender && myFormData.age && myFormData.country && !ageError && !countryError) {
       setDisableSubmit(false); // Enable the submit button
     } else {
       setDisableSubmit(true); // Disable the submit button
@@ -101,6 +101,7 @@ export default function LoginPage({ setIsLogin, setIsIntro, setFormData }) {
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
+                <option value="Others">Others</option>
               </select>
             </div>
             <div className='ageDiv looInput'>
@@ -125,7 +126,6 @@ export default function LoginPage({ setIsLogin, setIsIntro, setFormData }) {
                 placeholder='Grade'
                 value={myFormData.grade}
                 onChange={handleChange}
-                required
               >
                 <option value="">Select Grade</option>
                 <option value="3">Grade 3</option>
@@ -138,6 +138,7 @@ export default function LoginPage({ setIsLogin, setIsIntro, setFormData }) {
                 <option value="10">Grade 10</option>
                 <option value="11">Grade 11</option>
                 <option value="12">Grade 12</option>
+                <option value="13">Above 12</option>
               </select>
             </div>
             <div className='countryDiv looInput'>
