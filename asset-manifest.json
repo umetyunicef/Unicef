@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Unicef/static/css/main.4571853d.css",
-    "main.js": "/Unicef/static/js/main.262403d0.js",
-    "static/js/787.264cb4fb.chunk.js": "/Unicef/static/js/787.264cb4fb.chunk.js",
-    "index.html": "/Unicef/index.html",
-    "main.4571853d.css.map": "/Unicef/static/css/main.4571853d.css.map",
-    "main.262403d0.js.map": "/Unicef/static/js/main.262403d0.js.map",
-    "787.264cb4fb.chunk.js.map": "/Unicef/static/js/787.264cb4fb.chunk.js.map"
+    "main.css": "/poc/static/css/main.4571853d.css",
+    "main.js": "/poc/static/js/main.780b8dc3.js",
+    "static/js/787.e8abcbe9.chunk.js": "/poc/static/js/787.e8abcbe9.chunk.js",
+    "index.html": "/poc/index.html",
+    "main.4571853d.css.map": "/poc/static/css/main.4571853d.css.map",
+    "main.780b8dc3.js.map": "/poc/static/js/main.780b8dc3.js.map",
+    "787.e8abcbe9.chunk.js.map": "/poc/static/js/787.e8abcbe9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4571853d.css",
-    "static/js/main.262403d0.js"
+    "static/js/main.780b8dc3.js"
   ]
 }
