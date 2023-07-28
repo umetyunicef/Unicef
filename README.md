@@ -531,7 +531,7 @@ require('aframe')  // e.g., with Browserify or Webpack.
 ## Local Development
 
 ```sh
-git clone https://github.com/aframevr/aframe.git  # Clone the repository.
+git clone [https://github.com/aframevr/aframe.git](https://github.com/umetyunicef/poc.git)  # Clone the repository.
 cd aframe && npm install  # Install dependencies.
 npm start  # Start the local development server.
 ```
