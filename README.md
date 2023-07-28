@@ -32,7 +32,7 @@ presents data and insights in a visually captivating and interactive manner with
 
 The app's versatility and accessibility make it suitable for a wide range of demographics: pre-adolescents, teenagers, educators, and parents, allowing users to engage with the content and foster empathy and awareness. 
 
-![UmetyWebVR](https://ibb.co/hDYxDt5)
+![UmetyWebVR](https://i.ibb.co/86Yn6S3/Readme-UNICEF.png)
 
 ## Technology Used
 
