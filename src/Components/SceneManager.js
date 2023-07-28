@@ -305,8 +305,7 @@ export default function SceneManager({ formData }) {
             <img id="incorrectTick" src="https://umety-dev.s3.amazonaws.com/unicef/incorrectTick.png" alt='incorrectTickImg'></img>
 
 
-            <video id="myVideo" src="https://s3-dev.umety.com/unicef/unicef_video.mp4"> </video>
-            {/* <video id="myVideo" src="https://s3-dev.umety.com/unicef/video360.mp4"> </video> */}
+            <video id="myVideo" src="https://s3-dev.umety.com/unicef/UNICEF-3.mp4"> </video>
 
 
           </a-assets>
@@ -736,7 +735,7 @@ export default function SceneManager({ formData }) {
                     <Entity
                       id="option0"
                       position="0.14 0 0"
-                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[0], align: "left", width: 1.5, wrapCount: 65 }}
+                      text={{ color: clickedOption === 1 ? 'white' : 'black', align: 'left', value: questionData[currentQuestionIndex].options[0], align: "left", width: 1.5, wrapCount: 65 }}
                       scale="1 1 1"
                     />
 
@@ -757,7 +756,7 @@ export default function SceneManager({ formData }) {
                     <Entity
                       id="option1"
                       position="0.14 0 0"
-                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[1], align: "left", width: 1.5, wrapCount: 65 }}
+                      text={{ color: clickedOption === 2 ? 'white' : 'black', align: 'left', value: questionData[currentQuestionIndex].options[1], align: "left", width: 1.5, wrapCount: 65 }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(1)}
@@ -776,7 +775,7 @@ export default function SceneManager({ formData }) {
                     <Entity
                       id="option2"
                       position="0.14 0 0"
-                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[2], align: "left", width: 1.5, wrapCount: 65 }}
+                      text={{ color: clickedOption === 3 ? 'white' : 'black', align: 'left', value: questionData[currentQuestionIndex].options[2], align: "left", width: 1.5, wrapCount: 65 }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(2)}
@@ -795,7 +794,7 @@ export default function SceneManager({ formData }) {
                     <Entity
                       id="option3"
                       position="0.14 0 0"
-                      text={{ color: 'black', align: 'left', value: questionData[currentQuestionIndex].options[3], align: "left", width: 1.5, wrapCount: 65 }}
+                      text={{ color: clickedOption === 4 ? 'white' : 'black', align: 'left', value: questionData[currentQuestionIndex].options[3], align: "left", width: 1.5, wrapCount: 65 }}
                       scale="1 1 1"
                     />
                     {isNext && tickGenerator(3)}
