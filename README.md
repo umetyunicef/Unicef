@@ -46,7 +46,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Demo
 
-* [SOCIO-EMOTIONAL LEARNING POC](https://umetyunicef.github.io/poc/)
+* [Menstrual Health and Hygiene Prototype](https://umetyunicef.github.io/poc/)
 * [Report](https://umetyunicef.github.io/poc/report)
 
 ## Working with this project
