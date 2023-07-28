@@ -32,9 +32,9 @@ export default function SceneManager({ formData }) {
   const [questionData] = useState([
     {
       "id": 1,
-      "ques": "How long does a typical menstrual period last?",
-      "options": ["1-2 days", "3-6 days", "7-10 days", "12-15 days"],
-      "correctOption": "3-6 days"
+      "ques": "How do you think Jiya was feeling by the end of the story?",
+      "options": ["Comforted and excited", "No noticeable changes in emotions", "A sense of sadness", "Felt angry"],
+      "correctOption": "Comforted and excited"
     },
     {
       "id": 2,
@@ -44,9 +44,9 @@ export default function SceneManager({ formData }) {
     },
     {
       "id": 3,
-      "ques": "What is the recommended way to discard used pads?",
-      "options": ["Wrap in toilet paper or newspaper and throw them in the trash bin", "Flush them down the toilet", "Burn them", "Bury them in the ground"],
-      "correctOption": "Wrap in toilet paper or newspaper and throw them in the trash bin"
+      "ques": "How long does a typical menstrual period last?",
+      "options": ["1-2 days", "3-6 days", "7-10 days", "12-15 days"],
+      "correctOption": "3-6 days"
     },
     {
       "id": 4,
@@ -64,7 +64,30 @@ export default function SceneManager({ formData }) {
 
   const [isVRMode, setIsVRMode] = useState(false);
 
+
+  const ResetState = () => {
+
+    setIntroPanel(true);
+    setLearningObjPanel(false);
+    setBeginPanel(false);
+    setVideoPanel(false);
+    setQuizStartPanel(false);
+    setQuizPanel(false);
+    setScorePanel(false);
+    setIsVideoStarted(false);
+    setIsSubmit(false);
+    setIsNext(false);
+    setCurrentQuestionIndex(false);
+    setPickedOptionIndex(false);
+    setScore(false);
+    setSetClickedOption(false);
+    setIsVRMode(false);
+  }
+
   useEffect(() => {
+
+    // ResetState();
+
     const enterVRHandler = () => {
       console.log("VR Mode Enabled");
 
@@ -82,6 +105,10 @@ export default function SceneManager({ formData }) {
 
 
   }, []);
+
+
+
+
 
 
   const handleIntroClick = () => {
@@ -110,6 +137,7 @@ export default function SceneManager({ formData }) {
     videoBtn.setAttribute('visible', false);
     // setIsVideoEnded(true);
     setIsVideoStarted(false);
+    setVideoPanel(false);
     setQuizStartPanel(true);
 
   };
@@ -117,6 +145,7 @@ export default function SceneManager({ formData }) {
   const handleQuizStartClick = () => {
 
     console.log("Start Button Click");
+    setSetClickedOption(null);
     setQuizStartPanel(false);
     setQuizPanel(true);
   }
@@ -238,10 +267,11 @@ export default function SceneManager({ formData }) {
   }
 
 
-
-
   const handleReportClick = () => {
     console.log("Report Click");
+
+    ResetState();
+
     window.location.href = 'https://umetyunicef.github.io/Unicef/report';
   }
 
@@ -261,7 +291,7 @@ export default function SceneManager({ formData }) {
             <a-image id="uterus" src="https://umety-dev.s3.amazonaws.com/unicef/Egg_Uterus.png" />
 
             <img id="img1" src="https://umety-dev.s3.amazonaws.com/unicef/Menstrual_Cup.png" alt='img1'></img>
-            <img id="img2" src="https://umety-dev.s3.amazonaws.com/unicef/Sanitary Pad.png" alt='img2'></img>
+            <img id="img2" src="https://umety-dev.s3.amazonaws.com/unicef/Sanitary-Pad.png" alt='img2'></img>
 
             <img id="play" src="https://umety-dev.s3.amazonaws.com/unicef/play.png" alt='playImg'></img>
             <img id="pause" src="https://umety-dev.s3.amazonaws.com/unicef/pause.png" alt='pauseImg'></img>
@@ -270,6 +300,8 @@ export default function SceneManager({ formData }) {
 
 
             <video id="myVideo" src="https://s3-dev.umety.com/unicef/unicef_video.mp4"> </video>
+            {/* <video id="myVideo" src="https://s3-dev.umety.com/unicef/video360.mp4"> </video> */}
+
 
           </a-assets>
 
@@ -298,36 +330,27 @@ export default function SceneManager({ formData }) {
 
           {introPanel &&
             <>
-              {/* <Entity id="skyBox" primitive="a-sky" src="#skyImg" /> */}
+
               <Entity id="IntroContainer" position="0 1.7 -1.5">
-                <Entity id="IntroContainerBgPanel" geometry="primitive: plane; width: 1.8; height: 1.2"
+                <Entity id="IntroContainerBgPanel" geometry="primitive: plane; width: 2; height: 1.3"
                   material="color: #000000; opacity:0.8"
-                  position="0 0 0">
-                  {/* <Entity primitive="a-image" id="sanitary" src="#sanitary" position="-0.66 0.16 0.1" scale=".5 .4 .3" />
-                                    <Entity primitive="a-image" id="menstrual" src="#menstrual" position="-0.22 0.3 0.1" scale=".5 .4 .3" />
-                                    <Entity primitive="a-image" id="uterus" src="#uterus" position="0.22 0.3 0.1" scale=".5 .4 .3" />
-                                    <Entity primitive="a-image" id="temponImage" src="#tempon" position="0.66 0.16 0.1" scale=".5 .4 .3" /> */}
+                  position="0 0 0" />
+                <Entity primitive="a-image" id="sanitary" src="#sanitary" position="-0.65 0.1 0.1" scale="1 1 1" width="0.5" height="0.5" />
+                <Entity primitive="a-image" id="menstrual" src="#menstrual" position="-0.22 0.2 0.1" scale="1 1 1" width="0.5" height="0.5" />
+                <Entity primitive="a-image" id="uterus" src="#uterus" position="0.33 0.2 0.1" scale="1 1 1" width="0.5" height="0.5" />
+                <Entity primitive="a-image" id="temponImage" src="#tempon" position="0.73 0.1 0.1" scale="1 1 1" width="0.5" height="0.5" />
 
-
-
-                </Entity>
-                <Entity primitive="a-image" id="sanitary" src="#sanitary" position="-0.66 0.16 0.1" scale=".5 .4 .3" />
-                <Entity primitive="a-image" id="menstrual" src="#menstrual" position="-0.22 0.3 0.1" scale=".5 .4 .3" />
-                <Entity primitive="a-image" id="uterus" src="#uterus" position="0.22 0.3 0.1" scale=".5 .4 .3" />
-                <Entity primitive="a-image" id="temponImage" src="#tempon" position="0.66 0.16 0.1" scale=".5 .4 .3" />
                 <Entity
-                  id="IntroTextDiv"
-                  position="0 -0.20 0.1"
+                  id="TextDiv"
+                  position="0 -0.25 0.1"
                   text={{
-                    color: 'white', align: 'center', value: "Get ready to embark on an adventurous journey with your period pals to explore menstrual health and hygiene!",
-                    width: 1.2,
-                    lineHeight: 55,
-                    wrapCount: 50
+                    color: 'white', align: 'center', value: "Get ready to embark on an adventurous journey with your period pals to explore menstrual health and hygiene!"
+                    , width: 1.5, wrapCount: 55, lineHeight: 55
                   }}
                   scale="1 1 1"
                 ></Entity>
 
-                <Entity id="StartBtnBgPanel"
+                <Entity id="IntroBtnBgPanel"
                   geometry="primitive: plane; width: 0.5; height: 0.15"
                   material={{ color: 'royalblue' }}
                   position="0 -0.45 0.1"
@@ -337,12 +360,11 @@ export default function SceneManager({ formData }) {
                   }}
                 >
 
-                  <Entity id="StartBtnDiv"
+                  <Entity id="IntroBtnDiv"
                     text={{ value: 'START', align: 'center' }}
                     position="0 0 0"
                   />
                 </Entity>
-
 
               </Entity>
             </>
@@ -352,11 +374,13 @@ export default function SceneManager({ formData }) {
 
           {learningObjPanel &&
             <>
-              {/* <Entity id="skyBox" primitive="a-sky" src="#skyImg" /> */}
+              <Entity id="BgPanel" geometry="primitive: plane; width: 3.5; height: 2"
+                material="color: #404040 ; opacity:1"
+                position="0 1.7 -2" />
               <Entity id="LearningOutcomesContainer" position="0 1.7 -1.5">
 
-                <Entity id="LearningOutcomesDiv" position="0 0.6 0">
-                  <Entity id="LearningOutcomesBgPanel" geometry="primitive: plane; width: 3.4; height: 0.2"
+                <Entity id="LearningOutcomesDiv" position="0 0.55 0">
+                  <Entity id="LearningOutcomesBgPanel" geometry="primitive: plane; width: 1.1; height: 0.2"
                     material="color: #000000; opacity:0.8"
                     position="0 0 0" />
                   <Entity
@@ -368,7 +392,7 @@ export default function SceneManager({ formData }) {
                 </Entity>
 
 
-                <Entity id="knowledgeDiv" position="-1.2 0 0">
+                <Entity id="knowledgeDiv" position="-0.85 0 0" scale="0.8 0.8 0.8">
 
                   <Entity id="knowledgeDivBgPanel" geometry="primitive: plane; width: 1; height: 0.7"
                     material="color: #000000; opacity:0.8"
@@ -420,7 +444,7 @@ export default function SceneManager({ formData }) {
                 </Entity>
 
 
-                <Entity id="SkillsDiv" position="0 0 0">
+                <Entity id="SkillsDiv" position="0 0 0" scale="0.8 0.8 0.8">
 
                   <Entity id="SkillsDivBgPanel" geometry="primitive: plane; width: 1; height: 0.7"
                     material="color: #000000; opacity:0.8"
@@ -460,7 +484,7 @@ export default function SceneManager({ formData }) {
                 </Entity>
 
 
-                <Entity id="ValuesDiv" position="1.2 0 0">
+                <Entity id="ValuesDiv" position="0.85 0 0" scale="0.8 0.8 0.8">
 
                   <Entity id="knowledgeDivBgPanel" geometry="primitive: plane; width: 1; height: 0.7"
                     material="color: #000000; opacity:0.8"
@@ -526,7 +550,7 @@ export default function SceneManager({ formData }) {
                 <Entity id="NextBtnBgPanel"
                   geometry="primitive: plane; width: 0.5; height: 0.15"
                   material={{ color: 'royalblue' }}
-                  position="0 -0.63 0.1"
+                  position="0 -0.55 0.1"
                   className="raycastable"
                   events={{
                     click: handleLearningObjClick
@@ -545,7 +569,7 @@ export default function SceneManager({ formData }) {
 
           {beginPanel &&
             <>
-              {/* <Entity id="skyBox" primitive="a-sky" src="#skyImg" /> */}
+
               <Entity id="BeginContainer" position="0 1.7 -1.5">
                 <Entity id="BeginContainerBgPanel" geometry="primitive: plane; width: 1.5; height: 0.8"
                   material="color: #000000; opacity:0.8"
@@ -592,7 +616,7 @@ export default function SceneManager({ formData }) {
           }
 
           {videoPanel &&
-            <Entity primitive="a-image" id="videoControls" className="raycastable" src={isVideoStarted ? "#pause" : "#play"} position="0 0.5 -2" scale=".3 .3 .3"
+            <Entity primitive="a-image" id="videoControls" className="raycastable" src={isVideoStarted ? "#pause" : "#play"} position="0 0.3 -2" scale=".3 .3 .3"
               events={{
                 click: () => {
 
@@ -630,7 +654,7 @@ export default function SceneManager({ formData }) {
 
           {quizStartPanel &&
             <>
-              {/* <Entity id="skyBox" primitive="a-sky" src="#skyImg" /> */}
+
               <Entity id="StartContainer" position="0 1.7 -1.5">
                 <Entity id="StartContainerBgPanel" geometry="primitive: plane; width: 2; height: 1.3"
                   material="color: #000000; opacity:0.8"
@@ -673,7 +697,7 @@ export default function SceneManager({ formData }) {
 
           {quizPanel &&
             <>
-              {/* <Entity id="skyBox" primitive="a-sky" src="#skyImg" /> */}
+
               <Entity id="QuizContainer" position="0 1.7 -1.5">
                 <Entity id="QuestionContainerBgPanel" geometry="primitive: plane; width: 1.8; height: 1.2"
                   material="color: #000000; opacity:0.8"
@@ -778,8 +802,9 @@ export default function SceneManager({ formData }) {
                     material={{ color: 'royalblue' }}
                     position="0 -0.4 0.1"
                     className="raycastable"
+                    disabled="true"
                     events={{
-                      click: () => handleSubmit()
+                      click: clickedOption !== null && handleSubmit
                     }}
                   >
 
@@ -814,27 +839,24 @@ export default function SceneManager({ formData }) {
 
           {scorePanel &&
             <>
-              {/* <Entity id="skyBox" primitive="a-sky" src="#skyImg" /> */}
               <Entity id="FinalContainer" position="0 1.7 -1.5">
-                <Entity id="FinalContainerBgPanel" geometry="primitive: plane; width: 1.8; height: 1.2"
+                <Entity id="FinalContainerBgPanel" geometry="primitive: plane; width: 2; height: 1.3"
                   material="color: #000000; opacity:0.8"
                   position="0 0 0" />
-                <Entity primitive="a-image" id="sanitary" src="#sanitary" position="-0.66 0.16 0.1" scale=".5 .4 .3" />
-                <Entity primitive="a-image" id="menstrual" src="#menstrual" position="-0.22 0.3 0.1" scale=".5 .4 .3" />
-                <Entity primitive="a-image" id="uterus" src="#uterus" position="0.22 0.3 0.1" scale=".5 .4 .3" />
-                <Entity primitive="a-image" id="temponImage" src="#tempon" position="0.66 0.16 0.1" scale=".5 .4 .3" />
+                <Entity primitive="a-image" id="sanitary" src="#sanitary" position="-0.65 0.1 0.1" scale="1 1 1" width="0.5" height="0.5" />
+                <Entity primitive="a-image" id="menstrual" src="#menstrual" position="-0.22 0.2 0.1" scale="1 1 1" width="0.5" height="0.5" />
+                <Entity primitive="a-image" id="uterus" src="#uterus" position="0.33 0.2 0.1" scale="1 1 1" width="0.5" height="0.5" />
+                <Entity primitive="a-image" id="temponImage" src="#tempon" position="0.73 0.1 0.1" scale="1 1 1" width="0.5" height="0.5" />
 
                 <Entity
-                  id="RemarkDiv"
+                  id="TextDiv"
                   position="0 -0.25 0.1"
                   text={{
                     color: 'white', align: 'center', value: " Woo-hoo! You have completed this adventure! \n"
-                      + "Your quest for knowledge has unlocked a brighter, more informed path. Onward to the next thrilling escapade!",
-                    width: 1.2, wrapCount: 50, lineHeight: 55
+                      + "Your quest for knowledge has unlocked a brighter, more informed path. Onward to the next thrilling escapade!", width: 1.5, wrapCount: 55, lineHeight: 55
                   }}
                   scale="1 1 1"
                 ></Entity>
-
 
                 <Entity
                   id="ScoreTextDiv"
