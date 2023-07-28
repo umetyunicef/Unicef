@@ -6,11 +6,11 @@ import { firebase } from "../DataManager";
 export default function SceneManager({ formData }) {
 
 
-  const [introPanel, setIntroPanel] = useState(false);
+  const [introPanel, setIntroPanel] = useState(true);
   const [learningObjPanel, setLearningObjPanel] = useState(false);
   const [beginPanel, setBeginPanel] = useState(false);
   const [videoPanel, setVideoPanel] = useState(false);
-  const [quizStartPanel, setQuizStartPanel] = useState(true);
+  const [quizStartPanel, setQuizStartPanel] = useState(false);
   const [quizPanel, setQuizPanel] = useState(false);
   const [scorePanel, setScorePanel] = useState(false);
 
