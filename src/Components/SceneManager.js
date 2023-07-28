@@ -319,7 +319,7 @@ export default function SceneManager({ formData }) {
             < Entity id="skyBox" primitive="a-sky" src="#skyImg" />
           }
 
-          {!isVRMode && <Entity id="camera1" primitive="a-camera" cursor="rayOrigin: mouse;"></Entity>}
+          <Entity id="camera1" primitive="a-camera" cursor="rayOrigin: mouse;"></Entity>
 
           {isVRMode && <Entity id="camera2" primitive="a-camera">
             <a-entity cursor="fuse: false;"
