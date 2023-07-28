@@ -453,14 +453,6 @@ Add below code in index.html file at last
 	</script>
 ```
 
-
-### Sending user activity on Impact analysis platform
-
-URL: http://ec2-52-5-117-32.compute-1.amazonaws.com/unicef/public
-
-API: /api/app-activity
-
-
 #### Used parameter 
 
 ```
