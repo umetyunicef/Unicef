@@ -133,7 +133,7 @@ Linking manifest file to add below line
 Add Title to page to add below line
 
 ```
-<Title>MS300035</Title>
+<Title>Menstrual Health and Hygiene Prototype</Title>
 ```
 
 ### Load scripts
@@ -505,4 +505,41 @@ function sendDataToServer() {
     xhr.send(scoreDate);
 }
 ```
+### Builds
 
+To use the latest stable build of A-Frame, include [`aframe.min.js`](https://aframe.io/releases/1.4.2/aframe.min.js):
+
+```js
+<head>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+</head>
+```
+
+To check out the stable and master builds, see the [`dist/` folder](dist/).
+
+### npm
+
+```sh
+npm install --save aframe
+# Or yarn add aframe
+```
+
+```js
+require('aframe')  // e.g., with Browserify or Webpack.
+```
+
+## Local Development
+
+```sh
+git clone https://github.com/aframevr/aframe.git  # Clone the repository.
+cd aframe && npm install  # Install dependencies.
+npm start  # Start the local development server.
+```
+
+And open in your browser **[http://localhost:9000](http://localhost:9000)**.
+
+### Generating Builds
+
+```sh
+npm run dist
+```
