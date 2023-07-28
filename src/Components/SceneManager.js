@@ -6,11 +6,11 @@ import { firebase } from "../DataManager";
 export default function SceneManager({ formData }) {
 
 
-  const [introPanel, setIntroPanel] = useState(true);
+  const [introPanel, setIntroPanel] = useState(false);
   const [learningObjPanel, setLearningObjPanel] = useState(false);
   const [beginPanel, setBeginPanel] = useState(false);
   const [videoPanel, setVideoPanel] = useState(false);
-  const [quizStartPanel, setQuizStartPanel] = useState(false);
+  const [quizStartPanel, setQuizStartPanel] = useState(true);
   const [quizPanel, setQuizPanel] = useState(false);
   const [scorePanel, setScorePanel] = useState(false);
 
@@ -86,6 +86,11 @@ export default function SceneManager({ formData }) {
     setIsVRMode(false);
   }
 
+
+  useEffect(() => {
+
+    console.log("isOptionSelected", isOptionSelected)
+  }, [isOptionSelected])
   useEffect(() => {
 
     console.log("FormData", formData)
@@ -314,13 +319,9 @@ export default function SceneManager({ formData }) {
             < Entity id="skyBox" primitive="a-sky" src="#skyImg" />
           }
 
-          <Entity id="camera1" primitive="a-camera" cursor="rayOrigin: mouse;">
-            {/* <a-entity cursor="rayOrigin: mouse;"
-              raycaster="objects: .raycastable"
-            /> */}
-          </Entity>
-          <Entity id="camera2" primitive="a-camera">
+          {!isVRMode && <Entity id="camera1" primitive="a-camera" cursor="rayOrigin: mouse;"></Entity>}
 
+          {isVRMode && <Entity id="camera2" primitive="a-camera">
             <a-entity cursor="fuse: false;"
               position="0 0 -1"
               geometry="primitive: ring"
@@ -328,7 +329,7 @@ export default function SceneManager({ formData }) {
               scale={isVRMode ? "0.01 0.01 0.01" : "0 0 0"}
               raycaster="objects: .raycastable"
             />
-          </Entity>
+          </Entity>}
 
 
 
@@ -806,7 +807,7 @@ export default function SceneManager({ formData }) {
                     geometry="primitive: plane; width: 0.5; height: 0.15"
                     material={{ color: 'royalblue' }}
                     position="0 -0.4 0.1"
-                    className="raycastable"
+                    className={isOptionSelected && "raycastable"}
                     events={{
                       click: isOptionSelected && handleSubmit
                     }}
