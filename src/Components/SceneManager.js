@@ -133,7 +133,7 @@ export default function SceneManager({ formData }) {
 
     const videoBtn = document.querySelector('#videoControls');
     videoBtn.setAttribute('visible', false);
-    // setIsVideoEnded(true);
+
     setIsVideoStarted(false);
     setVideoPanel(false);
     setQuizStartPanel(true);
@@ -174,9 +174,12 @@ export default function SceneManager({ formData }) {
   }
 
 
+
+
   const handleNext = () => {
 
     setClickedOption(0);
+    console.log("Score", score)
 
 
     console.log("Next Button Clicked", currentQuestionIndex);
@@ -210,10 +213,6 @@ export default function SceneManager({ formData }) {
       setIsSubmit(true);
     }
 
-    console.log("2", currentQuestionIndex);
-
-
-
   }
 
   const handleOptionClick = (index) => {
@@ -222,7 +221,6 @@ export default function SceneManager({ formData }) {
 
     if (!isNext) {
       setClickedOption(index);
-      console.log("OPtion click", index)
       setPickedOptionIndex(index);
     }
 
@@ -278,7 +276,7 @@ export default function SceneManager({ formData }) {
 
     ResetState();
 
-    window.location.href = 'https://umetyunicef.github.io/Unicef/report';
+    window.location.href = 'https://umetyunicef.github.io/poc/report';
   }
 
   return (
