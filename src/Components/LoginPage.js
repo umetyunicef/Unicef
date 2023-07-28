@@ -6,7 +6,7 @@ export default function LoginPage({ setIsLogin, setSceneManager, setFormData }) 
     name: '',
     gender: '',
     age: '',
-    grade: '',
+    grade: 0,
     country: '',
   });
   const [ageError, setAgeError] = useState('');
@@ -17,7 +17,14 @@ export default function LoginPage({ setIsLogin, setSceneManager, setFormData }) 
 
     let { name, value } = event.target;
     if (name === "grade") {
-      value = parseInt(value);
+      if (value == '') {
+        value = 0
+        console.log("if grade value", value)
+      } else {
+
+        value = parseInt(value);
+        console.log("else grade value", value)
+      }
     }
 
     setMYFormData((prevFormdata) => ({ ...prevFormdata, [name]: value }));

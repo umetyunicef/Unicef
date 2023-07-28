@@ -6,11 +6,11 @@ import { firebase } from "../DataManager";
 export default function SceneManager({ formData }) {
 
 
-  const [introPanel, setIntroPanel] = useState(true);
+  const [introPanel, setIntroPanel] = useState(false);
   const [learningObjPanel, setLearningObjPanel] = useState(false);
   const [beginPanel, setBeginPanel] = useState(false);
   const [videoPanel, setVideoPanel] = useState(false);
-  const [quizStartPanel, setQuizStartPanel] = useState(false);
+  const [quizStartPanel, setQuizStartPanel] = useState(true);
   const [quizPanel, setQuizPanel] = useState(false);
   const [scorePanel, setScorePanel] = useState(false);
 
@@ -77,16 +77,16 @@ export default function SceneManager({ formData }) {
     setIsVideoStarted(false);
     setIsSubmit(false);
     setIsNext(false);
-    setCurrentQuestionIndex(false);
-    setPickedOptionIndex(false);
-    setScore(false);
-    setSetClickedOption(false);
+    setCurrentQuestionIndex(0);
+    setPickedOptionIndex(0);
+    setScore(0);
+    setSetClickedOption(null);
     setIsVRMode(false);
   }
 
   useEffect(() => {
 
-    // ResetState();
+    console.log("FormData", formData)
 
     const enterVRHandler = () => {
       console.log("VR Mode Enabled");
@@ -105,10 +105,6 @@ export default function SceneManager({ formData }) {
 
 
   }, []);
-
-
-
-
 
 
   const handleIntroClick = () => {
@@ -165,6 +161,8 @@ export default function SceneManager({ formData }) {
 
       setIsNext(true);
       setIsSubmit(false);
+    } else {
+      console.log("No option is selected")
     }
 
 
@@ -215,7 +213,7 @@ export default function SceneManager({ formData }) {
   const handleOptionClick = (index) => {
 
     if (!isNext) {
-      setSetClickedOption(Number(index));
+      setSetClickedOption(index);
       console.log("OPtion click", index)
       setPickedOptionIndex(index);
     }
@@ -268,7 +266,7 @@ export default function SceneManager({ formData }) {
 
 
   const handleReportClick = () => {
-    console.log("Report Click");
+    console.log("Report Click", formData);
 
     ResetState();
 
@@ -309,6 +307,7 @@ export default function SceneManager({ formData }) {
             !videoPanel &&
             < Entity id="skyBox" primitive="a-sky" src="#skyImg" />
           }
+
           <Entity id="camera1" primitive="a-camera">
             <a-entity cursor="rayOrigin: mouse;"
               raycaster="objects: .raycastable"
@@ -719,7 +718,7 @@ export default function SceneManager({ formData }) {
                     position="0 0.22 0"
                     className="raycastable"
                     events={{
-                      click: () => handleOptionClick("0"),
+                      click: () => handleOptionClick(0),
                       mouseenter: () => handleMouseEnter("#OptionBgPanel1"),
                       mouseleave: () => handleMouseExit()
 
@@ -741,7 +740,7 @@ export default function SceneManager({ formData }) {
                     position="0 0.09 0"
                     className="raycastable"
                     events={{
-                      click: () => handleOptionClick("1"),
+                      click: () => handleOptionClick(1),
                       mouseenter: () => handleMouseEnter("#OptionBgPanel2"),
                       mouseleave: () => handleMouseExit()
 
@@ -761,7 +760,7 @@ export default function SceneManager({ formData }) {
                     position="0 -0.04 0"
                     className="raycastable"
                     events={{
-                      click: () => handleOptionClick("2"),
+                      click: () => handleOptionClick(2),
                       mouseenter: () => handleMouseEnter("#OptionBgPanel3"),
                       mouseleave: () => handleMouseExit()
                     }}
@@ -780,7 +779,7 @@ export default function SceneManager({ formData }) {
                     position="0 -0.17 0"
                     className="raycastable"
                     events={{
-                      click: () => handleOptionClick("3"),
+                      click: () => handleOptionClick(3),
                       mouseenter: () => handleMouseEnter("#OptionBgPanel4"),
                       mouseleave: () => handleMouseExit()
                     }}
