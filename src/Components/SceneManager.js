@@ -6,11 +6,11 @@ import { firebase } from "../DataManager";
 export default function SceneManager({ formData }) {
 
 
-  const [introPanel, setIntroPanel] = useState(true);
+  const [introPanel, setIntroPanel] = useState(false);
   const [learningObjPanel, setLearningObjPanel] = useState(false);
   const [beginPanel, setBeginPanel] = useState(false);
   const [videoPanel, setVideoPanel] = useState(false);
-  const [quizStartPanel, setQuizStartPanel] = useState(false);
+  const [quizStartPanel, setQuizStartPanel] = useState(true);
   const [quizPanel, setQuizPanel] = useState(false);
   const [scorePanel, setScorePanel] = useState(false);
 
@@ -26,7 +26,8 @@ export default function SceneManager({ formData }) {
 
   const [score, setScore] = useState(0);
 
-  const [clickedOption, setClickedOption] = useState(null);
+  const [clickedOption, setClickedOption] = useState(0);
+  const [isOptionSelected, setIsOptionSelected] = useState(false);
 
 
   const [questionData] = useState([
@@ -80,7 +81,8 @@ export default function SceneManager({ formData }) {
     setCurrentQuestionIndex(0);
     setPickedOptionIndex(0);
     setScore(0);
-    setClickedOption(null);
+    setClickedOption(0);
+    setIsOptionSelected(false);
     setIsVRMode(false);
   }
 
@@ -141,7 +143,8 @@ export default function SceneManager({ formData }) {
   const handleQuizStartClick = () => {
 
     console.log("Start Button Click");
-    setClickedOption(null);
+    setClickedOption(0);
+    setIsOptionSelected(false);
     setQuizStartPanel(false);
     setQuizPanel(true);
   }
@@ -149,10 +152,10 @@ export default function SceneManager({ formData }) {
   const handleSubmit = () => {
 
 
-    if (clickedOption != null) {
+    if (isOptionSelected) {
       console.log("Submit Button Clicked");
       const correctAns = questionData[currentQuestionIndex].correctOption;
-      if (questionData[currentQuestionIndex].options[pickedOptionIndex] === correctAns) {
+      if (questionData[currentQuestionIndex].options[pickedOptionIndex - 1] === correctAns) {
         console.log("Correct Answer");
         setScore(prev => prev + 1);
       } else {
@@ -161,6 +164,7 @@ export default function SceneManager({ formData }) {
 
       setIsNext(true);
       setIsSubmit(false);
+      setIsOptionSelected(false);
     } else {
       console.log("No option is selected")
     }
@@ -169,9 +173,11 @@ export default function SceneManager({ formData }) {
 
   }
 
+
   const handleNext = () => {
 
-    setClickedOption(null);
+    setClickedOption(0);
+
 
     console.log("Next Button Clicked", currentQuestionIndex);
     if (currentQuestionIndex === 4) {
@@ -211,6 +217,8 @@ export default function SceneManager({ formData }) {
   }
 
   const handleOptionClick = (index) => {
+
+    setIsOptionSelected(true);
 
     if (!isNext) {
       setClickedOption(index);
@@ -714,11 +722,11 @@ export default function SceneManager({ formData }) {
 
                   <Entity id="OptionBgPanel1"
                     geometry="primitive: plane; width: 1.3; height: 0.1"
-                    material={clickedOption === 0 ? "color: royalblue" : "color: white"}
+                    material={clickedOption === 1 ? "color: royalblue" : "color: white"}
                     position="0 0.22 0"
                     className="raycastable"
                     events={{
-                      click: () => handleOptionClick(0),
+                      click: () => handleOptionClick(1),
                       mouseenter: () => handleMouseEnter("#OptionBgPanel1"),
                       mouseleave: () => handleMouseExit()
 
@@ -736,11 +744,11 @@ export default function SceneManager({ formData }) {
                   </Entity>
                   <Entity id="OptionBgPanel2"
                     geometry="primitive: plane; width: 1.3; height: 0.1"
-                    material={clickedOption === 1 ? "color: royalblue" : "color: white"}
+                    material={clickedOption === 2 ? "color: royalblue" : "color: white"}
                     position="0 0.09 0"
                     className="raycastable"
                     events={{
-                      click: () => handleOptionClick(1),
+                      click: () => handleOptionClick(2),
                       mouseenter: () => handleMouseEnter("#OptionBgPanel2"),
                       mouseleave: () => handleMouseExit()
 
@@ -756,11 +764,11 @@ export default function SceneManager({ formData }) {
                   </Entity>
                   <Entity id="OptionBgPanel3"
                     geometry="primitive: plane; width: 1.3; height: 0.1"
-                    material={clickedOption === 2 ? "color: royalblue" : "color: white"}
+                    material={clickedOption === 3 ? "color: royalblue" : "color: white"}
                     position="0 -0.04 0"
                     className="raycastable"
                     events={{
-                      click: () => handleOptionClick(2),
+                      click: () => handleOptionClick(3),
                       mouseenter: () => handleMouseEnter("#OptionBgPanel3"),
                       mouseleave: () => handleMouseExit()
                     }}
@@ -775,11 +783,11 @@ export default function SceneManager({ formData }) {
                   </Entity>
                   <Entity id="OptionBgPanel4"
                     geometry="primitive: plane; width: 1.3; height: 0.1"
-                    material={clickedOption === 3 ? "color: royalblue" : "color: white"}
+                    material={clickedOption === 4 ? "color: royalblue" : "color: white"}
                     position="0 -0.17 0"
                     className="raycastable"
                     events={{
-                      click: () => handleOptionClick(3),
+                      click: () => handleOptionClick(4),
                       mouseenter: () => handleMouseEnter("#OptionBgPanel4"),
                       mouseleave: () => handleMouseExit()
                     }}
@@ -803,7 +811,7 @@ export default function SceneManager({ formData }) {
                     className="raycastable"
                     disabled="true"
                     events={{
-                      click: clickedOption != null && handleSubmit
+                      click: handleSubmit
                     }}
                   >
 
