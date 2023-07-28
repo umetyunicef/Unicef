@@ -10,8 +10,8 @@ export default function SceneManager({ formData }) {
   const [learningObjPanel, setLearningObjPanel] = useState(false);
   const [beginPanel, setBeginPanel] = useState(false);
   const [videoPanel, setVideoPanel] = useState(false);
-  const [quizStartPanel, setQuizStartPanel] = useState(true);
-  const [quizPanel, setQuizPanel] = useState(false);
+  const [quizStartPanel, setQuizStartPanel] = useState(false);
+  const [quizPanel, setQuizPanel] = useState(true);
   const [scorePanel, setScorePanel] = useState(false);
 
 
@@ -291,7 +291,7 @@ export default function SceneManager({ formData }) {
       <div id="AFrameScene" style={{ height: window.innerHeight, width: window.innerWidth, border: '1px solid black' }}>
 
 
-        <Scene vr-mode-ui="enabled:true" embedded >
+        <Scene vr-mode-ui="enabled:true" embedded>
 
           <a-assets>
             <a-image id="skyImg" src="https://umety-dev.s3.amazonaws.com/unicef/skyImg.jpg" />
@@ -319,9 +319,12 @@ export default function SceneManager({ formData }) {
             < Entity id="skyBox" primitive="a-sky" src="#skyImg" />
           }
 
-          <Entity id="camera1" primitive="a-camera" cursor="rayOrigin: mouse;"></Entity>
-
-          {isVRMode && <Entity id="camera2" primitive="a-camera">
+          <Entity id="camera1" primitive="a-camera">
+            <a-entity cursor="rayOrigin: mouse;"
+              raycaster="objects: .raycastable"
+            />
+          </Entity>
+          <Entity id="camera2" primitive="a-camera">
             <a-entity cursor="fuse: false;"
               position="0 0 -1"
               geometry="primitive: ring"
@@ -329,7 +332,7 @@ export default function SceneManager({ formData }) {
               scale={isVRMode ? "0.01 0.01 0.01" : "0 0 0"}
               raycaster="objects: .raycastable"
             />
-          </Entity>}
+          </Entity>
 
 
 
