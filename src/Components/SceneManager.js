@@ -314,10 +314,10 @@ export default function SceneManager({ formData }) {
             < Entity id="skyBox" primitive="a-sky" src="#skyImg" />
           }
 
-          <Entity id="camera1" primitive="a-camera">
-            <a-entity cursor="rayOrigin: mouse;"
+          <Entity id="camera1" primitive="a-camera" cursor="rayOrigin: mouse;">
+            {/* <a-entity cursor="rayOrigin: mouse;"
               raycaster="objects: .raycastable"
-            />
+            /> */}
           </Entity>
           <Entity id="camera2" primitive="a-camera">
 
@@ -857,7 +857,7 @@ export default function SceneManager({ formData }) {
                   position="0 -0.25 0.1"
                   text={{
                     color: 'white', align: 'center', value: " Woo-hoo! You have completed this adventure! \n"
-                      + "Your quest for knowledge has unlocked a brighter, more informed path. Onward to the next thrilling escapade!", width: 1.5, wrapCount: 55, lineHeight: 55
+                      + "Your quest for knowledge has unlocked a brighter and more informed path. Onward to the next thrilling escapade!", width: 1.5, wrapCount: 55, lineHeight: 55
                   }}
                   scale="1 1 1"
                 ></Entity>
