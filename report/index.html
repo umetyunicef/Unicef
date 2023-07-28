@@ -1,57 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>UNICEF Schema Pagination</title>
-  <style>
-   *{ margin: 0px; padding: 0px; box-sizing: border-box; font-family: Verdana, Geneva, Tahoma, sans-serif;}
-    #userList { width: 100%; box-shadow: 0 2px 4px #eee; border-radius: 4px; overflow: hidden; }
-    #userList th{ background: #d3e0f0; padding: 10px 10px; font-size: 14px; border-bottom: 0px solid #eee; text-align: left; font-weight: 400;}
-    #userList td{border-bottom: 0px solid #eee; padding: 10px 10px; font-size: 14px; }
-    .fullbox{ width: 100%; padding: 40px 100px 10px 100px}
-    .fullbox h1{ font-size: 20px; padding: 0 0 20px 0;}
-    .paginationDiv{ padding: 20px 0 0 0; width: 100%; display: flex; justify-content: space-between; }
-    #userList tr:nth-child(2n) td{background: #f4f8fe}
-    .paginationDiv aside button{ background: skyblue; border: 0px; border-radius: 8px; font-weight: 500; padding: 10px 20px; margin: 0 0 0 15px; cursor: pointer;}
-    #records{ font-size: 12px;}
-    .serchDiv{ width: 250px; margin: 0 0 20px 0;  }
-    .serchDiv input{ width: 100%; height: 35px; padding: 0 20px; border-radius: 4px; border: 1px solid #ddd; }
-  </style>
-</head>
-<body>
-    <div class="fullbox">
-  <h1>UNICEF Schema</h1>
-  <div class="serchDiv">
-    <input type="text" id="searchInput" placeholder="Search by name">
-  </div>
-  
-  <table border="0" cellpadding="0" cellspacing="0" id="userList">
-      <thead>
-        <th onclick="sortTable(0)">Name <span></span></th>
-        <th onclick="sortTable(1)">Gender <span></span></th>
-        <th onclick="sortTable(2)">Age <span></span></th>
-        <th onclick="sortTable(3)">Grade <span></span></th>
-        <th onclick="sortTable(4)">Country <span></span></th>
-        <th onclick="sortTable(5)">Score <span></span></th>
-        <th onclick="sortTable(6)">Attempted On <span>&#x25B2;</span></th>
-    </thead>
-    <tbody>
-
-    </tbody>
-    <!-- User data will be added here dynamically -->
-  </table>
-
-  <div class="paginationDiv">
-    <p id="records"></p>
-    <aside>
-        <button class="pbtn" id="prevBtn" disabled>Previous</button>
-        <button class="pbtn" id="nextBtn">Next</button>
-    </aside>
-  </div>
-</div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Table Search with Pagination and Sorting</title>
+  <!-- Include jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Include DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+  <style>
+    *{ margin: 0px; padding: 0px; box-sizing: border-box; font-family: Verdana, Geneva, Tahoma, sans-serif;}
+     #dataTable { width: 100%!important; box-shadow: 0 2px 4px #eee; border-radius: 4px; overflow: hidden; padding-top: 20px; margin-bottom: 20px; border: 0px!important;}
+     #dataTable th{ background: #E6EEF7; padding: 15px 10px; font-size: 14px; border-bottom: 0px solid #eee; text-align: left; font-weight: 400; background-repeat: no-repeat; background-position: right center; text-transform: capitalize; position: relative; background-image: none!important;}
+     #dataTable td{border-bottom: 0px solid #eee; padding: 10px 10px; font-size: 14px; }
+     .fullbox{ width: 100%; padding: 40px 100px 10px 100px}
+     .fullbox h1{ font-size: 20px; padding: 0 0 20px 0;}
+     .paginationDiv{ padding: 20px 0 0 0; width: 100%; display: flex; justify-content: space-between; }
+     #dataTable tr:nth-child(2n) td{background: #f4f8fe}
+     .paginationDiv aside button{ background: skyblue; border: 0px; border-radius: 8px; font-weight: 500; padding: 10px 20px; margin: 0 0 0 15px; cursor: pointer;}
+     #records{ font-size: 12px;}
+     .serchDiv{ width: 250px; margin: 0 0 20px 0;  }
+     .serchDiv input{ width: 100%; height: 35px; padding: 0 20px; border-radius: 8px; border: 1px solid #ddd; padding: 0 20px!important; }
+     .dataTables_length select{ width: 90px; border: 1px solid #ddd; height: 35px; border-radius: 8px!important; padding: 0 10px!important; }
+     .dataTables_length label{ font-size: 14px; }
+     #dataTable_filter, .dataTables_info{ font-size: 14px;}
+     #dataTable_filter input{ height: 35px; width: 220px; padding: 0 15px!important; border-radius: 8px; }
+     #dataTable td{ background: #fff!important; border: 0px!important; text-transform: capitalize; }
+     #dataTable tr:nth-child(2n) td{ background: #F5F6F8!important;}
+     #dataTable_paginate .paginate_button{ background: #5B7CFD!important; height: 35px; border: 0px!important; color: #fff!important; font-weight: 500; border-radius: 8px;}
+     #dataTable_wrapper{ width: 100%; background: #fff; box-shadow: 0 0px 4px #ddd; border-radius: 8px; padding: 20px;}
+     #dataTable_paginate .disabled{ opacity: 0.5!important;}
+     #dataTable th::after{ content: ""; position: absolute; right: 5px; top: 41%; border-bottom: 8px solid #5B7CFD; border-left: 5px solid transparent; border-right: 5px solid transparent;}
+     #dataTable th.sorting.sorting_asc:after{border-top: 8px solid #5B7CFD; border-bottom: 0px; border-left: 5px solid transparent; border-right: 5px solid transparent;}
+   </style>
+</head>
+
+<body>
+  <div class="fullbox">
+    <h1>UNICEF Report</h1>
+  <!-- Your table goes here -->
+  <table id="dataTable" class="display">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Age</th>
+        <th>Grade</th>
+        <th>Country</th>
+        <th>Score</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  </div>
+
+  <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
   <script>
-    // Initialize Firebase
+
     const firebaseConfig = {
         apiKey: "AIzaSyB1bjWm3FV06EzaONxURAPOxcd34Fzp0W0",
         authDomain: "unicef-e6d80.firebaseapp.com",
@@ -64,211 +74,71 @@
     };
 
     firebase.initializeApp(firebaseConfig);
- // Constants for pagination
-    const PAGE_SIZE = 20;
-    let lastItemKey = null;
-    let firstItemKey = null;
-    let currentPage = 1;
-    let totalRecords = 0;
-    let currentPageRecords = 0;
-    let sortOrder = 1;
-
-    function fetchNextUsers(page, searchTerm, sortBy=0) {
-      getTotalRecords(searchTerm);
-      const userList = document.querySelector("#userList tbody");
-      userList.innerHTML = "";
-
-      const dbRef = firebase.database().ref('UNICEF');
-
-      var sortByMapping= ["name","gender","age","grade","country","score","created_on"];
-      var sortByColumnName = sortByMapping[sortBy];
-      if (currentPage > 1) {
-        query = dbRef.orderByChild(sortByColumnName).startAt(lastItemKey).limitToFirst(PAGE_SIZE + 1);
-      } else {
-        query = dbRef.orderByChild(sortByColumnName).limitToFirst(PAGE_SIZE);
-      }
-
-      if (searchTerm) {
-        query = dbRef.orderByChild('name').startAt(searchTerm).endAt(searchTerm + '\uf8ff');
-      }
-
-      query.once("value")
-        .then((snapshot) => {
-          const users = snapshot.val();
-          let userCount = 0;
-
-          let sortedUsers = [];
-          snapshot.forEach((childSnapshot) => {
-            sortedUsers.push(childSnapshot.val());
-          });
-
-          // Sort the data based on the selected column
-          if (sortBy === 0) {
-            sortedUsers.sort((a, b) => {
-              const nameA = a.name?.toLowerCase();
-              const nameB = b.name?.toLowerCase();
-              if (nameA < nameB) return -sortOrder;
-              if (nameA > nameB) return -sortOrder;
-              return 0;
-            });
-          } 
-          else if(sortBy === 1){
-            sortedUsers.sort((a,b) => {
-              const genderA = a.gender?.toLowerCase();
-              const genderB = b.gender?.toLowerCase();
-              if(genderA < genderB) return -sortOrder;
-              if(genderA > genderB) return -sortOrder;
-              return 0;
-            })
-          }
-          else if(sortBy === 2){
-            sortedUsers.sort((a,b) => {
-              const ageA = a.age;
-              const ageB = b.age;
-              return sortOrder * (ageA - ageB);
-            })
-          }
-          else if(sortBy === 3){
-            sortedUsers.sort((a,b) => {
-              const gradeA = a.grade;
-              const gradeB = b.grade;
-              return sortOrder * (gradeA - gradeB) ;
-            })
-          }
-          else if (sortBy === 4) {
-            sortedUsers.sort((a,b) => {
-              const countryA = a.country?.toLowerCase();
-              const countryB = b.country?.toLowerCase();
-              return sortOrder * (countryA > countryB);
-            })
-          }
-          else if(sortBy === 5) {
-            sortedUsers.sort((a,b) => {
-              const scoreA = a.score;
-              const scoreB = b.score;
-              return sortOrder * (scoreA > scoreB);
-            })
-          }
-          else if(sortBy === 6) {
-            sortedUsers.sort((a, b) => {
-              const dateA = new Date(a.created_on||'');
-              const dateB = new Date(b.created_on || '');
-              return sortOrder * (dateA - dateB) * -1;
-            });
-          }
-
-          sortedUsers.forEach((user) => {
-            const li = document.createElement("tr");
-            li.innerHTML = `<td>${user.name}</td> <td>${user.gender}</td> <td>${user.age}</td> <td>${user.grade}</td> <td>${user.country}</td> <td>${user.score}</td> <td>${convertUnixToDate(user.created_on)}</td>`;
-
-            if (userCount != 0 || currentPage === 1) {
-              userList.appendChild(li);
-            }
-
-            if (currentPage === 1 && userCount <= PAGE_SIZE - 1) {
-              lastItemKey = searchTerm ? user.name : user.created_on;
-            } else if (userCount === PAGE_SIZE) {
-              lastItemKey = searchTerm ? user.name : user.created_on;
-            }
-
-            if (currentPage !== 1 && userCount === 1) {
-              firstItemKey = searchTerm ? user.name : user.created_on;
-            }
-
-            userCount++;
-            currentPageRecords = userCount;
-          });
-
-          document.getElementById("prevBtn").disabled = currentPage === 1;
-          document.getElementById("nextBtn").disabled = currentPage == Math.ceil(totalRecords / PAGE_SIZE);
-          updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE);
-        })
-        .catch((error) => {
-          console.error("Error getting users:", error);
+    const database = firebase.database().ref('UNICEF');
+    
+    // Fetch data from Firebase
+    database.once('value')
+      .then(snapshot => {
+        const data = [];
+        snapshot.forEach(childSnapshot => {
+          const item = childSnapshot.val();
+          data.push(item);
         });
-    }
+        initializeDataTables(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data from Firebase:', error);
+      });
 
-    function convertUnixToDate(timestamp) {
-            const dateObj = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
+      function convertUnixToDate(timestamp) {
+            const dateObj = new Date(timestamp * 1000); 
             const year = dateObj.getFullYear();
-            const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // Months are zero-based, so we add 1
+            const month = String(dateObj.getMonth() + 1).padStart(2, "0"); 
             const day = String(dateObj.getDate()).padStart(2, "0");
             const hour = String(dateObj.getHours()).padStart(2,"0");
             const minute = String(dateObj.getMinutes()).padStart(2,"0");
             const seconds = String(dateObj.getSeconds()).padStart(2,"0");
-
             return `${year}-${month}-${day} ${hour}:${minute}:${seconds}`;
         }
 
-    // Function to handle the "Next" button click
-    document.getElementById("nextBtn").addEventListener("click", () => {
-      currentPage++;
-      fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), sortOrder);
-    });
+      function getGrade(gradeVal) {
+            const grades = {
+              1: 1,
+              2: 2,
+              3: 3,
+              4: 4,
+              5: 5,
+              6: 6,
+              7: 7,
+              8: 8,
+              9: 9,
+              10: 10,
+              11: 11,
+              12: 12,
+              13: "Above 12"
+            }
+            return grades[gradeVal];
+        }
 
-    // Function to handle the "Previous" button click
-    document.getElementById("prevBtn").addEventListener("click", () => {
-      if (currentPage > 1) {
-        currentPage--;
-        lastItemKey = null; // Reset lastItemKey to load previous page from the beginning
-        fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), sortOrder);
-        updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE);
-      }
-    });
-
-    // Function to fetch the total number of records
-    async function getTotalRecords(searchTerm) {
-      if(!searchTerm){
-        const dbRef = firebase.database().ref('UNICEF');
-        const data = await dbRef.once("value");
-        totalRecords = data.numChildren();
-        document.getElementById("nextBtn").disabled = currentPage == Math.ceil(totalRecords / PAGE_SIZE);
-        updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE);
-      }
+    function initializeDataTables(data) {
+      const dataTable = $('#dataTable').DataTable({
+        data: data,
+        columns: [
+          { data: 'name' },
+          { data: 'gender' },
+          { data: 'age' },
+          { data: 'grade', render: function(data) { return getGrade(data); }  },
+          { data: 'country' },
+          { data: 'score' },
+          { data: "created_on", render: function(data) { return convertUnixToDate(data); } }
+        ],
+        searching: true,
+        paging: true,
+        ordering: true,
+        order: [6, "desc"]
+        // pageLength: 10 (manage list for this property)
+      });
     }
-
-    // Function to update the pagination information
-    function updatedRecords(currentPage, currentPageRecords, totalRecords, PAGE_SIZE){
-      document.getElementById("records").innerText = `Page ${currentPage} of ${Math.ceil(totalRecords / PAGE_SIZE)}`;
-    }
-
-    // Search functionality
-    document.getElementById("searchInput").addEventListener("keyup", () => {
-      const searchTerm = document.getElementById("searchInput").value.trim();
-      currentPage = 1;
-      lastItemKey = null;
-      fetchNextUsers(currentPage, searchTerm, sortOrder=0);
-      showArrowOnColumn(0,1);
-    });
-
-    function showArrowOnColumn(sortBy, sortOrder){
-      // Get the target table
-      const table = document.getElementById('userList');
-
-      // Find the ith <th> element
-      const thElements = table.querySelectorAll('th');
-      for(let i=0;i<thElements.length;i++){
-        const spanElement = thElements[i].querySelector('span');
-        spanElement.textContent = "";
-      }
-      const ithTh = thElements[sortBy];
-      // Create a <span> element
-      const spanElement = ithTh.querySelector('span');
-      // Set the content of the <span> (you can change this as per your requirement)
-      spanElement.textContent = sortOrder>0 ? "\u25B2" : "\u25BC";
-      // Append the <span> tag inside the ith <th> element
-      ithTh.appendChild(spanElement);
-    }
-
-    // Function to handle the sorting of the table
-    function sortTable(columnIndex) {
-      sortOrder *= -1;
-      showArrowOnColumn(columnIndex ,sortOrder);
-      fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), columnIndex);
-    }
-
-    // Initial fetch on page load
-    fetchNextUsers(currentPage, document.getElementById("searchInput").value.trim(), 6);
   </script>
 </body>
 </html>
