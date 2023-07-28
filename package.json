@@ -1,8 +1,8 @@
 {
-  "name": "video",
+  "name": "poc",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://umetyunicef.github.io/Unicef",
+  "homepage": "https://umetyunicef.github.io/poc",
   "dependencies": {
     "@fastify/busboy": "^1.2.1",
     "@testing-library/jest-dom": "^5.17.0",
