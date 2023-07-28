@@ -179,6 +179,7 @@ export default function SceneManager({ formData }) {
   const handleNext = () => {
 
     setClickedOption(0);
+    setIsOptionSelected(false);
     console.log("Score", score)
 
 
@@ -806,9 +807,8 @@ export default function SceneManager({ formData }) {
                     material={{ color: 'royalblue' }}
                     position="0 -0.4 0.1"
                     className="raycastable"
-                    disabled="true"
                     events={{
-                      click: handleSubmit
+                      click: isOptionSelected && handleSubmit
                     }}
                   >
 
