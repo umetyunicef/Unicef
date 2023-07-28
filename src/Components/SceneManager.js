@@ -26,7 +26,7 @@ export default function SceneManager({ formData }) {
 
   const [score, setScore] = useState(0);
 
-  const [clickedOption, setSetClickedOption] = useState(null);
+  const [clickedOption, setClickedOption] = useState(null);
 
 
   const [questionData] = useState([
@@ -80,7 +80,7 @@ export default function SceneManager({ formData }) {
     setCurrentQuestionIndex(0);
     setPickedOptionIndex(0);
     setScore(0);
-    setSetClickedOption(null);
+    setClickedOption(null);
     setIsVRMode(false);
   }
 
@@ -141,7 +141,7 @@ export default function SceneManager({ formData }) {
   const handleQuizStartClick = () => {
 
     console.log("Start Button Click");
-    setSetClickedOption(null);
+    setClickedOption(null);
     setQuizStartPanel(false);
     setQuizPanel(true);
   }
@@ -149,7 +149,7 @@ export default function SceneManager({ formData }) {
   const handleSubmit = () => {
 
 
-    if (clickedOption !== null) {
+    if (clickedOption != null) {
       console.log("Submit Button Clicked");
       const correctAns = questionData[currentQuestionIndex].correctOption;
       if (questionData[currentQuestionIndex].options[pickedOptionIndex] === correctAns) {
@@ -171,7 +171,7 @@ export default function SceneManager({ formData }) {
 
   const handleNext = () => {
 
-    setSetClickedOption(null);
+    setClickedOption(null);
 
     console.log("Next Button Clicked", currentQuestionIndex);
     if (currentQuestionIndex === 4) {
@@ -180,12 +180,12 @@ export default function SceneManager({ formData }) {
       console.log("User Data....", formData);
 
       const UserData = {
-        name: formData.name?.toLowerCase() || "",
+        name: formData.name?.toLowerCase(),
         score: score,
-        grade: formData.grade || "",
-        age: formData.age || "",
-        gender: formData.gender?.toLowerCase() || "",
-        country: formData.country?.toUpperCase() || "",
+        grade: formData.grade || 0,
+        age: formData.age,
+        gender: formData.gender?.toLowerCase(),
+        country: formData.country?.toUpperCase(),
         created_on: Math.floor(Date.now() / 1000)
       }
 
@@ -213,7 +213,7 @@ export default function SceneManager({ formData }) {
   const handleOptionClick = (index) => {
 
     if (!isNext) {
-      setSetClickedOption(index);
+      setClickedOption(index);
       console.log("OPtion click", index)
       setPickedOptionIndex(index);
     }
@@ -803,7 +803,7 @@ export default function SceneManager({ formData }) {
                     className="raycastable"
                     disabled="true"
                     events={{
-                      click: clickedOption !== null && handleSubmit
+                      click: clickedOption != null && handleSubmit
                     }}
                   >
 
