@@ -6,12 +6,12 @@ import { firebase } from "../DataManager";
 export default function SceneManager({ formData }) {
 
 
-  const [introPanel, setIntroPanel] = useState(false);
+  const [introPanel, setIntroPanel] = useState(true);
   const [learningObjPanel, setLearningObjPanel] = useState(false);
   const [beginPanel, setBeginPanel] = useState(false);
   const [videoPanel, setVideoPanel] = useState(false);
   const [quizStartPanel, setQuizStartPanel] = useState(false);
-  const [quizPanel, setQuizPanel] = useState(true);
+  const [quizPanel, setQuizPanel] = useState(false);
   const [scorePanel, setScorePanel] = useState(false);
 
 
@@ -309,7 +309,7 @@ export default function SceneManager({ formData }) {
             <img id="incorrectTick" src="https://umety-dev.s3.amazonaws.com/unicef/incorrectTick.png" alt='incorrectTickImg'></img>
 
 
-            <video id="myVideo" src="https://s3-dev.umety.com/unicef/UNICEF-3.mp4"> </video>
+            <video id="myVideo" src="https://s3-dev.umety.com/unicef/UNICEF-4.mp4"> </video>
 
 
           </a-assets>
