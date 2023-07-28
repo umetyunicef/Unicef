@@ -67,7 +67,7 @@ export default function SceneManager({ formData }) {
 
   const ResetState = () => {
 
-    setIntroPanel(true);
+    setIntroPanel(false);
     setLearningObjPanel(false);
     setBeginPanel(false);
     setVideoPanel(false);
