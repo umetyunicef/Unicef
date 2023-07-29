@@ -321,7 +321,7 @@ export default function SceneManager({ formData }) {
 
           <Entity id="camera1" primitive="a-camera">
             <a-entity cursor="rayOrigin: mouse;"
-              raycaster="objects: .raycastable"
+              raycaster={isVRMode ? "objects: .raycastable2" : "objects: .raycastable"}
             />
           </Entity>
           <Entity id="camera2" primitive="a-camera">
@@ -330,7 +330,7 @@ export default function SceneManager({ formData }) {
               geometry="primitive: ring"
               material="color: white; shader: flat"
               scale={isVRMode ? "0.01 0.01 0.01" : "0 0 0"}
-              raycaster="objects: .raycastable"
+              raycaster= {isVRMode ? "objects: .raycastable" : "objects: .raycastable2"}
             />
           </Entity>
 
